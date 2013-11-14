@@ -1,0 +1,7 @@
+<link rel="stylesheet" href="https://cdn.moot.it/1/moot.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://cdn.moot.it/1/moot.min.js"></script>
+<a class="moot"
+   href="https://moot.it/i/{{ site.JB.comments.moot.user }}/{{ site.JB.comments.moot.forum }}{{ page.id }}"
+   data-show_online="{{ site.JB.comments.moot.show_online }}">
+</a>

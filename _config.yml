@@ -78,7 +78,11 @@ JB :
   # Set 'provider' to false to turn commenting off globally.
   #
   comments :
-    provider : false
+    provider : moot
+    moot :
+        user : initialxy
+        forum : comments
+        show_online : false
    
   # Settings for analytics helper
   # Set 'provider' to the analytics provider you want to use.
