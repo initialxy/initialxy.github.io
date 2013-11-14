@@ -25,6 +25,8 @@ author :
 #
 production_url : http://initialxy.github.io
 
+excerpt_separator : <!--more-->
+
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #
 JB :

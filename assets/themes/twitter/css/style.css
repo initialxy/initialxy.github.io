@@ -68,4 +68,19 @@ body {
 	border:1px solid #4C964D;
 	color:#FFF;
 }
-	
+
+.posts h3 a,
+.posts h3 a:link,
+.posts h3 a:visited,
+.posts h3 a:hover,
+.posts h3 a:active {
+    color: inherit;
+}
+
+.post {
+    margin: 1em 0 1em 0;
+}
+
+.post p {
+    margin: 0;
+}
