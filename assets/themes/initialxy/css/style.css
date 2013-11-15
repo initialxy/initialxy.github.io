@@ -30,12 +30,14 @@ body {
     margin-bottom: 1em 0 2em 0;
 }
 
-.content .post small {
-    color: #999999;
-}
-
 nav.navbar.navbar-static-top {
     margin-bottom: 0;
+}
+
+.content .tag .badge {
+    margin-left: 1em;
+    background-color: #e5e5e5;
+    color: #5e5e5e;
 }
 
 /* Custom Moot styling. */
