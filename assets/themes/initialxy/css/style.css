@@ -54,6 +54,11 @@ nav.navbar.navbar-static-top {
     box-shadow: 0 0 .2em #5c0fa8 inset;    
 }
 
+.content .m-focused.m-replyform textarea {
+    border-color: #5c0fa8;
+    box-shadow: 0 0 .2em #5c0fa8 inset; 
+}
+
 .content .m-page a {
     color: #5c0fa8;
 }
