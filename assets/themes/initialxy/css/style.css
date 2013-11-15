@@ -34,6 +34,10 @@ nav.navbar.navbar-static-top {
     margin-bottom: 0;
 }
 
+.content .tag {
+    margin: 0.2em 0 0.2em 0;
+}
+
 .content .tag .badge {
     margin-left: 1em;
     background-color: #e5e5e5;
