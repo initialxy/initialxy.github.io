@@ -1,0 +1,66 @@
+input.m-hidden {
+    display: none;
+}
+
+body {
+    background-color: #f8f8f8;
+}
+
+.footer {
+    border-top: 1px solid #e7e7e7;
+    padding: 2em 0 2em 0;
+}
+
+.content {
+    background-color: white;
+    padding-bottom: 2em;
+}
+
+.content .page-header {
+    margin: 0 0 1em 0;
+    padding: 2em 0 2em 0;
+}
+
+.content .page-header h1 {
+    margin: 0;
+    color: #5c0fa8;
+}
+
+.content .lead {
+    margin-bottom: 1em 0 2em 0;
+}
+
+.content .post small {
+    color: #999999;
+}
+
+nav.navbar.navbar-static-top {
+    margin-bottom: 0;
+}
+
+/* Custom Moot styling. */
+.content .moot button, .m-button {
+    background-color: #5c0fa8;
+}
+
+.content .m-focused .m-input-wrap {
+    border-color: #5c0fa8;
+    box-shadow: 0 0 .2em #5c0fa8 inset;    
+}
+
+.content .m-page a {
+    color: #5c0fa8;
+}
+
+.content .m-page {
+    padding-right: 0;
+}
+
+.content .is-threaded {
+    padding: 0;
+}
+
+.content .m-logo.m-below-fold {
+    margin-left: 0;
+    margin-right: 0;
+}
