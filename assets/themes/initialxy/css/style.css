@@ -44,6 +44,24 @@ nav.navbar.navbar-static-top {
     color: #5e5e5e;
 }
 
+.content .pagination_container {
+    text-align: center;
+}
+
+/* Tweaks for devices larger than phone. */
+@media (min-width: 768px) {
+    .content .pagination_container {
+        text-align: left;
+    }
+}
+
+/* Tweaks for devices larger than tablet. */
+@media (min-width: 992px) {
+    .content .date {
+        text-align: right;
+    }
+}
+
 /* Custom Moot styling. */
 .content .moot button, .m-button {
     background-color: #5c0fa8;
