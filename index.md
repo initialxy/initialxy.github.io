@@ -8,7 +8,7 @@ title: Brain, what do you want to do tonight?
     The same thing we do every night, dude&ndash;try to squash stupid bugs!
 </p>
 
-<div class="posts">
+<div class="posts_list">
   {% for post in site.posts %}
     <div class="post">
         <div class="row">

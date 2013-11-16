@@ -57,7 +57,7 @@ nav.navbar.navbar-static-top {
 
 /* Tweaks for devices larger than tablet. */
 @media (min-width: 992px) {
-    .content .date {
+    .content .posts_list .date {
         text-align: right;
     }
 }
