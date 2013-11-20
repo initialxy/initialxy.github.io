@@ -20,7 +20,7 @@ a.authorship:active {
 
 .content {
     background-color: white;
-    padding-bottom: 2em;
+    padding-bottom: 1em;
 }
 
 .content .page-header {
@@ -34,7 +34,19 @@ a.authorship:active {
 }
 
 .content .lead {
-    margin-bottom: 1em 0 2em 0;
+    margin: 0 0 1em 0;
+}
+
+.content .main .posts_summary {
+    margin: 1em 0 1em 0;
+}
+
+.content .main .pagination {
+    margin: 0;
+}
+
+.content .main .pagination_container {
+    margin-top: 1em;
 }
 
 nav.navbar.navbar-static-top {
@@ -55,11 +67,11 @@ nav.navbar.navbar-static-top {
     content: ",";
 }
 
-.content .post .pagination_container {
+.content .pagination_container {
     text-align: center;
 }
 
-.content .post .pagination_container li a {
+.content .pagination_container li a {
     display: block;
     width: 8em;
     text-align: center;
@@ -100,7 +112,7 @@ nav.navbar.navbar-static-top {
 
 /* Tweaks for devices larger than phone. */
 @media (min-width: 768px) {
-    .content .post .pagination_container {
+    .content .pagination_container {
         text-align: left;
     }
 }

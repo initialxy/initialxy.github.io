@@ -4,26 +4,55 @@ title: Brain, what do you want to do tonight?
 ---
 {% include JB/setup %}
 
-<p class="lead">
-    The same thing we do every night, dude&ndash;try to squash stupid bugs!
-</p>
+<div class="main">
+    <p class="lead">
+        The same thing we do every night, dude&ndash;try to squash stupid bugs!
+    </p>
 
-<div class="posts_summary">
-  {% for post in site.posts %}
-    <div class="post_summary">
-        <h3>
-            <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
-        </h3>
-        <small class="author">
-            By <a class="authorship" href="{{ site.authors[post.author].googleplus }}">{{ site.authors[post.author].display_name }}</a>
-        </small>
-        <small class="date">
-            {{ post.date | date: "%B %-d %Y" }}
-        </small>
+    <div class="posts_summary">
+        {% for post in paginator.posts %}
+        <div class="post_summary">
+            <h3>
+                <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+            </h3>
+            <small class="author">
+                By <a class="authorship" href="{{ site.authors[post.author].googleplus }}">{{ site.authors[post.author].display_name }}</a>
+            </small>
+            <small class="date">
+                {{ post.date | date: "%B %-d %Y" }}
+            </small>
 
-        <p class="excerpt">{{ post.excerpt | markdownify }}</p>
-        <a href="{{ BASE_PATH }}{{ post.url }}">Read More</a>
+            <p class="excerpt">{{ post.excerpt | markdownify }}</p>
+            <a href="{{ BASE_PATH }}{{ post.url }}">Read More</a>
+        </div>
+        {% endfor %}
     </div>
-  {% endfor %}
+
+    <div class="pagination_container">
+        <ul class="pagination">
+            {% if paginator.previous_page %}
+            <li class="prev">
+            {% if paginator.previous_page == 1 %}
+            <a href="/" title="Previous Page">&larr; Previous</a>
+            {% else %}
+            <a href="/page{{ paginator.previous_page }}" title="Previous Page">&larr; Previous</a>
+            {% endif %}
+            </li>
+            {% else %}
+            <li class="prev disabled">
+            <a>&larr; Previous</a>
+            </li>
+            {% endif %}
+            {% if paginator.next_page %}
+            <li class="next">
+            <a href="/page{{ paginator.next_page }}" title="Next Page">Next &rarr;</a>
+            </li>
+            {% else %}
+            <li class="next disabled">
+            <a>Next &rarr;</a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
 </div>
 
