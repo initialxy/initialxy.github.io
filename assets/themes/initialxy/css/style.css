@@ -44,22 +44,49 @@ nav.navbar.navbar-static-top {
     color: #5e5e5e;
 }
 
-.content .pagination_container {
+.content .post .pagination_container {
     text-align: center;
+}
+
+.content .post .pagination_container li a {
+    display: block;
+    width: 8em;
+    text-align: center;
+}
+
+.content .post .pagination_container li.archive {
+    display: none;
+}
+
+.content .post .info {
+    margin-bottom: 1em;
+    overflow: hidden;
+}
+
+.content .post .info .avatar {
+    margin-right: 0.5em;
+    float: left;
+    height: 2.5em;
+    width: auto;
+
+    -webkit-border-radius: 0.3em;
+    -moz-border-radius: 0.3em;
+    border-radius: 0.3em;
+}
+
+.content .post .info small {
+    display: block;
 }
 
 /* Tweaks for devices larger than phone. */
 @media (min-width: 768px) {
-    .content .pagination_container {
+    .content .post .pagination_container {
         text-align: left;
     }
 }
 
 /* Tweaks for devices larger than tablet. */
 @media (min-width: 992px) {
-    .content .posts_list .date {
-        text-align: right;
-    }
 }
 
 /* Custom Moot styling. */

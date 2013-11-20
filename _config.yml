@@ -10,10 +10,7 @@ pygments: true
 #
 title : Gee
 tagline: Brain, what do you want to do tonight?
-author :
-  name : initialxy
-  email : initialxy (at) gmail.com
-  github : initialxy
+site_author : initialxy
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt 
@@ -24,6 +21,15 @@ author :
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
 production_url : http://initialxy.github.io
+
+authors :
+    initialxy :
+        nick_name : initialxy
+        display_name : Xingchen Yu
+        gravatar: 4900bddc64f0df18bf2576d27f87e6b0
+        github : https://github.com/initialxy
+        web : http://www.initialxy.com
+        linkedin : http://ca.linkedin.com/pub/xingchen-yu/67/180/154
 
 excerpt_separator : <!--more-->
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Hello World"
+author: initialxy
 description: ""
 category: ""
 tags: []

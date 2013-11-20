@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="https://cdn.moot.it/1/moot.css">
 <script src="https://cdn.moot.it/1/moot.min.js"></script>
 <a class="moot"
    href="https://moot.it/i/{{ site.JB.comments.moot.user }}/{{ site.JB.comments.moot.forum }}{{ page.id }}"

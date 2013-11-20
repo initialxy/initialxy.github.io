@@ -11,8 +11,7 @@ title : Atom Feed
  <updated>{{ site.time | date_to_xmlschema }}</updated>
  <id>{{ site.production_url }}</id>
  <author>
-   <name>{{ site.author.name }}</name>
-   <email>{{ site.author.email }}</email>
+   <name>{{ site.authors[site.site_author].display_name }}</name>
  </author>
 
  {% for post in site.posts %}
@@ -22,6 +21,9 @@ title : Atom Feed
    <updated>{{ post.date | date_to_xmlschema }}</updated>
    <id>{{ site.production_url }}{{ post.id }}</id>
    <content type="html">{{ post.content | xml_escape }}</content>
+   <author>
+     <name>{{ site.authors[post.author].display_name }}</name>
+   </author>   
  </entry>
  {% endfor %}
  

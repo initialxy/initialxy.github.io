@@ -4,12 +4,15 @@
         <meta charset="utf-8">
         <title>{{ page.title }}</title>
         {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
-        <meta name="author" content="{{ site.author.name }}">
+        <meta name="author" content="{{ site.authors[site.site_author].display_name }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
         <link href="{{ ASSET_PATH }}/css/style.css" rel="stylesheet" type="text/css"/>
-
+        {% case site.JB.comments.provider %}
+        {% when "moot" %}
+        <link rel="stylesheet" href="https://cdn.moot.it/1/moot.css">
+        {% endcase %}
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
     </head>
@@ -44,9 +47,9 @@
         <div class="footer">
             <div class="container">
                 <p>
-                    &copy; {{ site.author.name }} 2012 
+                    &copy; {{ site.authors[site.site_author].display_name }} 2013
                     with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
-                    and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+                    and <a href="http://getbootstrap.com" target="_blank">Twitter Bootstrap</a>
                 </p>
             </div>
         </div>
