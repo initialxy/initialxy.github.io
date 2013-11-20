@@ -11,6 +11,13 @@ body {
     padding: 2em 0 2em 0;
 }
 
+a.authorship:link,
+a.authorship:visited,
+a.authorship:hover,
+a.authorship:active {
+    color: inherit;
+}
+
 .content {
     background-color: white;
     padding-bottom: 2em;
@@ -42,6 +49,10 @@ nav.navbar.navbar-static-top {
     margin-left: 1em;
     background-color: #e5e5e5;
     color: #5e5e5e;
+}
+
+.content .post_summary .author:after {
+    content: ",";
 }
 
 .content .post .pagination_container {

@@ -14,8 +14,10 @@ title: Brain, what do you want to do tonight?
         <h3>
             <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
         </h3>
-        <small class="info">
-            {{ site.authors[post.author].display_name }},
+        <small class="author">
+            By <a class="authorship" href="{{ site.authors[post.author].googleplus }}">{{ site.authors[post.author].display_name }}</a>
+        </small>
+        <small class="date">
             {{ post.date | date: "%B %-d %Y" }}
         </small>
 

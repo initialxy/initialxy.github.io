@@ -7,8 +7,8 @@
 <div class="container post">
     <div class="info">
         <img class="avatar" src="https://s.gravatar.com/avatar/{{ site.authors[page.author].gravatar }}?s=80" />
-        <small>{{ site.authors[page.author].display_name }}</small>
-        <small>{{ page.date | date: "%B %-d %Y" }}</small>
+        <small class="author">By <a class="authorship" href="{{ site.authors[page.author].googleplus }}?rel=author">{{ site.authors[page.author].display_name }}</a></small>
+        <small class="date">{{ page.date | date: "%B %-d %Y" }}</small>
     </div>
 
     {{ content }}
