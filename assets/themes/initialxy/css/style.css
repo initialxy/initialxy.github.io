@@ -78,6 +78,15 @@ nav.navbar.navbar-static-top {
     display: block;
 }
 
+.content .about_me .avatar {
+    float: left;
+    margin-right: 0.5em;
+
+    -webkit-border-radius: 0.5em;
+    -moz-border-radius: 0.5em;
+    border-radius: 0.5em;
+}
+
 /* Tweaks for devices larger than phone. */
 @media (min-width: 768px) {
     .content .post .pagination_container {
