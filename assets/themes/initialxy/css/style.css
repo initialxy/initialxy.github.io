@@ -11,11 +11,15 @@ body {
     padding: 2em 0 2em 0;
 }
 
-a.authorship:link,
-a.authorship:visited,
-a.authorship:hover,
-a.authorship:active {
+.author a:link,
+.author a:visited,
+.author a:hover,
+.author a:active {
     color: inherit;
+}
+
+.authorship {
+    display: none;
 }
 
 .content {
@@ -73,8 +77,26 @@ nav.navbar.navbar-static-top {
 
 .content .pagination_container li a {
     display: block;
-    width: 8em;
+    width: 10em;
     text-align: center;
+}
+
+.content .pagination_container li.prev a:before,
+.content .pagination_container li.next a:before {
+    content: "\002190\0000a0";
+}
+
+.content .pagination_container li.prev a:after,
+.content .pagination_container li.next a:after {
+    content: "\0000a0\002192";
+}
+
+.content .pagination_container li.prev a:after {
+    visibility: hidden;
+}
+
+.content .pagination_container li.next a:before {
+    visibility: hidden;
 }
 
 .content .post .pagination_container li.archive {

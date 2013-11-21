@@ -16,7 +16,7 @@ title: Brain, what do you want to do tonight?
                 <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
             </h3>
             <small class="author">
-                By <a class="authorship" href="{{ site.authors[post.author].googleplus }}">{{ site.authors[post.author].display_name }}</a>
+                By <a href="{{ site.authors[post.author].about }}">{{ site.authors[post.author].display_name }}</a>
             </small>
             <small class="date">
                 {{ post.date | date: "%B %-d %Y" }}
@@ -33,23 +33,23 @@ title: Brain, what do you want to do tonight?
             {% if paginator.previous_page %}
             <li class="prev">
             {% if paginator.previous_page == 1 %}
-            <a href="/" title="Previous Page">&larr; Previous</a>
+            <a href="/" title="Previous Page">Previous</a>
             {% else %}
-            <a href="/page{{ paginator.previous_page }}" title="Previous Page">&larr; Previous</a>
+            <a href="/page{{ paginator.previous_page }}" title="Previous Page">Previous</a>
             {% endif %}
             </li>
             {% else %}
             <li class="prev disabled">
-            <a>&larr; Previous</a>
+            <a>Previous</a>
             </li>
             {% endif %}
             {% if paginator.next_page %}
             <li class="next">
-            <a href="/page{{ paginator.next_page }}" title="Next Page">Next &rarr;</a>
+            <a href="/page{{ paginator.next_page }}" title="Next Page">Next</a>
             </li>
             {% else %}
             <li class="next disabled">
-            <a>Next &rarr;</a>
+            <a>Next</a>
             </li>
             {% endif %}
         </ul>

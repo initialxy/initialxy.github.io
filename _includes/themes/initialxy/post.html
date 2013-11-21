@@ -7,7 +7,10 @@
 <div class="container post">
     <div class="info">
         <img class="avatar" src="https://s.gravatar.com/avatar/{{ site.authors[page.author].gravatar }}?s=80" />
-        <small class="author">By <a class="authorship" href="{{ site.authors[page.author].googleplus }}?rel=author">{{ site.authors[page.author].display_name }}</a></small>
+        <small class="author">
+            By <a href="{{ site.authors[page.author].about }}">{{ site.authors[page.author].display_name }}</a>
+            <a class="authorship" href="{{ site.authors[page.author].googleplus }}?rel=author">Authorship</a>
+        </small>
         <small class="date">{{ page.date | date: "%B %-d %Y" }}</small>
     </div>
 
@@ -18,11 +21,11 @@
         <ul class="pagination">
             {% if page.previous %}
             <li class="prev">
-                <a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">&larr; Previous</a>
+                <a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">Previous</a>
             </li>
             {% else %}
             <li class="prev disabled">
-                <a>&larr; Previous</a>
+                <a>Previous</a>
             </li>
             {% endif %}
             <li class="archive">
@@ -30,11 +33,11 @@
             </li>
             {% if page.next %}
             <li class="next">
-                <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next &rarr;</a>
+                <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next</a>
             </li>
             {% else %}
             <li class="next disabled">
-                <a>Next &rarr;</a>
+                <a>Next</a>
             </li>
             {% endif %}
         </ul>
