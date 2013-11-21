@@ -33,7 +33,7 @@ to see if there's any reactions.
 * ```
 console.log();
 ```
-will through an exception. This is more of a bug than issue, but worth mentioning. So make sure when you are doing _console_ debugging, you clear fully take things out.
+will through an exception. This is more of a bug than issue, but worth mentioning. So make sure you fully take things out when _console_ debugging, .
 
 ### Tips
 
