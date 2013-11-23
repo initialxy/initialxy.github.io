@@ -8,7 +8,7 @@ tags: [JavaScript, Weinre, Debugging]
 ---
 {% include JB/setup %}
 
-[Weinre](http://people.apache.org/~pmuellr/weinre/docs/latest/) (pronounced like "winery") is a lovely tool to provide JavaScript console and DOM tree inspection for remote devices that don't ship with a remote debugger. I've been using it for quite a while especially when I got issues with Android's legacy WebView. (I say legacy, because the new WebView on Android 4.4 KitKat now has built-in remote debugger, but the older one doesn't.) I'd like to discuss some things to watch out for when using Weinre as well as some tips. <!--more-->
+[Weinre](http://people.apache.org/~pmuellr/weinre/docs/latest/) (pronounced like "winery") is a lovely tool to provide JavaScript console and DOM tree inspection for remote devices that don't ship with a remote debugger. I've been using it for quite a while especially when I got issues with Android's legacy WebView. (I say legacy, because the new WebView on Android 4.4 KitKat is now implemented with [Chromium](http://developer.android.com/about/versions/android-4.4.html#Behaviors) and has built-in remote debugger, but the older one doesn't.) I'd like to discuss some things to watch out for when using Weinre as well as some tips. <!--more-->
 
 ### Fundamentals
 
@@ -24,17 +24,10 @@ This post assumes you already know the basics of getting Weinre to run. I won't 
 
 ![Remote target](/static/images/2013-11-21-using-weinre/remote_refresh.jpg)
 
-* Weinre disconnects easily, especially when your WebView is sent to background or your device goes to sleep. If you react quickly enough, you might be able to save it. If you suspect Weinre has disconnected, you could go to _Console_ tab and run
-```
-alert("hello");
-```
-to see if there's any reactions.
+* Weinre disconnects easily, especially when your WebView is sent to background or your device goes to sleep. If you react quickly enough, you might be able to save it. If you suspect Weinre has disconnected, you could go to _Console_ tab and run `alert("hello");` to see if there's any reactions.
 * Weinre is bounded by the same rules as any other JavaScript, HTML and CSS, so don't be surprised if certain things seems wanky, such as element highlight went under a element of yours that has massive z-index.
-* ```
-console.log();
-```
-will through an exception. This is more of a bug than issue, but worth mentioning. So make sure you fully take things out when console debugging, .
+* `console.log();` will through an exception. This is more of a bug than issue, but worth mentioning. So make sure you fully take things out when console debugging, .
 
 ### Tips
 
-Aside from the tips I have already mentioned above and some common Chrome tricks like _$0_, I want to note that even though Weinre does not provide a JavaScript debugger, it at least provides a functional JavaScript console that runs in the same environment as your device. That means you can use it to inspect APIs, DOMs and your JavaScript objects. Oftentimes your JavaScript variables and objects are not available to the global scope, but you could try to expose the ones you need in your code to global score by assigning them to a global variable without using the _var_ keyboard eg. ```g = this;```. Then you can inspect them in the console.
+Aside from the tips I have already mentioned above and some common Chrome tricks like _$0_, I want to note that even though Weinre does not provide a JavaScript debugger, it at least provides a functional JavaScript console that runs in the same environment as your device. That means you can use it to inspect APIs, DOMs and your JavaScript objects. Oftentimes your JavaScript variables and objects are not available to the global scope, but you could try to expose the ones you need in your code to global score by assigning them to a global variable without using the _var_ keyboard eg. `g = this;`. Then you can inspect them in the console.
