@@ -6,6 +6,10 @@ body {
     background-color: #f8f8f8;
 }
 
+img {
+    max-width: 100%;
+}
+
 .footer {
     border-top: 1px solid #e7e7e7;
     padding: 2em 0 2em 0;
