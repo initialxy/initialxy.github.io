@@ -66,7 +66,7 @@ This was all working before, and now it stopped working. So I scrolled down some
             .querySelector("link[rel='stylesheet'][href$='cus-widget.css']");
     document.head.appendChild(styleSheet.cloneNode(true));
 
-At this point I hit yet another weird Polymer bug. So I removed Polymer from _index.html_. (In case) But the above piece of code failed to find my style sheet. So I had to move the CSS import out of `<tempate>` tag and into `<head>` tag like so:
+At this point I hit yet another weird Polymer bug. So I removed Polymer from _index.html_. (In case you are wondering if my original code would have worked without Polymer, the answer is no, it still didn't import my style sheet on Chromium 33.) But then the above piece of code failed to find my style sheet. So I had to move the CSS import out of `<tempate>` tag and into `<head>` tag like so:
 
     <head>
         <title>CusWidget</title>
