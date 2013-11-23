@@ -73,7 +73,7 @@ At this point I hit yet another weird Polymer bug. So I removed Polymer from _in
         <link rel="stylesheet" href="cus-widget.css"></link>
     </head>
 
-Finally my CSS is imported (as evident on the _Network_ tab of Chromium's debugger). But I still don't see my style. I figured at this point, it's just a main document style sheet, so I gotta style my cus-widget_ like this:
+Finally my CSS is imported (as evident on the _Network_ tab of Chromium's debugger). But I still don't see my style. I figured at this point, it's just a main document style sheet, so I gotta style my _cus-widget_ like this:
 
     cus-widget {
         border: 1px solid red;
