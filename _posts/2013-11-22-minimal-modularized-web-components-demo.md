@@ -60,7 +60,7 @@ My _cus-widget.css_ looked like this:
         display: block;
     }
 
-This was all working before, and now it stopped working. So I scrolled down some more on the same HTML5Rocks article to find some clues. Appearently I could grab my CSS import from my _cus-widget.html_ and dump it into the main document (_index.html_). I had to add the following to my _cus-widget.js_:
+This was all working before, and now it stopped working. So I scrolled down some more on the same HTML5Rocks article to find some clues. Appearently I could grab my CSS import from my _cus-widget.html_ and dump it into the main document, _index.html_. I had to add the following to my _cus-widget.js_:
 
     var styleSheet = document.currentScript.ownerDocument
             .querySelector("link[rel='stylesheet'][href$='cus-widget.css']");
