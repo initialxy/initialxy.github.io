@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <head>
+        <title>Flexbox</title>
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet/less" href="flexbox.less" type="text/css">
+
+        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.5.0/less.min.js"></script>
+    </head>
+    <body>
+        <div class="flex_parent">
+            <div class="header">
+                Header with fixed height.
+            </div>
+
+            <div class="message">
+                Message container that has variable height depending on contents.
+
+                <span id="display_message" class="hidden">
+                    This is a very very long message that should hopefull span a few lines that expands the height of this container. blah blah blah something something.
+                </span>
+            </div>
+
+            <div class="content">
+                <p>
+                    Contents container that should occupy remaining height.
+                    If contents are too long, it should start scrolling.
+                </p>
+                <p>
+                    Click the button below to toggle a long message in the message box above.
+                </p>
+
+                <button id="toggle_message">Toggle message</button>
+
+                <p class="blah">
+                    Some more random text just to expand the height some more.<br/>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </p>
+            </div>
+
+            <div class="footer">
+                Footer with fixed height.
+            <div>
+        </div>
+
+        <script>
+            window.onload = function() {
+                var toggleMessage = document.getElementById("toggle_message");
+                var displayMessage = document.getElementById("display_message");
+
+                toggleMessage.addEventListener("click", function(e) {
+                    if (displayMessage.className === "hidden") {
+                        displayMessage.className = "";
+                    } else {
+                        displayMessage.className = "hidden";
+                    }
+                }, false);
+            }
+        </script>
+    </body>
+</head>

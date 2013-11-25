@@ -1,0 +1,92 @@
+// Flex mixins.
+.flex_display {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  // When Twitter Bootstrap's hidden is applied to the same element, make sure
+  // display is set to none.
+  &.hidden {
+  	display: none;
+  }
+}
+
+.flex_direction_column {
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.flex (@grow: 0, @shrink: 1, @basis: auto) {
+  -webkit-box-flex: @grow;
+  -webkit-flex: @grow @shrink @basis;
+  -ms-flex: @grow @shrink @basis;
+  flex: @grow @shrink @basis;
+
+  // BB10 tweak.
+  height: @basis;
+}
+
+.flex_parent {
+	.flex_display;
+	.flex_direction_column;
+	height: 100%;
+}
+
+
+// Demo specific styles.
+html, body {
+    margin: 0;
+    padding: 0;
+
+    height: 100%;
+}
+
+body {
+    font-size: 1em;
+    color: white;
+    font-family: 'Roboto', Helvetica, Arial, Sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+.header {
+    background-color: #70aeff;
+    height: 3em;
+
+    vertical-align: middle;
+    text-align: center;
+    line-height: 3em;
+}
+
+.message {
+    background-color: #ff7070;
+    padding: 1em;
+}
+
+.content {
+    background-color: #f0f0f0;
+    color: black;
+    padding: 1em;
+
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .flex(1, 1, 0);
+}
+
+.blah {
+    color: #969696;
+}
+
+.footer {
+    .header;
+}
