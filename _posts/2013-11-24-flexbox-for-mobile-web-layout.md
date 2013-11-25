@@ -11,23 +11,31 @@ tags: [CSS3, LESS, LESS Mixin, Mobile Web, Demo]
 I was reading about Flexbox earlier from [this article on CSS-Tricks](http://css-tricks.com/snippets/css/a-guide-to-flexbox/) and I found it extremely useful for a typical mobile web layout that you can see in below. The key feature from Flexbox that I found particularly useful is the ability to create containers that can **fill the remaining space**, which until recently, was achieved using JavaScript measuring and resizing on many mobile web framesworks (such as [Dojo](https://dojotoolkit.org/reference-guide/1.9/dojox/mobile/ScrollablePane.html)). The drawback with this JavaScript solution is that not only is it slow and irresponsive, but also unable to detect size change of surrounding elements, making software far more complex. So I looked up the availability of Flexbox on [caniuse.com](http://caniuse.com/flexbox) and pleasantly found it to be quite ready (at least in my personal opinion). I managed to implement a Flexbox based layout for a mobile web app I was working on and tested it on my arsenal of test devices. In this article I'd like to share my results and discuss the differences between each mobile browser. You may be aware that there are alternative mobile web layouts that are much more popular. I will discuss these near the end of this article.
 
 [![Flexbox layout](/static/images/2013-11-24-flexbox-for-mobile-web-layout/layout.jpg)](/static/files/2013-11-24-flexbox-for-mobile-web-layout/flexbox/)
-<!--more-->
+<span class="hidden">read more</span>
 
 The number one reason why I am so fond of Flexbox when it comes to moble web layout is because it can be used to make content container **expand to fill remaining space**, which has always been a challenge with CSS previously. (If contents are too long, content container should be scrollable, which I will cover in another article.) `display: block;` does not expand height, and `display: table;` requires many more wrappers and has difficulty creating a row that **fit variable content size** (see message container from above layout). I've been solutions involving JavaScript measurements on `resize` event, which, needless to say, has its own set of problems. This is where Flexbox comes in for rescue. First of all, I'd like to clarify that this whole article revolves around creating a layout similar to the one shown above, which covers vast majority of mobile web layouts. I'm not trying to create generic Flexbox mixins. (In case you ask, no, [Compass' Flexbox mixins](http://compass-style.org/reference/compass/css3/box/) don't work so well on mobile devices. I've tested them.)
 
 Before we begin, please read [this article on CSS-Tricks](http://css-tricks.com/snippets/css/a-guide-to-flexbox/), which covers the concepts of Flexbox. This article assume you fundamental understanding of Flexbox. Now let's get started! The main concept for the above layout is to have a main container that has:
 
+```css
+.main {
     height: 100%;
     display: flex;
     flex-direction: column;
+}
+```
 
 We use `flex-direction: column;` to establish top to bottom rows. Every child element inside, except content, don't actually need any CSS properties at all! This is one of the beauties of this layout. Their heights will behave exactly what you expect, either fit content size or fixed size depending on what you set for `height`. Then we have content container, which we want it to expand remaining space. In order to achieve that, we need to set:
 
+```css
+.content {
     flex: 1 1 0;
     /* Should be equivalent to: */
     /* flex-grow: 1; */
     /* flex-shrink: 1; */
     /* flex-basis: 0; */
+}
+```
 
 What this means is that we want it to grow or shrink to fit remaining space with a base size of 0. Awesome, this should be the end of this article right? Not so fast! Let's test this on various mobile devices. Before we begin testing, let's see what [caniuse.com](http://caniuse.com/flexbox) says about Flexbox availabilities on mobile browsers.
 
@@ -51,13 +59,21 @@ At first, BlackBerry 10 seems to be working fine, until contents got really long
 
 This is where old syntax kicks in. Android's legacy WebView supports only old syntax, but Chrome as well as its [new Chromium based WebView found on Android 4.4 KitKat](http://developer.android.com/about/versions/android-4.4.html#Behaviors) supports the full blown new syntax. In order to get the old syntax to work, main container needs to have:
 
+```css
+.main {
     height: 100%;
     display: -webkit-box;
     -webkit-box-orient: vertical;
+}
+```
 
 Content container needs to have:
 
+```
+.content {
     -webkit-box-flex: 1;
+}
+```
 
 Notice that content container no longer has `flex-shrink: 1;`, `flex-basis: 0;` properties. `-webkit-box-flex: 1;` covers both grow and shrink behaviours.
 
@@ -65,43 +81,51 @@ Notice that content container no longer has `flex-shrink: 1;`, `flex-basis: 0;` 
 
 Let's write some [LESS](http://lesscss.org/) mixins to put everything together! (I'm pretty sure you can easily rewrite the followings as [SASS](http://sass-lang.com/) mixins.)
 
-    .flex_display {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: -webkit-flex;
-      display: flex;
+```
+.flex_display {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
 
-      // When Twitter Bootstrap's hidden is applied to the same element, make sure
-      // display is set to none.
-      &.hidden {
-        display: none;
-      }
-    }
+  // When Twitter Bootstrap's hidden is applied to the same element, make sure
+  // display is set to none.
+  &.hidden {
+    display: none;
+  }
+}
 
-    .flex_direction_column {
-      -webkit-box-orient: vertical;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-    }
+.flex_direction_column {
+  -webkit-box-orient: vertical;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
 
-    .flex (@grow: 0, @shrink: 1, @basis: auto) {
-      -webkit-box-flex: @grow;
-      -webkit-flex: @grow @shrink @basis;
-      -ms-flex: @grow @shrink @basis;
-      flex: @grow @shrink @basis;
+.flex (@grow: 0, @shrink: 1, @basis: auto) {
+  -webkit-box-flex: @grow;
+  -webkit-flex: @grow @shrink @basis;
+  -ms-flex: @grow @shrink @basis;
+  flex: @grow @shrink @basis;
 
-      // BB10 tweak.
-      height: @basis;
-    }
+  // BB10 tweak.
+  height: @basis;
+}
 
-    .flex_parent {
-        .flex_display;
-        .flex_direction_column;
-        height: 100%;
-    }
+.flex_main {
+    .flex_display;
+    .flex_direction_column;
+    height: 100%;
+}
 
-All you have to do now is to apply `.flex_parent` to your main container and expand the mixin `.flex(1, 1, 0);` in your content container's styles. You can see them all in action in this [demo](/static/files/2013-11-24-flexbox-for-mobile-web-layout/flexbox/).
+.content {
+    // TODO: Add your own styles.
+
+    .flex(1, 1, 0);
+}
+```
+
+All you have to do now is to apply `.flex_main` to your main container and expand the mixin `.flex(1, 1, 0);` in your content container's styles. You can see them all in action in this [demo](/static/files/2013-11-24-flexbox-for-mobile-web-layout/flexbox/).
 
 ### Popular Alternatives
 

@@ -8,11 +8,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
-        <link href="{{ ASSET_PATH }}/css/style.css" rel="stylesheet" type="text/css"/>
         {% case site.JB.comments.provider %}
         {% when "moot" %}
         <link rel="stylesheet" href="https://cdn.moot.it/1/moot.css">
         {% endcase %}
+        <link href="{{ ASSET_PATH }}/css/syntax.css" rel="stylesheet" type="text/css"/>
+        <link href="{{ ASSET_PATH }}/css/style.css" rel="stylesheet" type="text/css"/>
+
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
     </head>
