@@ -69,7 +69,7 @@ This is where old syntax kicks in. Android's legacy WebView supports only old sy
 
 Content container needs to have:
 
-```
+```css
 .content {
     -webkit-box-flex: 1;
 }
