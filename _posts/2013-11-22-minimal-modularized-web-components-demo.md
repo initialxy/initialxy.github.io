@@ -14,7 +14,7 @@ A few months ago I came across the following video from this year's Google I/O. 
 
 Web Components were so cutting edge at the time (actually even at the time of this writing) that you literally have to download the nightly build of [Chromium](http://www.chromium.org/), enable bunch of experimental features explicitly, and you still only have a patchy support of it. In this post, I'd like to discuss the current state of Web Components, and show you a mininal modularized demo. I say modularized, I mean breaking it down into as many files as possible.<!--more-->
 
-First thing first, let's just get straight to the point. You can see my demo [here](/static/files/2013-11-22-minimal-modularized-web-components-demo/demo/). Again, you need to have the latest version of [Chromium](http://www.chromium.org/). (At time of this wirting, the latest Chromium is 33 and Chrome is 31.) Open _chrome://flags_ in address bar and enable:
+First thing first, let's just get straight to the point. You can see my demo [here](/static/files/2013-11-22-minimal-modularized-web-components-demo/demo/). Again, you need to have the latest version of [Chromium](http://www.chromium.org/). (At time of this wirting, the latest Chromium is 33 and Chrome is 31.) Open `chrome://flags` in address bar and enable:
 
 * Enable Experimental JavaScript
 * Enable experimental Web Platform features
@@ -34,7 +34,7 @@ Like I mentioned earlier, I modularized my demo as much as I could, that means I
     index.html <-- cus-widget.html <----- cus-widget.js
                                       +-- cus-widget.css
 
-The idea is that all index.html has to worry about is to import _cus-widget.html_ then it get simply use the `<cus-widget>hello<cus-widget/>` tag to its advantage. _cus-widget.html_ implements this rather simple custom widget and it impports JavaScript and CSS from separate files. Unfortunately this time around, I actually had less success than a few of months ago. First of all, [Polymer](http://www.polymer-project.org/) is a project that's intended to provide polyfill for Web Components. Few months ago, I _had_ to use Polymer because event the latest nightly build of Chromium didn't have all of the Web Components features (namely HTML import was missing), and I actually managed to get it to work somewhat close to idea setup. Today, I got the latest version of Polymer (0.0.20131107) and I immediately hit a [bug](https://github.com/Polymer/polymer/issues/290). But that's ok, I easily worked around it. But now I noticed that the styling for my custom widget was missing. Now ideally, I should be able to import CSS as part of the template, as per this [HTML5Rocks article](http://www.html5rocks.com/en/tutorials/webcomponents/imports/):
+The idea is that all index.html has to worry about is to import `cus-widget.html` then it get simply use the `<cus-widget>hello<cus-widget/>` tag to its advantage. `cus-widget.html` implements this rather simple custom widget and it impports JavaScript and CSS from separate files. Unfortunately this time around, I actually had less success than a few of months ago. First of all, [Polymer](http://www.polymer-project.org/) is a project that's intended to provide polyfill for Web Components. Few months ago, I _had_ to use Polymer because event the latest nightly build of Chromium didn't have all of the Web Components features (namely HTML import was missing), and I actually managed to get it to work somewhat close to idea setup. Today, I got the latest version of Polymer (0.0.20131107) and I immediately hit a [bug](https://github.com/Polymer/polymer/issues/290). But that's ok, I easily worked around it. But now I noticed that the styling for my custom widget was missing. Now ideally, I should be able to import CSS as part of the template, as per this [HTML5Rocks article](http://www.html5rocks.com/en/tutorials/webcomponents/imports/):
 
     <template>
         <link rel="stylesheet" href="polymer-ui-tabs.css">
@@ -42,7 +42,7 @@ The idea is that all index.html has to worry about is to import _cus-widget.html
         <shadow></shadow>
     </template>
 
-This should ensure an isolated CSS name space for the custom widget. So I originally had this in my _cus-widget.html_:
+This should ensure an isolated CSS name space for the custom widget. So I originally had this in my `cus-widget.html`:
 
     <template id="cus-widget_template">
         <link rel="stylesheet" href="cus-widget.css"></link>
@@ -52,7 +52,7 @@ This should ensure an isolated CSS name space for the custom widget. So I origin
         </div>
     </template>
 
-My _cus-widget.css_ looked like this:
+My `cus-widget.css` looked like this:
 
     div {
         border: 1px solid red;
@@ -60,20 +60,20 @@ My _cus-widget.css_ looked like this:
         display: block;
     }
 
-This was all working before, and now it stopped working. So I scrolled down some more on the same HTML5Rocks article to find some clues. Appearently I could grab my CSS import from my _cus-widget.html_ and dump it into the main document, _index.html_. I had to add the following to my _cus-widget.js_:
+This was all working before, and now it stopped working. So I scrolled down some more on the same HTML5Rocks article to find some clues. Appearently I could grab my CSS import from my `cus-widget.html` and dump it into the main document, `index.html`. I had to add the following to my `cus-widget.js`:
 
     var styleSheet = document.currentScript.ownerDocument
             .querySelector("link[rel='stylesheet'][href$='cus-widget.css']");
     document.head.appendChild(styleSheet.cloneNode(true));
 
-At this point I hit yet another weird Polymer bug. So I removed Polymer from _index.html_. (In case you are wondering if my original code would have worked without Polymer, the answer is no, it still didn't import my style sheet on Chromium 33.) But then the above piece of code failed to find my style sheet. So I had to move the CSS import out of `<tempate>` tag and into `<head>` tag like so:
+At this point I hit yet another weird Polymer bug. So I removed Polymer from `index.html`. (In case you are wondering if my original code would have worked without Polymer, the answer is no, it still didn't import my style sheet on Chromium 33.) But then the above piece of code failed to find my style sheet. So I had to move the CSS import out of `<tempate>` tag and into `<head>` tag like so:
 
     <head>
         <title>CusWidget</title>
         <link rel="stylesheet" href="cus-widget.css"></link>
     </head>
 
-Finally my CSS is imported (as evident on the _Network_ tab of Chromium's debugger). But I still don't see my style. I figured at this point, it's just a main document style sheet, so I gotta style my _cus-widget_ like this:
+Finally my CSS is imported (as evident on the _Network_ tab of Chromium's debugger). But I still don't see my style. I figured at this point, it's just a main document style sheet, so I gotta style my `cus-widget.css` like this:
 
     cus-widget {
         border: 1px solid red;
@@ -81,6 +81,6 @@ Finally my CSS is imported (as evident on the _Network_ tab of Chromium's debugg
         display: block;
     }
 
-Yay! It's finally showing everything correctly, or is it? There's definitely something fundamentally **wrong** with this demo if you haven't noticed. Now my CSS is just a main document style sheet like every other imported CSS, which completely defeats the purpose of having CSS for Shadow DOMs. There's no longer an isolated name space for _cus-widget.css_, and as you can see earlier, it can no longer select and style Shadown DOMs.
+Yay! It's finally showing everything correctly, or is it? There's definitely something fundamentally **wrong** with this demo if you haven't noticed. Now my CSS is just a main document style sheet like every other imported CSS, which completely defeats the purpose of having CSS for Shadow DOMs. There's no longer an isolated name space for `cus-widget.css`, and as you can see earlier, it can no longer select and style Shadown DOMs.
 
 In conclusion, Web Components is very promising, but it's most defintely still too immature for prime time. I shall wait patiently for it to become production-ready.
