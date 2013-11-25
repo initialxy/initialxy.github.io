@@ -25,7 +25,9 @@ We use `flex-direction: column;` to establish top to bottom rows. Every child el
 
     flex: 1 1 0;
     /* Should be equivalent to: */
-    /* flex-grow: 1; flex-shrink: 1; flex-basis: 0; */
+    /* flex-grow: 1; */
+    /* flex-shrink: 1; */
+    /* flex-basis: 0; */
 
 What this means is that we want it to grow or shrink to fit remaining space with a base size of 0. Awesome, this should be the end of this article right? Not so fast! Let's test this on various mobile devices. Before we begin testing, let's see what [caniuse.com](http://caniuse.com/flexbox) says about Flexbox availabilities on mobile browsers.
 
@@ -39,11 +41,11 @@ iOS has a pretty standard support for Flexbox. All you have to add is the `-webk
 
 ### Windows Phone 8, Windows 8 (IE 10)
 
-This is where we start to run into some troubles. IE 10 supports a [patchy syntax of Flexbox](http://zomigi.com/blog/flexbox-syntax-for-ie-10/). What this means is that it supports the short hand properties `flex: 1 1 0;` but not the individual property: `flex-grow: 1; flex-shrink: 1; flex-basis: 0;`. At least we can get it to work with just the short hand.
+This is where we start to run into some troubles. IE 10 supports a [patchy syntax of Flexbox](http://zomigi.com/blog/flexbox-syntax-for-ie-10/). What this means is that it supports the short hand properties `flex: 1 1 0;` but not the individual property: `flex-grow: 1;`, `flex-shrink: 1;`, `flex-basis: 0;`. At least we can get it to work with just the short hand.
 
 ### BlackBerry 10
 
-At first, BlackBerry 10 seems to be working fine, until contents got really long and you notice that its content container gets as long as its contents and pushed footer as well the bottom section of itself out of screen. Hm, how did this happen? We had `flex-shrink: 1; flex-basis: 0;`. Shouldn't it shrink? Well turns out it also supports a patchy syntax. The trick to fix this is to force its `height: 0` instead and let it only grow.
+At first, BlackBerry 10 seems to be working fine, until contents got really long and you notice that its content container gets as long as its contents and pushed footer as well the bottom section of itself out of screen. Hm, how did this happen? We had `flex-shrink: 1;`, `flex-basis: 0;`. Shouldn't it shrink? Well turns out it also supports a patchy syntax. The trick to fix this is to force its `height: 0` instead and let it only grow.
 
 ### Android
 
@@ -57,7 +59,7 @@ Content container needs to have:
 
     -webkit-box-flex: 1;
 
-Notice that content container no longer has `flex-shrink: 1; flex-basis: 0;` properties. `-webkit-box-flex: 1;` covers both grow and shrink behaviours.
+Notice that content container no longer has `flex-shrink: 1;`, `flex-basis: 0;` properties. `-webkit-box-flex: 1;` covers both grow and shrink behaviours.
 
 ### Put Everything Together
 
@@ -99,4 +101,4 @@ Let's write some [LESS](http://lesscss.org/) mixins to put everything together! 
         height: 100%;
     }
 
-All you have to do now is to apply `.flex_parent` to your main container and expand the mixin `.flex(1, 1, 0px);` in your content container's styles. You can see them all in action in this [demo](http://localhost:8081/static/files/2013-11-24-flexbox-for-mobile-web-layout/flexbox/).
+All you have to do now is to apply `.flex_parent` to your main container and expand the mixin `.flex(1, 1, 0);` in your content container's styles. You can see them all in action in this [demo](/static/files/2013-11-24-flexbox-for-mobile-web-layout/flexbox/).
