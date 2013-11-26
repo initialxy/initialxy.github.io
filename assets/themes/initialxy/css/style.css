@@ -136,6 +136,16 @@ nav.navbar.navbar-static-top {
     border-radius: 0.5em;
 }
 
+.content td,
+.content th {
+    padding: 0.5em;
+    border: 1px solid #e7e7e7;
+}
+
+.content th {
+    background-color: #f8f8f8;
+}
+
 /* Tweaks for devices larger than phone. */
 @media (min-width: 768px) {
     .content .pagination_container {

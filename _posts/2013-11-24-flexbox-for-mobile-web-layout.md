@@ -129,7 +129,7 @@ All you have to do now is to apply `.flex_main` to your main container and expan
 
 ### Popular Alternatives
 
-If you've been a mobile web developer for a long time, you are probably aware of some of the more popular layouts. Currently the most commonly used one is to apply `position: fixed;` for header or footer, and have contents scroll with page body. Then add margin or padding that's equal to the constant height of header or footer. This is a perfectly fine approach and is more backward compatible. (As far as `position: fixed;` goes, which was MIA from mobile web browsers in the earlier years.) I have no objection to this approach as long as your requirements are fine with it. However while we are here, let's compare the differences.
+If you've been a mobile web developer for a long time, you are probably aware of some of the more popular layouts. Currently the most commonly used one is to apply `position: fixed;` for header or footer, and have contents scroll with page body. Then add margin or padding that's equal to the constant height of header or footer. This is a perfectly fine approach and is more backward compatible. (As far as `position: fixed;` goes, which was missing from mobile web browsers in the earlier years.) I have no objection to this approach as long as your requirements are fine with it. However while we are here, let's compare the differences.
 
 Pros:
 
@@ -142,6 +142,6 @@ Cons:
 * Only one area is scrollable. If you are going to create a two-pane layout for tablet or slide-in menu for phone, you will have to create the secondary scrollable area with `position: fixed;` and make it scrollable with either JavaScript based scroll or native scroll using `overflow: scroll;` combined with `-webkit-overflow-scrolling: touch;` (which is also used with the Flexbox approach).
 * If you are building a [single-page application](http://en.wikipedia.org/wiki/Single-page_application), page transition could get **really funky** (speaking from my experience with hacking around [jQuery Mobile](http://jquerymobile.com/demos/1.2.0/docs/pages/page-transitions.html)), and you may have limited options.
 
-Another approach to mobile web layout dates even further back. You'd simply have footer and header at beginning and end of body. This approach obviously is the most primitive and have the most backward compatibility (because `position: fixed;` was MIA for long time). The obvious drawback is that header, footer and message will be scrolled out of view, which makes it difficult to provide quick-access menu items.
+Another approach to mobile web layout dates even further back. You'd simply have footer and header at beginning and end of body. This approach obviously is the most primitive and have the most backward compatibility (because `position: fixed;` was missing for long time). The obvious drawback is that header, footer and message will be scrolled out of view, which makes it difficult to provide quick-access menu items.
 
 In my personal opinion, Flexbox support is ready on mobile browsers (as we have discussed earlier), and native scrollable container is coming along nicely (not nicely enough for now, but the future is bright). Therefore I'd say the Flexbox based layout I have discussed in this article gives you the best control and options. It could be considered especially looking forward.
