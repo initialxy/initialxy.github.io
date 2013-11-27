@@ -14,8 +14,8 @@ tags: [JavaScript, Weinre, Debugging]
 
 This post assumes you already know the basics of getting Weinre to run. I won't cover anything related to installation of start up. But before you start there's a few very important things you need to remember. I've been using version 2.0.0 at time of this writing.
 
-* Weinre is **not** a JavaScript debugger, because Weinre itself is JavaScript that runs in the same environment as others, it is incapable of pausing JavaScript execution on its will.
-* Weinre does not print JavaScript errors. Again, due to the fact that Weinre is just like every other piece of JavaScript that's running in your environment, it cannot intercept JavaScript Errors such as `SyntaxError` or `ReferenceError`. So if things just stopped working and Weinre console didn't print anything, you might just have ran into an error but Weinre couldn't tell you. It is a good idea to run your code on a desktop browser (if possible) and watch desktop browser's console to cache these errors.
+* Weinre is **not** a JavaScript debugger. For JavaScript debugging, you may be interested in [Aardwolf](http://lexandera.com/aardwolf/), which is a very different piece of art.
+* Weinre does not print JavaScript errors. Due to the fact that Weinre is just like every other piece of JavaScript that's running in your environment, it cannot intercept JavaScript Errors such as `SyntaxError` or `ReferenceError`. So if things just stopped working and Weinre console didn't print anything, you might just have ran into an error but Weinre couldn't tell you. It is a good idea to run your code on a desktop browser (if possible) and watch desktop browser's console to cache these errors.
 
 ### Issues
 
