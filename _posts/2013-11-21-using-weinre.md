@@ -26,7 +26,7 @@ This post assumes you already know the basics of getting Weinre to run. I won't 
 
 * Weinre disconnects easily, especially when your WebView is sent to background or your device goes to sleep. If you react quickly enough, you might be able to save it. If you suspect Weinre has disconnected, you could go to _Console_ tab and run `alert("hello");` to see if there's any reactions.
 * Weinre is bounded by the same rules as any other JavaScript, HTML and CSS, so don't be surprised if certain things seems wanky, such as element highlight went under a element of yours that has massive z-index.
-* `console.log();` will through an exception. This is more of a bug than issue, but worth mentioning. So make sure you fully take things out when console debugging, .
+* `console.log();` will throw an exception. This is more of a bug than issue, but worth mentioning. So make sure you fully take things out when console debugging, .
 
 ### Tips
 
