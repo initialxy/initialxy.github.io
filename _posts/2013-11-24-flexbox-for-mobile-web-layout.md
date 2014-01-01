@@ -49,7 +49,7 @@ iOS has a pretty standard support for Flexbox. All you have to add is the `-webk
 
 ### Windows Phone 8, Windows 8 (IE 10)
 
-This is where we start to run into some troubles. IE 10 supports a [patchy syntax of Flexbox](http://zomigi.com/blog/flexbox-syntax-for-ie-10/). What this means is that it supports the short hand properties `flex: 1 1 0;` but not the individual property: `flex-grow: 1;`, `flex-shrink: 1;`, `flex-basis: 0;`. At least we can get it to work with just the short hand.
+This is where we start to run into some troubles. IE 10 supports a [patchy syntax of Flexbox](http://zomigi.com/blog/flexbox-syntax-for-ie-10/). What this means is that it supports the short hand properties `flex: 1 1 0px;` but not the individual property: `flex-grow: 1;`, `flex-shrink: 1;`, `flex-basis: 0px;`. At least we can get it to work with just the short hand. You may have notice that I put `px` unit to basis even though its value is 0. This is another issue I happened to have stumbled upon. Appearently on IE10, flex will not take effect unless you have a unit to basis, even if its 0.
 
 ### BlackBerry 10
 
@@ -121,7 +121,7 @@ Let's write some [LESS](http://lesscss.org/) mixins to put everything together! 
 .content {
     // TODO: Add your own styles.
 
-    .flex(1, 1, 0);
+    .flex(1, 1, 0px);
 }
 ```
 
