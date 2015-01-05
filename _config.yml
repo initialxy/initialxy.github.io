@@ -92,8 +92,8 @@ JB:
   # Set 'provider' to false to turn commenting off globally.
   #
   comments:
-    provider: moot
-    moot:
+    provider: muut
+    muut:
         user: initialxy
         forum: comments
         show_online: false

@@ -1,5 +1,5 @@
-<script src="https://cdn.moot.it/1/moot.min.js"></script>
-<a class="moot"
-   href="https://moot.it/i/{{ site.JB.comments.moot.user }}/{{ site.JB.comments.moot.forum }}{{ page.id }}"
-   data-show_online="{{ site.JB.comments.moot.show_online }}">
+<script src="//cdn.muut.com/1/moot.min.js"></script>
+<a class="muut"
+   href="https://muut.it/i/{{ site.JB.comments.muut.user }}/{{ site.JB.comments.muut.forum }}{{ page.id }}"
+   data-show_online="{{ site.JB.comments.muut.show_online }}">
 </a>
