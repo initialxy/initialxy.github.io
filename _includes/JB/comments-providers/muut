@@ -1,5 +1,0 @@
-<script src="//cdn.muut.com/1/moot.min.js"></script>
-<a class="muut"
-   href="https://muut.it/i/{{ site.JB.comments.muut.user }}/{{ site.JB.comments.muut.forum }}{{ page.id }}"
-   data-show_online="{{ site.JB.comments.muut.show_online }}">
-</a>

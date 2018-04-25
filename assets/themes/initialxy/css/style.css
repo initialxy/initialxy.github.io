@@ -157,11 +157,6 @@ nav.navbar.navbar-static-top {
 @media (min-width: 992px) {
 }
 
-/* Custom Muut styling. */
-.content .muut button, .m-button {
-    background-color: #5c0fa8;
-}
-
 .content .m-focused .m-input-wrap {
     border-color: #5c0fa8;
     box-shadow: 0 0 .2em #5c0fa8 inset;    
