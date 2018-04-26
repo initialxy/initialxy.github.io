@@ -3,7 +3,7 @@ layout: post
 author: initialxy
 title: "Flexbox for Mobile Web Layout"
 description: "Utilizaing Flexbox to easily create typical mobile web layout."
-category: "lesson"
+category: "Lesson"
 tags: [CSS3, LESS, LESS Mixin, Mobile Web, Demo]
 ---
 {% include JB/setup %}

@@ -3,8 +3,8 @@ layout: post
 author: initialxy
 title: "Technical Interview Notes"
 description: "Technical interveiw review notes"
-category: "notes"
-tags: [Programming]
+category: "Notes"
+tags: [Programming, Interview]
 ---
 {% include JB/setup %}
 
@@ -46,8 +46,8 @@ Typically you should expect multiple rounds of back to back interviews (usually 
 #### Work your muscles
 During an interview, you will be expected to write on a board or wall (depending on how cool the meeting room is). You actually **need** some arm muscles and stamina. Prepare your muscles during a mock interview by actually writing on a board. Remember to write reasonably small and leave blank lines between each line and some blank spaces between variables, so you can easily edit it as you think. You won’t have a text editor, so editing a line could be painful.
 
-#### Prepare and practice the usual personal questions
-Depending on the tech company you are interviewing for, these questions can sometimes be asked for different reasons. Some companies take these questions into their interview evaluation, while others use these only as warm up. Some companies have dedicated interview sessions for these personal questions. It's a good idea to ask your recruiter and clarify their significance ahead of time if possible. Prepare a short answer and a long answer. Say it out loud and get used to answering them. In case these questions don't hold much (if any) significance, don't waste time on these. Just be concise and short.
+#### Prepare and practice the usual questions
+Depending on the tech company you are interviewing for, questions regarding your expertise can be asked for different reasons. Some companies take these questions into their interview evaluation, while others use these only as warm up. Some companies have dedicated interview sessions for these. It's a good idea to ask your recruiter and clarify their significance ahead of time if possible. Prepare a short answer and a long answer. Say it out loud and get used to answering them. In case these questions don't hold much (if any) significance, don't waste time on these. Just be concise and short.
 * Tell me about yourself.
 * What do you feel passionate about?
 * What’s your proudest project and why?
