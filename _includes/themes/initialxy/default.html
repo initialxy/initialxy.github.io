@@ -7,34 +7,28 @@
         <meta name="author" content="{{ site.authors[site.site_author].display_name }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"/>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+            integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+            crossorigin="anonymous"
+        />
         <link href="{{ ASSET_PATH }}/css/syntax.css" rel="stylesheet" type="text/css"/>
         <link href="{{ ASSET_PATH }}/css/style.css" rel="stylesheet" type="text/css"/>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
     </head>
 
     <body>
-        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <nav class="navbar navbar-light bg-light" role="navigation">
             <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="{{ HOME_PATH }}">{{ site.title }}</a>
-                </div>
-                
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        {% assign pages_list = site.pages | sort:"name" %}
-                        {% assign group = 'navigation' %}
-                        {% include JB/pages_list %}
-                    </ul>
-                </div>
+                <a class="navbar-brand" href="{{ HOME_PATH }}">
+                    <img src="{{ ASSET_PATH }}/images/logo_small.png" alt="logo">
+                </a>
+
+                <ul class="navbar-nav">
+                    {% assign pages_list = site.pages | sort:"name" %}
+                    {% assign group = 'navigation' %}
+                    {% include JB/pages_list %}
+                </ul>
             </div>
         </nav>
 

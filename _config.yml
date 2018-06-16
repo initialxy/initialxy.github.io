@@ -11,8 +11,8 @@ highlighter: rouge
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title: Gee
-tagline: Brain, what do you want to do tonight?
+title: initialxy
+tagline: Gee, Brain, what do you want to do tonight?
 site_author: initialxy
 
 
@@ -82,7 +82,6 @@ JB:
   # These paths are to the main pages Jekyll-Bootstrap ships with.
   # Some JB helpers refer to these paths; change them here if needed.
   #
-  archive_path: /archive.html
   categories_path: /categories.html
   tags_path: /tags.html
   atom_path: /atom.xml

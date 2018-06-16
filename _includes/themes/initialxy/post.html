@@ -13,7 +13,6 @@
         </small>
         <small class="updated">{{ page.date | date: "%B %-d %Y" }}</small>
     </div>
-
     {{ content }}
     <hr>
 
@@ -28,9 +27,6 @@
                 <a>Previous</a>
             </li>
             {% endif %}
-            <li class="archive">
-                <a href="{{ BASE_PATH }}{{ site.JB.archive_path }}">Archive</a>
-            </li>
             {% if page.next %}
             <li class="next">
                 <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next</a>
