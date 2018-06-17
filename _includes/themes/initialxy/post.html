@@ -17,26 +17,28 @@
     <hr>
 
     <div class="pagination_container">
-        <ul class="pagination">
+        <div class="pagination btn-group" role="group">
             {% if page.previous %}
-            <li class="prev">
-                <a href="{{ BASE_PATH }}{{ page.previous.url }}" title="{{ page.previous.title }}">Previous</a>
-            </li>
+            <a
+                class="prev btn btn-light"
+                href="{{ BASE_PATH }}{{ page.previous.url }}"
+                title="{{ page.previous.title }}">
+                Previous
+            </a>
             {% else %}
-            <li class="prev disabled">
-                <a>Previous</a>
-            </li>
+            <a class="prev btn btn-light disabled">Previous</a>
             {% endif %}
             {% if page.next %}
-            <li class="next">
-                <a href="{{ BASE_PATH }}{{ page.next.url }}" title="{{ page.next.title }}">Next</a>
-            </li>
+            <a
+                class="next btn btn-light"
+                href="{{ BASE_PATH }}{{ page.next.url }}"
+                title="{{ page.next.title }}">
+                Next
+            </a>
             {% else %}
-            <li class="next disabled">
-                <a>Next</a>
-            </li>
+            <a class="next btn btn-light disabled">Next</a>
             {% endif %}
-        </ul>
+        </div>
     </div>
     <hr/>
     {% unless page.tags == empty %}

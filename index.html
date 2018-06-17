@@ -21,30 +21,22 @@ title: summary
     </div>
 
     <div class="pagination_container">
-        <ul class="pagination">
+        <div class="pagination btn-group" role="group">
             {% if paginator.previous_page %}
-            <li class="prev">
             {% if paginator.previous_page == 1 %}
-            <a href="/" title="Previous Page">Previous</a>
+            <a class="prev btn btn-light" href="/" title="Previous Page">Previous</a>
             {% else %}
-            <a href="/page{{ paginator.previous_page }}" title="Previous Page">Previous</a>
+            <a class="prev btn btn-light" href="/page{{ paginator.previous_page }}" title="Previous Page">Previous</a>
             {% endif %}
-            </li>
             {% else %}
-            <li class="prev disabled">
-            <a>Previous</a>
-            </li>
+            <a class="prev btn btn-light disabled">Previous</a>
             {% endif %}
             {% if paginator.next_page %}
-            <li class="next">
-            <a href="/page{{ paginator.next_page }}" title="Next Page">Next</a>
-            </li>
+            <a class="next btn btn-light" href="/page{{ paginator.next_page }}" title="Next Page">Next</a>
             {% else %}
-            <li class="next disabled">
-            <a>Next</a>
-            </li>
+            <a class="next btn btn-light disabled">Next</a>
             {% endif %}
-        </ul>
+        </div>
     </div>
 </div>
 

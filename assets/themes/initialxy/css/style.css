@@ -12,7 +12,7 @@ img {
 
 .footer {
     border-top: 1px solid #e7e7e7;
-    padding: 2em 0 2em 0;
+    padding: 2rem 0 2rem 0;
 }
 
 .author a:link,
@@ -28,12 +28,12 @@ img {
 
 .content {
     background-color: white;
-    padding-bottom: 1em;
+    padding-bottom: 1rem;
 }
 
 .content .page-header {
-    margin: 0 0 1em 0;
-    padding: 2em 0 2em 0;
+    margin: 0 0 1rem 0;
+    padding: 2rem 0 2rem 0;
 }
 
 .content .page-header h1 {
@@ -42,7 +42,7 @@ img {
 }
 
 .content .lead {
-    margin: 0 0 1em 0;
+    margin: 0 0 1rem 0;
 }
 
 .content .main .pagination {
@@ -50,7 +50,11 @@ img {
 }
 
 .content .main .pagination_container {
-    margin-top: 1em;
+    margin-top: 1rem;
+}
+
+nav.navbar {
+    border-bottom: 1px solid #e7e7e7;
 }
 
 nav.navbar>.container {
@@ -73,17 +77,17 @@ nav.navbar .navbar-nav .nav-link {
 }
 
 .content .tag {
-    margin: 0.2em 0 0.2em 0;
+    margin: 0.2rem 0 0.2rem 0;
 }
 
 .content .tag .badge {
-    margin-left: 1em;
+    margin-left: 1rem;
     background-color: #e5e5e5;
     color: #5e5e5e;
 }
 
 .content .post_summary {
-    margin: 1em 0 1em 0;
+    margin: 1rem 0 1rem 0;
 }
 
 .content .post_summary .author:after {
@@ -94,44 +98,44 @@ nav.navbar .navbar-nav .nav-link {
     text-align: center;
 }
 
-.content .pagination_container li a {
+.content .pagination_container a {
     display: block;
-    width: 10em;
+    width: 10rem;
     text-align: center;
 }
 
-.content .pagination_container li.prev a:before,
-.content .pagination_container li.next a:before {
+.content .pagination_container a.prev:before,
+.content .pagination_container a.next:before {
     content: "\002190\0000a0";
 }
 
-.content .pagination_container li.prev a:after,
-.content .pagination_container li.next a:after {
+.content .pagination_container a.prev:after,
+.content .pagination_container a.next:after {
     content: "\0000a0\002192";
 }
 
-.content .pagination_container li.prev a:after {
+.content .pagination_container a.prev:after {
     visibility: hidden;
 }
 
-.content .pagination_container li.next a:before {
+.content .pagination_container a.next:before {
     visibility: hidden;
 }
 
 .content .post .info {
-    margin-bottom: 1em;
+    margin-bottom: 1rem;
     overflow: hidden;
 }
 
 .content .post .info .avatar {
-    margin-right: 0.5em;
+    margin-right: 0.5rem;
     float: left;
-    height: 2.5em;
+    height: 2.5rem;
     width: auto;
 
-    -webkit-border-radius: 0.3em;
-    -moz-border-radius: 0.3em;
-    border-radius: 0.3em;
+    -webkit-border-radius: 0.3rem;
+    -moz-border-radius: 0.3rem;
+    border-radius: 0.3rem;
 }
 
 .content .post .info small {
@@ -140,21 +144,28 @@ nav.navbar .navbar-nav .nav-link {
 
 .content .about_me .avatar {
     float: left;
-    margin-right: 0.5em;
+    margin-right: 0.5rem;
 
-    -webkit-border-radius: 0.5em;
-    -moz-border-radius: 0.5em;
-    border-radius: 0.5em;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    border-radius: 0.5rem;
 }
 
 .content td,
 .content th {
-    padding: 0.5em;
+    padding: 0.5rem;
     border: 1px solid #e7e7e7;
 }
 
 .content th {
     background-color: #f8f8f8;
+}
+
+/* Tweaks for first gen iPhones. */
+@media (max-width: 320px) {
+    nav.navbar .navbar-nav {
+        font-size: 80%;
+    }
 }
 
 /* Tweaks for devices larger than phone. */
@@ -170,12 +181,12 @@ nav.navbar .navbar-nav .nav-link {
 
 .content .m-focused .m-input-wrap {
     border-color: #5c0fa8;
-    box-shadow: 0 0 .2em #5c0fa8 inset;    
+    box-shadow: 0 0 .2rem #5c0fa8 inset;    
 }
 
 .content .m-focused.m-replyform textarea {
     border-color: #5c0fa8;
-    box-shadow: 0 0 .2em #5c0fa8 inset; 
+    box-shadow: 0 0 .2rem #5c0fa8 inset; 
 }
 
 .content .m-page a {
