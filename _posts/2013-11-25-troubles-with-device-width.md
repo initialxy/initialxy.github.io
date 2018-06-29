@@ -8,7 +8,7 @@ tags: [CSS3, HTML5, Mobile Web, Media Query]
 ---
 {% include JB/setup %}
 
-Mobile web developers are probably aware of what [media queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries) are. They are extremely useful tools to select resource as well as provide layout tweaks for responsive web designs. One of the well known media query feature is `device-width` along with its variations (`min-device-width`, `max-device-width`). However I have discovered that it has vastly inconsistent behaviours on different mobile browsers. In this article, I'd like to discuss what exactly `device-width` means, its issues as well as solutions. <span class="hidden">read more</span>
+Mobile web developers are probably aware of what [media queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries) are. They are extremely useful tools to select resource as well as provide layout tweaks for responsive web designs. One of the well known media query feature is `device-width` along with its variations (`min-device-width`, `max-device-width`). However I have discovered that it has vastly inconsistent behaviours on different mobile browsers. In this article, I'd like to discuss what exactly `device-width` means, its issues as well as solutions. <!--more-->
 
 ### What is device-width?
 

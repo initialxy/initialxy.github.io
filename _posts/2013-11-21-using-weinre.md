@@ -8,7 +8,7 @@ tags: [JavaScript, Weinre, Debugging]
 ---
 {% include JB/setup %}
 
-[Weinre](http://people.apache.org/~pmuellr/weinre/docs/latest/) (pronounced like "winery") is a lovely tool to provide JavaScript console and DOM tree inspection for remote devices that don't ship with a remote debugger. I've been using it for quite a while especially when I got issues with Android's legacy WebView. (I say legacy, because the new WebView on Android 4.4 KitKat is now implemented with [Chromium](http://developer.android.com/about/versions/android-4.4.html#Behaviors) and has built-in remote debugger, but the older one doesn't.) I'd like to discuss some things to watch out for when using Weinre as well as some tips. <span class="hidden">read more</span>
+[Weinre](http://people.apache.org/~pmuellr/weinre/docs/latest/) (pronounced like "winery") is a lovely tool to provide JavaScript console and DOM tree inspection for remote devices that don't ship with a remote debugger. I've been using it for quite a while especially when I got issues with Android's legacy WebView. (I say legacy, because the new WebView on Android 4.4 KitKat is now implemented with [Chromium](http://developer.android.com/about/versions/android-4.4.html#Behaviors) and has built-in remote debugger, but the older one doesn't.) I'd like to discuss some things to watch out for when using Weinre as well as some tips. <!--more-->
 
 ### Fundamentals
 

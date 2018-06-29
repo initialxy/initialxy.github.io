@@ -12,7 +12,7 @@ A few months ago I came across the following video from this year's Google I/O. 
 
 [![Web Components: A Tectonic Shift for Web Development](https://img.youtube.com/vi/fqULJBBEVQE/0.jpg)](https://www.youtube.com/watch?v=fqULJBBEVQE)
 
-Web Components were so cutting edge at the time (actually even at the time of this writing) that you literally have to download the nightly build of [Chromium](http://www.chromium.org/), enable bunch of experimental features explicitly, and you still only have a patchy support of it. In this post, I'd like to discuss the current state of Web Components, and show you a mininal modularized demo. I say modularized, I mean breaking it down into as many files as possible. <span class="hidden">read more</span>
+Web Components were so cutting edge at the time (actually even at the time of this writing) that you literally have to download the nightly build of [Chromium](http://www.chromium.org/), enable bunch of experimental features explicitly, and you still only have a patchy support of it. In this post, I'd like to discuss the current state of Web Components, and show you a mininal modularized demo. I say modularized, I mean breaking it down into as many files as possible. <!--more-->
 
 First thing first, let's just get straight to the point. You can see my demo [here](/static/files/2013-11-22-minimal-modularized-web-components-demo/demo/). Again, you need to have the latest version of [Chromium](http://www.chromium.org/). (At time of this wirting, the latest Chromium is 33 and Chrome is 31.) Open `chrome://flags` in address bar and enable:
 

@@ -8,7 +8,7 @@ tags: [Programming, Interview]
 ---
 {% include JB/setup %}
 
-It's that time again. Now you gotta prepare for technical interviews, which you haven't done in years. Here are some review notes that should come in handy to remind yourself of the thrill. This note is meant for my own future reference. But since it contains no confidential materials, I decided to publish it on my blog.<span class="hidden">read more</span>
+It's that time again. Now you gotta prepare for technical interviews, which you haven't done in years. Here are some review notes that should come in handy to remind yourself of the thrill. This note is meant for my own future reference. But since it contains no confidential materials, I decided to publish it on my blog. <!--more-->
 
 ### Fundamentals
 Straight off Wikipedia. It would be a shame if you failed an interview just because you forgot some common knowledge.

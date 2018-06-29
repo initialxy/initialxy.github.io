@@ -38,7 +38,7 @@ authors:
 
 paginate: 10
 
-excerpt_separator: <span class="hidden">read more</span>
+excerpt_separator: <!--more-->
 
 # All Jekyll-Bootstrap specific configurations are namespaced into this hash
 #

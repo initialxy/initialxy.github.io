@@ -2,10 +2,6 @@ input.m-hidden {
     display: none;
 }
 
-body {
-    background-color: #f8f8f8;
-}
-
 img {
     max-width: 100%;
 }
@@ -55,6 +51,8 @@ img {
 
 nav.navbar {
     border-bottom: 1px solid #e7e7e7;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 nav.navbar>.container {
@@ -151,14 +149,28 @@ nav.navbar .navbar-nav .nav-link {
     border-radius: 0.5rem;
 }
 
-.content td,
-.content th {
-    padding: 0.5rem;
+.content table {
+    margin-bottom: 1rem;
     border: 1px solid #e7e7e7;
 }
 
+.content td,
 .content th {
-    background-color: #f8f8f8;
+    padding: 1rem;
+}
+
+.content td {
+    border-top: 1px solid #e7e7e7;
+}
+
+.content th {
+    border-bottom: 2px solid #e7e7e7;
+}
+
+.content pre {
+    border: 1px solid #e7e7e7;
+    background-color: #f8f9fa;
+    padding: 1rem;
 }
 
 /* Tweaks for first gen iPhones. */
@@ -177,31 +189,4 @@ nav.navbar .navbar-nav .nav-link {
 
 /* Tweaks for devices larger than tablet. */
 @media (min-width: 992px) {
-}
-
-.content .m-focused .m-input-wrap {
-    border-color: #5c0fa8;
-    box-shadow: 0 0 .2rem #5c0fa8 inset;    
-}
-
-.content .m-focused.m-replyform textarea {
-    border-color: #5c0fa8;
-    box-shadow: 0 0 .2rem #5c0fa8 inset; 
-}
-
-.content .m-page a {
-    color: #5c0fa8;
-}
-
-.content .m-page {
-    padding-right: 0;
-}
-
-.content .is-threaded {
-    padding: 0;
-}
-
-.content .m-logo.m-below-fold {
-    margin-left: 0;
-    margin-right: 0;
 }
