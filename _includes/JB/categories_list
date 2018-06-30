@@ -22,13 +22,13 @@ Usage:
 {% else %}
   {% if categories_list.first[0] == null %}
     {% for category in categories_list %} 
-    	<a class="tag btn btn-default" href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
+    	<a class="tag btn btn-light" href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category }}-ref">
     		{{ category | join: "/" }} <span class="badge">{{ site.categories[category].size }}</span>
     	</a>
     {% endfor %}
   {% else %}
     {% for category in categories_list %} 
-    	<a class="tag btn btn-default" href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category[0] }}-ref">
+    	<a class="tag btn btn-light" href="{{ BASE_PATH }}{{ site.JB.categories_path }}#{{ category[0] }}-ref">
     		{{ category[0] | join: "/" }} <span class="badge">{{ category[1].size }}</span>
     	</a>
     {% endfor %}

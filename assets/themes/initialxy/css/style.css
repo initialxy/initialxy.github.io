@@ -24,12 +24,10 @@ img {
 
 .content {
     background-color: white;
-    padding-bottom: 1rem;
 }
 
 .content .page-header {
-    margin: 0 0 1rem 0;
-    padding: 2rem 0 2rem 0;
+    margin: 2rem 0;
 }
 
 .content .page-header h1 {
@@ -39,14 +37,6 @@ img {
 
 .content .lead {
     margin: 0 0 1rem 0;
-}
-
-.content .main .pagination {
-    margin: 0;
-}
-
-.content .main .pagination_container {
-    margin-top: 1rem;
 }
 
 nav.navbar {
@@ -74,6 +64,10 @@ nav.navbar .navbar-nav .nav-link {
     padding: 0 0.5rem 0 0.5rem;
 }
 
+.content .tag_box {
+    margin: 1rem 0;
+}
+
 .content .tag {
     margin: 0.2rem 0 0.2rem 0;
 }
@@ -94,6 +88,7 @@ nav.navbar .navbar-nav .nav-link {
 
 .content .pagination_container {
     text-align: center;
+    margin: 2rem 0;
 }
 
 .content .pagination_container a {
@@ -140,9 +135,14 @@ nav.navbar .navbar-nav .nav-link {
     display: block;
 }
 
+.content .about_me {
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
 .content .about_me .avatar {
     float: left;
-    margin-right: 0.5rem;
+    margin-right: 1rem;
 
     -webkit-border-radius: 0.5rem;
     -moz-border-radius: 0.5rem;
