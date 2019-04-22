@@ -1,0 +1,48 @@
+---
+layout: post
+author: initialxy
+title: "Failure is Inevitable"
+description: "Keeping up system stability in face of inevitable failures"
+category: "Discussions"
+tags: [System]
+---
+{% include JB/setup %}
+
+_Anything that can go wrong will go wrong._ We live in a world where system failures are inevitable. This is particularly true for highly complex systems, where there are numerous points of failures and may carry significant importance. How do we keep systems available and stable? How do we minimize and mitigate failures?<!--more-->
+
+### What failures?
+Let's define what failures are in the scope of this discussion. While there are many types of failures: business failure, integrity failure, security compromise. For sake of actually having an end to this discussion, I'd like to focus more on a narrow scope of technical system failures, which are; exceptions, incorrect results, inconsistencies, and SLA misses. These failures accumulate as a system becomes more complex and interdependent on micro-services. The reality of the matter is for any service, we should always expect it to fail with a certain chance. However, we need to have mechanics to make sure the system as a whole can survive. If we simply allow service failures to accumulate, then we cannot deliver a scalable system with reasonable availability.
+
+### What can we do about it?
+I'd like to discuss some techniques that can be employed to **mitigate or minimize** failures. Then go a bit into the type of failure it addresses and drawbacks.
+
+#### Good tests
+You want good tests coverage to catch coding bugs and prevent regression. That's easy to than done. Why aren't we all writing tests? Well, there's a trade off of quality with productivity. It's up to you to decide where the balance is for your particular product. Be aware of the difference between a unit test, integration test, and end-to-end test, and know which one is right for each aspect of the system. Tests should be added for every manifested failure to prevent regression. You should also consider investing in better test infra to improve the productivity of writing tests. This can include specialized test frameworks geared towards your particular product or even a portion of your product. If it's unproductive to write tests, obviously there will be fewer tests.
+
+#### Static analysis
+Test infra is one thing, but a lot of problems can be detected ahead of time by static analytics tools. Don't underestimate their potentials. Simple things like a good type system and type checker will save you a lot of headaches. Null inference is particularly useful. While it's ok to use weak-type languages, but avoid using them at scale. Make sure whatever mistake that you can make with weak-type languages won't only manifest during runtime in production. For instance, it's ok to use Python (without type checker introduced in 3.5) for config or code generation, adhoc scripts, etc. If a language has optional type checkers such as TypeScript for JavaScript, then it might just be your lifesaver.
+
+#### Have monitors and alerts
+You want to keep a close eye on when and where failures happen. Make sure you have good monitors and alerts to detect failures and keep them under control. Unfortunately, you often do need to manually solve failures, and we want to be able to do your job as quickly as possible. In a complex system, it's often difficult to find the root cause of a higher level failure. You will have to rely on good logging and monitors. As an oncall, you often just need to correlate multiple metrics that you have to theorize where the root cause could be. So make your job easier ahead of time.
+
+#### Rate Limiter
+You want to keep a close eye on when and where failures happen. Make sure you have good monitors and alerts to detect failures and keep them under control. Unfortunately, you often do need to manually solve failures, and we want to be able to do your job as quickly as possible. In a complex system, it's often difficult to find the root cause of a higher level failure. You will have to rely on good logging and monitors. As an oncall, you often just need to correlate multiple metrics that you have to theorize where the root cause could be. So make your job easier ahead of time.
+
+
+#### Retry
+If a dependency service is expected to fail due to **transient** failures, we can simply retry it. The math is simple. If something has a success rate of 99% then trying it twice will give us 99.99% success rate. Sounds great right? Well, not quite. This technique only applies to transient failures. More specifically, failures that cannot be consistently reproduced multiple times. For example network congestion, DB congestion. As you can imagine if failure can be reproduced in multiple runs, then obviously it won't work. For example, a failure that is caused by a specific bug in code. Pay special attention to out-of-memory or timeouts, as these may not be coding bugs, but retry will often not work for them. If a process went out-of-memory due to the size of data, then retrying with the same data will just cause out-of-memory again. Timeout is a little bit tricky. If timeout is caused by network congestion, then it may be worthwhile to retry, but if timeout is caused by the size of data, then it's not gonna help. Another pitfall is that retry will obviously increase your runtime. So be aware that it doesn't end up making causing SLA miss for your service. Also, be aware that retrying will inevitably increase traffic for your dependency even with exponential back off. Make sure the fact that you are retrying isn't a factor of traffic congestion in the first place.
+
+#### Recurring fixers
+For a part of a system that may produce inconsistent or incorrect data, it may be a good idea to schedule recurring jobs to fix them or act upon them. Due to [CAP theorem](https://en.wikipedia.org/wiki/CAP_theorem), you can't have cake and eat it too. Sometimes eventual consistency is a desirable outcome. Inconsistencies could be **eventually** fixed by recurring jobs. Though what happens before is it fixed and what needs to be fixed needs to be carefully considered. For example, you may need a job to refund your customers for over-sold items. You need to be aware of its potential business impact as well. Notice that if you were to schedule a job just to rerun something is just a form of retry. You should not use this technique if it can be accomplished by retry. Your fixer job should at least be justifiable by having much more lenient SLA and resources.
+
+#### Caching
+The honest truth is that a surprising amount of scalability issues can be solved by simply slapping cache on it. Network traffic can often be massively reduced. SLA misses can be reduced. Good news all around right? Well not so fast. Caching is easy, but [cache invalidation is one of the most diffcult problems](https://martinfowler.com/bliki/TwoHardThings.html) in computer science. The reason why cache invalidation is hard, aside from pesky cross-region cache invalidation, is that as your system becomes more and more complex, there will be more things that need to be cached. You often lose track of where the cache is and what needs to invalidate which cache. You should make a best effort to centralize your cache layer and create good abstractions to make sure mutation and cache invalidation will go through the same point. Sometimes an entire infra may be created just to serve as a centralized cache for data models. Now, what about those cross-region cache invalidation? Unfortunately, there isn't an easy answer to that. You need a solution that caters to your product. Generally speaking, you want to propagate an invalidation request across all of your data centers. Exactly how you do that depends on your infra. A pitfall to be aware of is that even though cache can reduce SLA misses by minimizing traffic volume, It often won't help with timeouts due to the volume or type of data that need to be processed. If your data was never once completed, then it won't get cached.
+
+#### Approximation of results
+You may have to deal with complex data processing that can't possibly finish within SLA. A technique that you can use is to figure out a way to approximate results. Algorithms such as [HyperLogLog](https://en.wikipedia.org/wiki/HyperLogLog) and [simulated annealing](https://en.wikipedia.org/wiki/Simulated_annealing) are such examples. Other solutions may include running portions of the data in offline BigData pipelines while only process a small amount of live data. Be aware of your confidence range, worst case and business impact of your approximated results.
+
+#### Redundancy
+Have redundant instances of services that you can fall back to, and it should be configurable such that oncall can manually switch instances easily. Unfortunately, there's no easy way to do this. Every company and every service does it differently. This is a piece of infra that often takes a lot of work, care, and operational cost. You need to figure out a good balance here.
+
+#### Business plan
+Have redundant instances of services that you can fall back to, and it should be configurable such that oncall can manually switch instances easily. Unfortunately, there's no easy way to do this. Every company and every service does it differently. This is a piece of infra that often takes a lot of work, care, and operational cost. You need to figure out a good balance here.
