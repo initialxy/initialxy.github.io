@@ -3,7 +3,7 @@ layout: post
 author: initialxy
 title: "Failure is Inevitable"
 description: "Keeping up system stability in face of inevitable failures"
-category: "Discussions"
+category: "Discussion"
 tags: [System]
 ---
 {% include JB/setup %}

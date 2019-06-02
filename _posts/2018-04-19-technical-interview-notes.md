@@ -3,7 +3,7 @@ layout: post
 author: initialxy
 title: "Technical Interview Notes"
 description: "Technical interveiw review notes"
-category: "Notes"
+category: "Note"
 tags: [Programming, Interview]
 ---
 {% include JB/setup %}

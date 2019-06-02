@@ -3,7 +3,7 @@ layout: post
 author: initialxy
 title: "My Take on Reason Native"
 description: "My thoughts on Reason Native after playing with it"
-category: "Discussoins"
+category: "Discussion"
 tags: [OCaml, JavaScript, Native, Reason]
 ---
 {% include JB/setup %}
