@@ -11,8 +11,13 @@ title: initialxy
             <h3>
                 <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
             </h3>
-            <small class="author">By <a href="{{ site.authors[post.author].about }}">{{ site.authors[post.author].display_name }}</a></small>
-            <small class="updated">{{ post.date | date: "%B %-d %Y" }}</small>
+            <div class="post-info">
+                <img class="avatar" src="https://s.gravatar.com/avatar/{{ site.authors[post.author].gravatar }}?s=80" />
+                <small class="author">
+                    <a href="{{ site.authors[post.author].about }}">{{ site.authors[post.author].display_name }}</a>
+                </small>
+                <small class="updated text-muted">{{ post.date | date: "%b %-d, %Y" }}</small>
+            </div>
 
             <p class="excerpt">{{ post.excerpt | markdownify }}</p>
             <a href="{{ BASE_PATH }}{{ post.url }}">Read More</a>

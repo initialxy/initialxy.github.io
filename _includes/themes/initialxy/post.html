@@ -5,13 +5,12 @@
 </div>
 
 <div class="container post">
-    <div class="info">
+    <div class="post-info">
         <img class="avatar" src="https://s.gravatar.com/avatar/{{ site.authors[page.author].gravatar }}?s=80" />
         <small class="author">
-            By <a href="{{ site.authors[page.author].about }}">{{ site.authors[page.author].display_name }}</a>
-            <a class="authorship" href="{{ site.authors[page.author].googleplus }}?rel=author"> </a>
+            <a href="{{ site.authors[page.author].about }}">{{ site.authors[page.author].display_name }}</a>
         </small>
-        <small class="updated">{{ page.date | date: "%B %-d %Y" }}</small>
+        <small class="updated text-muted">{{ page.date | date: "%b %-d, %Y" }}</small>
     </div>
     {{ content }}
     <div class="pagination_container">

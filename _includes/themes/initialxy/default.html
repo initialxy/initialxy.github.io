@@ -15,17 +15,19 @@
             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
             crossorigin="anonymous"
         />
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
         <link href="{{ ASSET_PATH }}/css/syntax.css" rel="stylesheet" type="text/css"/>
         <link href="{{ ASSET_PATH }}/css/style.css" rel="stylesheet" type="text/css"/>
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+        <nav class="navbar navbar-expand navbar-light bg-light" role="navigation">
             <div class="container-md">
                 <a class="navbar-brand" href="{{ HOME_PATH }}">
                     <img src="{{ ASSET_PATH }}/images/logo_small.png" alt="logo">
                 </a>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-collapse">
                     <ul class="navbar-nav">
                         {% assign pages_list = site.pages | sort:"name" %}
                         {% assign group = 'navigation' %}
