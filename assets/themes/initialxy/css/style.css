@@ -1,5 +1,10 @@
-input.m-hidden {
-    display: none;
+
+body {
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+}
+
+a {
+    text-decoration: none;
 }
 
 img {
@@ -46,19 +51,9 @@ nav.navbar {
     padding-right: 0;
 }
 
-nav.navbar>.container {
-    justify-content: flex-start;
-    -ms-flex-pack: start;
-}
-
 nav.navbar .navbar-brand img {
     width: 30px;
     height: 30px;
-}
-
-nav.navbar .navbar-nav {
-    flex-direction: row;
-    -ms-flex-direction: row;
 }
 
 nav.navbar .navbar-nav .nav-link {
@@ -182,22 +177,4 @@ nav.navbar .navbar-nav .nav-link {
 
 .content blockquote>p {
     margin: 0;
-}
-
-/* Tweaks for first gen iPhones. */
-@media (max-width: 320px) {
-    nav.navbar .navbar-nav {
-        font-size: 80%;
-    }
-}
-
-/* Tweaks for devices larger than phone. */
-@media (min-width: 768px) {
-    .content .pagination_container {
-        text-align: left;
-    }
-}
-
-/* Tweaks for devices larger than tablet. */
-@media (min-width: 992px) {
 }
