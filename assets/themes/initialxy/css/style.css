@@ -49,8 +49,18 @@ nav.navbar {
 }
 
 nav.navbar .navbar-brand img {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
+}
+
+nav.navbar .navbar-brand.avatar {
+    margin: 0;
+}
+
+nav.navbar .navbar-brand.avatar img {
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 }
 
 nav.navbar .navbar-nav .nav-link {
@@ -110,7 +120,6 @@ nav.navbar .navbar-nav .nav-link {
 }
 
 .post_info {
-    margin: 1rem 0 1rem 0;
     overflow: hidden;
 }
 
@@ -125,22 +134,13 @@ nav.navbar .navbar-nav .nav-link {
     border-radius: 50%;
 }
 
-.post_info small {
-    display: block;
+.post_info small.updated::before {
+    content: " | ";
 }
 
 .content .about_me {
     overflow: hidden;
     margin: 1rem 0;
-}
-
-.content .about_me .avatar {
-    float: left;
-    margin-right: 1rem;
-
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
 }
 
 .content table {

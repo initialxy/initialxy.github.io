@@ -27,6 +27,9 @@
                 <a class="navbar-brand" href="{{ HOME_PATH }}">
                     <img src="{{ ASSET_PATH }}/images/logo_small.png" alt="logo">
                 </a>
+                <a class="navbar-brand avatar" href="{{ site.authors[site.site_author].about }}">
+                    <img src="https://s.gravatar.com/avatar/{{ site.authors[site.site_author].gravatar }}?s=80" alt="avatar">
+                </a>
                 <div class="navbar-collapse">
                     <ul class="navbar-nav">
                         {% assign pages_list = site.pages | sort:"name" %}
