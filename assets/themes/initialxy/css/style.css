@@ -120,21 +120,13 @@ nav.navbar .navbar-nav .nav-link {
 }
 
 .post_info {
-    overflow: hidden;
-    margin-bottom: 0.5rem;
     margin-top: 0.5rem;
 }
 
-.post_info .avatar {
-    margin-right: 0.5rem;
-    float: left;
-    height: 2.5rem;
-    width: auto;
-
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
+.post_info + p {
+    margin-bottom: 0.5rem;
 }
+
 
 .post_info small.updated::before {
     content: " | ";
