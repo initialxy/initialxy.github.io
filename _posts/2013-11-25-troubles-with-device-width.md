@@ -10,7 +10,7 @@ tags: [CSS3, HTML5, Mobile Web, Media Query]
 
 Mobile web developers are probably aware of what [media queries](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries) are. They are extremely useful tools to select resource as well as provide layout tweaks for responsive web designs. One of the well known media query feature is `device-width` along with its variations (`min-device-width`, `max-device-width`). However I have discovered that it has vastly inconsistent behaviours on different mobile browsers. In this article, I'd like to discuss what exactly `device-width` means, its issues as well as solutions. <!--more-->
 
-### What is device-width?
+## What is device-width?
 
 Let's begin by figuring what `device-width` really means. According to [Mozilla's definition](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Media_queries#device-width):
 
@@ -38,7 +38,7 @@ But what difference does this make on a mobile device? Mobile apps are always in
 
 Notice that I said portrait mode. This is where fun begins. On iOS, `device-width` always references to the width of the device in portrait mode, or the way I'd like to put it; always the smaller dimension. (This is equivalent to Android's `sw` resource selector.) While `width` is always the current width of either orientations. So take the above example, and rotate your device to landscape mode, you should see a red background for both iPhone 4 and iPhone 3GS, because now `width` is `480px` while `device-width` is `320px`. Since we are looking for "at most 320px", the second media query will fail.
 
-### Here Comes Trouble
+## Here Comes Trouble
 
 Now let's test this out on Android. Please keep in mind that Android now has two different WebView implementations: a newer implementation [based on Chromium and is available on Android 4.4 KiKat](http://developer.android.com/about/versions/android-4.4.html#Behaviors) and above, and a legacy implementation on Android 4.3 Jelly Beans and below. The [Android Chrome Browser](https://play.google.com/store/apps/details?id=com.android.chrome&hl=en), which could be installed from Google Play on older vesions of Android, should be very similar to the Chromium based WebView. On the legacy WebView, you should notice that `device-width` is **NOT** scaled by pixel ratio, even though `window.devicePixelRatio` could be larger than 1 and `px` is scaled everywhere else in CSS. It's just the `device-width` media query that's "broken". (I have "broken" in quotes, because this behaviour is not really standardized. It's still up to everyone's own definition. We just hoped that Android would follow iOS's suite.) However `width` is still scaled by pixel ratio, and `device-width` references to the smaller dimension. This is a huge deal breaker for usage of `device-width`. Say you have the following media query intended to match tablet.
 
@@ -62,7 +62,7 @@ Before we move on, let's take a look at between pixel ratio and screen densities
 
 Up until now, pixel ratio has been rather nice numbers consistently. So you can use `-webkit-device-pixel-ratio` to match them. Even [Android's official documentation](http://developer.android.com/guide/webapps/targeting.html) suggests so. Then we have BlackBerry 10. BlackBerry Z10's pixel ratio is 2.24, with screen resolution of 768x1280 and `px` resolution of 342x571. BlackBerry Q10's pixel ratio is 2.08 with screen resolution of 720x720 and `px` resolution of 346x346. This means you can not use `-webkit-device-pixel-ratio` to match their pixel ratios, instead, you will have to use either `-webkit-max-device-pixel-ratio` or `-webkit-min-device-pixel-ratio`. To make matters worse, BlackBerry 10's `device-width` is not always the smaller dimension, it is simply the current width (similar to `width`).
 
-### Solutions
+## Solutions
 
 Given the vast inconsistencies of `device-width`, how are we going detect device types? The answer is to **NOT** use `device-width` and use `width` instead. Notice that `width` has much more consistent behaviour across different platforms. Let's take a look at how [Twitter Bootstrap deals with device type detection](http://getbootstrap.com/css/#grid).
 

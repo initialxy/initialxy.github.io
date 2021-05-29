@@ -13,7 +13,7 @@ I build PCs as a hobby, though I don't go for the best and latest. I usually lik
 ![Front yard](/static/images/2019-09-28-building-a-compact-pc/front_y.jpg)![Back](/static/images/2019-09-28-building-a-compact-pc/back.jpg)![side](/static/images/2019-09-28-building-a-compact-pc/side.jpg)
 <!--more-->
 
-### The Plan
+## The Plan
 
 My spare parts could be assembled to make a typical Micro-ATX build. However, that is obviously not convenient for travel. My original plan was to build a more typical Mini-ITX build with something like Cooler Master Elite 110 that could fit in check-in luggage. With this plan, I only need a new Mini-ITX motherboard and case. I could reuse my APU, RAM, SSD, and PSU. However, my mom did not want to bring a check-in luggage just for my PC. So I had to alter my plan. After some research, I decided to still stick with Mini-ITX form factor, because I wanted to reuse as many parts as possible. If I wanted to go smaller, then I'd have to find some specialized barebone solutions like Intel NUC, ASRock DeskMini A300 or Mini-STX. These solutions would force me to reuse even fewer parts. Though ASRock DeskMini A300 would probably end up being more cost-effective, it needed laptop class SO-DIMM memory. So I wanted to challenge myself to build the tiniest possible **generic parts** build without specialized parts. Here was my planed parts list.
 
@@ -35,11 +35,11 @@ Second is the CPU cooler. The case I got, Morex 557, has the smallest dimension 
 
 ![CPU coolers](/static/images/2019-09-28-building-a-compact-pc/cpu_coolers.jpg)![Barely fits](/static/images/2019-09-28-building-a-compact-pc/barely_fits.jpg)
 
-### The Build
+## The Build
 
 The actual build process was quite enjoyable for me. It only took about 3 hours to get everything into working condition. The Mini-ITX motherboard is pretty straightforward to work with. Desktop class CPU and RAM fit in just fine. I originally mistakenly plugged the CPU fan into case fan 1, but it still worked and I quickly noticed that once I tried to optimize my fan curve in UEFI settings. The pico PSU needs to be attached to the back of the case with an included bolt. It provides 12v 24 pins, 12v 8 pins, Molex and SATA adapters. One thing to note is that I had very little choice in PSU, as my motherboard required a 12v 8 pin CPU power adapter, and most pico PSU only provides a 4 pin. Everything plugs-in intuitively. The motherboard has an M.2 NVMe x4 slot for SSD at its **back**. However, I didn't use it. Instead, I wanted to reuse my old 2.5" SATA III SSD. That became quite a tricky fit. I also overclocked my RAM to 2666Mhz with XMP profile 1, it works flawlessly.
 
-### The Quirks
+## The Quirks
 
 Even though I got everything working, it doesn't mean I didn't hit some weird obstacles that I didn't anticipate. Let's start with the SSD. I believe the case intended for 2.5" SSD to be mounted on a drive cage. But it also eats away just a couple millimeters in height. If I had installed it, it would have blocked half of my CPU cooler and there won't be enough height left to install the actual SSD. So I just left it out. The SSD's screw holes don't align with the screw holes on the side of the case, so I just put in one screw to secure the SSD. At this point the SSD is sitting on top of my CPU cooler, blocking perhaps a couple of millimeters of the fan. I decided that is fine. However, the SSD is also just a tad too tall, which made the case difficult to close, though still possible if I pushed hard enough. I didn't want it to push down on the CPU cooler on just one corner, which would put uneven mounting pressure on the CPU. So I took out a pair of scissors and just cut a hole in the SSD's case. Needless to say, it voids the warranty, but now it fits!
 

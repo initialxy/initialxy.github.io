@@ -43,19 +43,19 @@ What this means is that we want it to grow or shrink to fit remaining space with
 
 Cool! Looks like we got support from Android 2.1, iOS 3.2, BlackBerry 10, Windows Phone 8 and Windows 8 (IE 10). I'd call it pretty much ready for prime time. (eh, Microsoft.) One thing you may have noticed is that it says something about **older syntax**. What this means is that when Flexbox was being drafted, it actually had a **very** different syntax, and some browsers implemented this syntax. We will come back to this later.
 
-### iOS
+## iOS
 
 iOS has a pretty standard support for Flexbox. All you have to add is the `-webkit-` prefix, which isn't so bad. Other than that, I didn't notice anything on my iOS devices.
 
-### Windows Phone 8, Windows 8 (IE 10)
+## Windows Phone 8, Windows 8 (IE 10)
 
 This is where we start to run into some troubles. IE 10 supports a [patchy syntax of Flexbox](http://zomigi.com/blog/flexbox-syntax-for-ie-10/). What this means is that it supports the short hand properties `flex: 1 1 0px;` but not the individual property: `flex-grow: 1;`, `flex-shrink: 1;`, `flex-basis: 0px;`. At least we can get it to work with just the short hand. You may have notice that I put `px` unit to basis even though its value is 0. This is another issue I happened to have stumbled upon. Appearently on IE10, flex will not take effect unless you have a unit to basis, even if its 0.
 
-### BlackBerry 10
+## BlackBerry 10
 
 At first, BlackBerry 10 seems to be working fine, until contents got really long and you notice that its content container gets as long as its contents and pushed footer as well the bottom section of itself out of screen. Hm, how did this happen? We had `flex-shrink: 1;`, `flex-basis: 0;`. Shouldn't it shrink? Well turns out it also supports a patchy syntax. The trick to fix this is to force its `height: 0` instead and let it only grow.
 
-### Android
+## Android
 
 This is where old syntax kicks in. Android's legacy WebView supports only old syntax, but Chrome as well as its [new Chromium based WebView found on Android 4.4 KitKat](http://developer.android.com/about/versions/android-4.4.html#Behaviors) supports the full blown new syntax. In order to get the old syntax to work, main container needs to have:
 
@@ -77,7 +77,7 @@ Content container needs to have:
 
 Notice that content container no longer has `flex-shrink: 1;`, `flex-basis: 0;` properties. `-webkit-box-flex: 1;` covers both grow and shrink behaviours.
 
-### Putting Everything Together
+## Putting Everything Together
 
 Let's write some [LESS](http://lesscss.org/) mixins to put everything together! (I'm pretty sure you can easily rewrite the followings as [SASS](http://sass-lang.com/) mixins.)
 
@@ -127,7 +127,7 @@ Let's write some [LESS](http://lesscss.org/) mixins to put everything together! 
 
 All you have to do now is to apply `.flex_main` to your main container and expand the mixin `.flex(1, 1, 0);` in your content container's styles. You can see them all in action in this [demo](/static/files/2013-11-24-flexbox-for-mobile-web-layout/flexbox/).
 
-### Popular Alternatives
+## Popular Alternatives
 
 If you've been a mobile web developer for a long time, you are probably aware of some of the more popular layouts. Currently the most commonly used one is to apply `position: fixed;` for header or footer, and have contents scroll with page body. Then add margin or padding that's equal to the constant height of header or footer. This is a perfectly fine approach and is more backward compatible. (As far as `position: fixed;` goes, which was missing from mobile web browsers in the earlier years.) I have no objection to this approach as long as your requirements are fine with it. However while we are here, let's compare the differences.
 
