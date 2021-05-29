@@ -110,11 +110,14 @@ Naturally, you may have some questions at this point. Does it actually perform w
 
 ![WiFi 6 Hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_hs_wifi6.jpg)![WiFi 5 Hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_hs_wifi5.jpg)![WiFi 5 router](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_router_wifi5.jpg)
 
-| Setup | Network Latency | Total Latency | Bitrate | Frame Rate | Bandwidth | Note |
-|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-| WiFi 6 Hotspot | 5 to 7 ms | 37 to 39 ms | 60 Mbps | 90 fps | 1200 Mbps | Stutter if far |
-| WiFi 5 Hotspot | 7 to 9 ms | 39 to 42 ms | 27 Mbps | 90 fps | 96 Mbps | Stutter when far |
-| WiFi 5 Router | 13 to 15 ms | 49 to 51 ms | 36 Mbps | 90 fps | 866 Mbps | Ocasional stutter |
+| | WiFi 6 Hotspot | WiFi 5 Hotspot | WiFi 5 Router |
+|-----------|-----------|-----------|-----------|
+| Network Latency | 5 to 7 ms | 7 to 9 ms | 13 to 15 ms |
+| Total Latency | 37 to 39 ms | 39 to 42 ms | 49 to 51 ms |
+| Bitrate | 60 Mbps | 28 Mbps | 36 Mbps |
+| Frame Rate | 90 fps | 90 fps | 90 fps |
+| Bandwidth | 1200 Mbps | 96 Mbps | 866 Mbps |
+| Notes | Stutter if far | Stutter if far | Occasional stutter |
 
 Keep in mind that I have a low-tier GPU. Virtual Desktop is running in a low-quality setting, automatic bitrate, and 90 fps cap. As expected, WiFi 6 delivers the best numbers across the board. However in both hotspot setups, while experience is pretty smooth, if I moved to another room, there will be significant stutters frequently, making them unplayable. WiFi receiver does not have very strong output signal strength after all. What's interesting to note is that the WiFi 5 hotspot could only deliver 96 Mbps bandwidth. Unlike WiFi 6, there was no setting in Windows 10 that allowed me to lock its frequency band to 5 GHz. I'm not sure why bandwidth is so low and I didn't find any way to increase it. Consequently, bitrate was a mere 27 Mbps, which made compression artifacts easily visible. Network latency was also consistently higher than WiFi 6 hotspot, even though WiFi 6 was not supposed to improve latency on theory. Though only by a couple of ms. When both Oculus 2 and PC are connected through my WiFi 5 router downstairs, understandably network latency was significantly higher, usually just under 15 ms, due to a round trip to my router. Compression artifacts are visible if you move quickly, and it randomly stutters from time to time. However, I'd still consider it playable as long as you are not playing highly timing-sensitive games like BeatSaber. In BeatSaber, it feels like your sabers are slightly wabbly due to the added latency, though head movement still feels pretty smooth enough that it doesn't cause motion sickness for me due to movement compensation on the headset. As a rule of thumb, I'd still choose to use a WiFi 5 router connection when playing low-intensity games due to its convenience and the fact that I could play anywhere in my house (where my office space is pretty limited). But for high-intensity games, I'd use a WiFi 6 hotspot. WiFi 5 hotspot is tolerable if you don't want to buy a WiFi 6 card, but be prepared to see compression artifacts everywhere. I'm sure overall latency can be improved if I had a newer GPU, considering the fact that older AMD GPU is known to have poor encoder performance. However, the GPU market isn't so kind at the moment. With all that in mind, if a game offers a Quest 2 native version, I'd still consider picking it up, as long as mods and cost aren't something of concern. Native games still win in crispness and responsiveness in most cases, which are more important than graphical flares in my opinion.
 
