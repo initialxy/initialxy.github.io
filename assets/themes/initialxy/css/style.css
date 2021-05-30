@@ -142,6 +142,15 @@ nav.navbar .navbar-nav .nav-link {
     border: 1px solid #e7e7e7;
 }
 
+.content .table_too_wide {
+    max-width: 100%;
+    overflow: scroll;
+}
+
+.content .table_too_wide::-webkit-scrollbar {
+    display: none;
+  }
+
 .content td,
 .content th {
     padding: 1rem;
