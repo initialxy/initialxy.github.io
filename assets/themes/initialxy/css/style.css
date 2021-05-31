@@ -149,7 +149,7 @@ nav.navbar .navbar-nav .nav-link {
 
 .content .table_too_wide::-webkit-scrollbar {
     display: none;
-  }
+}
 
 .content td,
 .content th {

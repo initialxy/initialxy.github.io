@@ -30,15 +30,15 @@ I have a 256GB Oculus Quest 2, which is exactly the same as its 64GB base model 
 | WiFi 1 | ZYT 3000Mbps PCIe Wifi Card with Intel WiFi 6 AX200 chipset |
 | WiFi 2 | TP-Link AC600 USB WiFi Adapter |
 
-Notice that I have two WiFi adapters. An internal PCIe WiFi 6 (ax) adapter and an external USB WiFi 5 (ac) adapter. I will explain why I got two later. The only reason why I got this particular no-name WiFi 6 card is that I wanted to make sure it will work with Linux. I use Arch Linux as my main desktop OS, so Linux compatibility is a requirement. After some Googling, I learned that as of writing only the Intel AX200 chipset is compatible with Linux. Other chipsets don't seem to work with Linux at all. After some more research, I found a few WiFi 6 cards that use the Intel AX200 chipset, but only this one explicitly states its chipset and the fact that it's Linux compatible in its Amazon listing. So I bought it. I can testify that it indeed works with both Linux and Windows 10 flawlessly. Just plug in and play, no driver installation required on both. My home router is a Google OnHub with WiFi 5. 
+Notice that I have two WiFi adapters. An internal PCIe WiFi 6 (ax) adapter and an external USB WiFi 5 (ac) adapter. I will explain why I got two later. The only reason why I got this particular no-name WiFi 6 card is that I wanted to make sure it will work with Linux. I use Arch Linux as my main desktop OS, so Linux compatibility is a requirement. After some Googling, I learned that as of writing only the Intel AX200 chipset is compatible with Linux. Other chipsets don't seem to work with Linux at all. After some more research, I found a few WiFi 6 cards that use the Intel AX200 chipset, but only this one explicitly states its chipset and the fact that it's Linux compatible in its Amazon listing. So I bought it. I can testify that it indeed works with both Linux and Windows 10 flawlessly. Just plug in and play, no driver installation required on both. Another thing that's worth mentioning is that my home router is a Google OnHub with WiFi 5. 
 
 ## Air Link vs Virtual Desktop
 
-As for software, Oculus recently released [Air Link](https://www.oculus.com/blog/introducing-oculus-air-link-a-wireless-way-to-play-pc-vr-games-on-oculus-quest-2-plus-infinite-office-updates-support-for-120-hz-on-quest-2-and-more/) as a Beta feature. You have to enable it on both your Oculus Quest 2 as well as Oculus software on PC. Somehow on the Quest 2, it will remember that you've enabled it, but on PC you have to go into its settings and enable it every boot. Alternatively, you can also use [Virtual Desktop](https://www.oculus.com/experiences/quest/2017050365004772/?locale=en_US). You just need to run its desktop streamer on your PC and you can play both Oculus and Steam games. For both Air Link and Virtual Desktop, I went with their default settings.
+As for software, Oculus recently released [Air Link](https://www.oculus.com/blog/introducing-oculus-air-link-a-wireless-way-to-play-pc-vr-games-on-oculus-quest-2-plus-infinite-office-updates-support-for-120-hz-on-quest-2-and-more/) as a Beta feature. You have to enable it on both your Oculus Quest 2 as well as Oculus software on PC. Somehow on the Quest 2, it will remember that you've enabled it, but on PC side you have to go into its settings and enable it every boot. Alternatively, you can also use [Virtual Desktop](https://www.oculus.com/experiences/quest/2017050365004772/?locale=en_US). You just need to run its desktop streamer on your PC and you can play both Oculus and Steam games. For both Air Link and Virtual Desktop, I went with their default settings.
 
 ![Virtual Desktop Setting](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/vd_stream_settings.jpg)
 
-A very important thing to mention here is that my GPU is really not great. Virtual Desktop literally thinks it's a Potato, but I choose to use "Low" quality anyways, because I refuse to accept "Potato". On the Air Link side, there isn't a lot of settings to choose from, but you can see that my bitrate is capped at 100 Mbps. This is currently a known issue for AMD GPU and [documented by Air Link](https://support.oculus.com/Air Link/). If you have an Nvidia GPU, the cap is 200 Mbps. Reddit users speculate this is due to AMD GPU's poorer encoder performance, especially on older GPUs. For me, Virtual Desktop offers significantly better visuals than Air Link. On Air Link, I can notice significant delays and compression artifacts. However, this experience doesn't seem to be the [consensus](https://www.reddit.com/r/OculusQuest/comments/mx3v8n/quick_air_link_vs_virtual_desktop_summary/). So if you have a better GPU, you will likely have different opinions. As for me, I'm gonna stick with Virtual Desktop going forward, especially because it offers a nice performance overlay, which makes it easier to see in-game metrics.
+Something very important to mention here is that my GPU is really not great. Virtual Desktop literally thinks it's a Potato, but I choose to use "Low" quality anyways, because I refuse to accept "Potato". On the Air Link side, there isn't a lot of settings to choose from, but you can see that my bitrate is capped at 100 Mbps. This is currently a known issue for AMD GPU and [documented by Air Link](https://support.oculus.com/Air Link/). If you have an Nvidia GPU, the cap is 200 Mbps. Reddit users speculate this is due to AMD GPU's poorer encoder performance, especially on older GPUs. For me, Virtual Desktop offers significantly better visuals than Air Link. On Air Link, I can notice significant delays and compression artifacts. However, this experience doesn't seem to be the [consensus](https://www.reddit.com/r/OculusQuest/comments/mx3v8n/quick_air_link_vs_virtual_desktop_summary/). So if you have a better GPU, you will likely have different opinions. As for me, I'm gonna stick with Virtual Desktop going forward, especially because it offers a nice performance overlay, which makes it easier to see in-game metrics.
 
 ## WiFi 6 Hotspot Connection
 
@@ -60,27 +60,33 @@ I was able to get a 1200 Mbps connection with my Quest 2, and that should be the
 
 To deal with this issue, you need to turn off WiFi scanning. However, when it's turned off, your WiFi adapter will no longer be able to connect to your router nor hotspot. So you need to turn it on, start a hotspot, then turn it off. The above video linked a [PowerShell script](https://pastebin.com/kJyCgNBm) provided by a Reddit user to perform these steps. Here are the important bits. Note that "Wifi 3" needs to be replaced by your WiFi 6 adapter's name.
 
-    $connectionProfile = [Windows.Networking.Connectivity.NetworkInformation,Windows.Networking.Connectivity,ContentType=WindowsRuntime]::GetInternetConnectionProfile()
-    $tetheringManager = [Windows.Networking.NetworkOperators.NetworkOperatorTetheringManager,Windows.Networking.NetworkOperators,ContentType=WindowsRuntime]::CreateFromConnectionProfile($connectionProfile)
- 
-    # Enable Scan (need it to enable HotSpot). Change "Wi-Fi 3" to your adapter name
-    Start-Sleep -Seconds 2
-    netsh wlan set autoconfig enabled=yes interface="Wi-Fi 3"
- 
-    # Start Mobile Hotspot
-    $tetheringManager.StartTetheringAsync()
-    Start-Sleep -Seconds 2
- 
-    # Disable Scan (need it to remove latency when Windows do a scheduled network scan). Change "Wi-Fi 3" to your adapter name
-    netsh wlan set autoconfig enabled=no interface="Wi-Fi 3"
+```powershell
+$connectionProfile = [Windows.Networking.Connectivity.NetworkInformation,Windows.Networking.Connectivity,ContentType=WindowsRuntime]::GetInternetConnectionProfile()
+$tetheringManager = [Windows.Networking.NetworkOperators.NetworkOperatorTetheringManager,Windows.Networking.NetworkOperators,ContentType=WindowsRuntime]::CreateFromConnectionProfile($connectionProfile)
+
+# Enable Scan (need it to enable HotSpot). Change "Wi-Fi 3" to your adapter name
+Start-Sleep -Seconds 2
+netsh wlan set autoconfig enabled=yes interface="Wi-Fi 3"
+
+# Start Mobile Hotspot
+$tetheringManager.StartTetheringAsync()
+Start-Sleep -Seconds 2
+
+# Disable Scan (need it to remove latency when Windows do a scheduled network scan). Change "Wi-Fi 3" to your adapter name
+netsh wlan set autoconfig enabled=no interface="Wi-Fi 3"
+```
 
 Save this script as a PowerShell script. eg. `start_hotspot.ps1`. You will need to run this script in PowerShell with Administrator privilege. However, when you do, it will tell you that `running scripts is disabled on this system.` You will need to lower your Execution Policy's security level. Of course, you probably don't want to do that. In that case, you will need to run
 
-    powershell -ExecutionPolicy Bypass -File .\start_hotspot.ps1
+```powershell
+powershell -ExecutionPolicy Bypass -File .\start_hotspot.ps1
+```
 
 That will allow you to bypass the execution policy just for that one instance. When you are done with your VR session, remember to turn it back on with
 
-    netsh wlan set autoconfig enabled=yes interface="Wi-Fi 3"
+```powershell
+netsh wlan set autoconfig enabled=yes interface="Wi-Fi 3"
+```
  
  Consider saving it as another script. eg. `enable_wifi_scan.ps1`. Once your Quest 2 is connected to your hotspot, it will not have access to the internet (unless, of course, you have ethernet). Interestingly Air Link will not work without an internet connection. But Virtual Desktop will work. So open up Virtual Desktop Streamer on your PC and you can play games offline. At this point, your Quest 2 will attempt to drop from your hotspot and reconnect with your router to acquire an internet connection. You could "forget" your router's SSID to mitigate this.
 
