@@ -1,8 +1,8 @@
 ---
 layout: post
 author: initialxy
-title: "Oculus Quest 2 Wireless Streaming Setup"
-description: "Explore different ways to setup wireless game streaming on the Oculus Quest 2"
+title: "Oculus Quest 2 Wireless PC VR Setup"
+description: "Explore different ways to setup wireless PC VR streaming on the Oculus Quest 2"
 category: "VR"
 tags: [VR, Oculus, Oculus Quest 2, Wifi 6, Air Link, Virtual Desktop]
 ---
@@ -10,7 +10,7 @@ tags: [VR, Oculus, Oculus Quest 2, Wifi 6, Air Link, Virtual Desktop]
 
 I consider myself a moderate VR enthusiast. I've been an owner of an Oculus Rift for a couple of years, and recently I got an Oculus Quest 2. It is an interesting device, which is completely standalone with inside-out tracking. You can put it on and play anywhere you'd like without a gaming PC nor base stations. It even has some features like hand tracking that's quite impressive. That being said, I found its ability to wirelessly stream games from PC to be the most intriguing, because I purchased most of my games on Steam! In this post, let's explore a few different ways to play PC VR games wirelessly on the Quest 2 and their quirks. In particular, using a **WiFi 6 hotspot** to minimize network latency.
 
-![Google Earth](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/google_earth.jpg)![BeatSaber](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/beatsaber.jpg)![Gorn](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/gorn.jpg)
+![Google Earth](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/google_earth.jpg)![BeatSaber](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/beatsaber.jpg)![Gorn](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/gorn.jpg)
 <!--more-->
 
 ## Why Are You Doing This?
@@ -36,7 +36,7 @@ Notice that I have two WiFi adapters. An internal PCIe WiFi 6 (ax) adapter and a
 
 As for software, Oculus recently released [Air Link](https://www.oculus.com/blog/introducing-oculus-air-link-a-wireless-way-to-play-pc-vr-games-on-oculus-quest-2-plus-infinite-office-updates-support-for-120-hz-on-quest-2-and-more/) as a Beta feature. You have to enable it on both your Oculus Quest 2 as well as Oculus software on PC. Somehow on the Quest 2, it will remember that you've enabled it, but on PC you have to go into its settings and enable it every boot. Alternatively, you can also use [Virtual Desktop](https://www.oculus.com/experiences/quest/2017050365004772/?locale=en_US). You just need to run its desktop streamer on your PC and you can play both Oculus and Steam games. For both Air Link and Virtual Desktop, I went with their default settings.
 
-![Virtual Desktop Setting](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/vd_stream_settings.jpg)
+![Virtual Desktop Setting](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/vd_stream_settings.jpg)
 
 A very important thing to mention here is that my GPU is really not great. Virtual Desktop literally thinks it's a Potato, but I choose to use "Low" quality anyways, because I refuse to accept "Potato". On the Air Link side, there isn't a lot of settings to choose from, but you can see that my bitrate is capped at 100 Mbps. This is currently a known issue for AMD GPU and [documented by Air Link](https://support.oculus.com/Air Link/). If you have an Nvidia GPU, the cap is 200 Mbps. Reddit users speculate this is due to AMD GPU's poorer encoder performance, especially on older GPUs. For me, Virtual Desktop offers significantly better visuals than Air Link. On Air Link, I can notice significant delays and compression artifacts. However, this experience doesn't seem to be the [consensus](https://www.reddit.com/r/OculusQuest/comments/mx3v8n/quick_air_link_vs_virtual_desktop_summary/). So if you have a better GPU, you will likely have different opinions. As for me, I'm gonna stick with Virtual Desktop going forward, especially because it offers a nice performance overlay, which makes it easier to see in-game metrics.
 
@@ -52,11 +52,11 @@ However, my setup has a key difference. In this video, their PC is connected to 
 
 First, go to Windows 10's _Network Connections_ and take a note of your WiFi 6 adapter's name. In my case, it is named "Wifi 3" and that's what I will refer to it going forward. You may be tempted to just go to _Mobile hotspot_ in Settings and turn it on. Unfortunately, there are some quirks. In the above video, they mentioned that there seems to be a bug with the Intel AX200 chipset such that your WiFi 6 connection with your Quest 2 doesn't get full bandwidth until you connect your phone to your hotspot first. I did **not** experience this issue. Reddit users speculate this is due to the hotspot defaulting to 2.4 GHz. So I forced my hotspot to use 5 GHz. I'm not sure if that helped or if the bug was fixed.
 
-![Windows 10 Hotspot Setting](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/windows_hs_setting.png)
+![Windows 10 Hotspot Setting](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/windows_hs_setting.png)
 
 I was able to get a 1200 Mbps connection with my Quest 2, and that should be the maximum bandwidth supported by Quest 2. There's another issue that was mentioned in the above video. When hotspot is connected, Windows continues to scan for WiFi SSIDs once in a while. When it happens, it will massively choke your VR experience up to several seconds like this.
 
-![BeatSaber choking](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_hs_wifi5_video.gif)
+![BeatSaber choking](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/bs_hs_wifi5_video.gif)
 
 To deal with this issue, you need to turn off WiFi scanning. However, when it's turned off, your WiFi adapter will no longer be able to connect to your router nor hotspot. So you need to turn it on, start a hotspot, then turn it off. The above video linked a [PowerShell script](https://pastebin.com/kJyCgNBm) provided by a Reddit user to perform these steps. Here are the important bits. Note that "Wifi 3" needs to be replaced by your WiFi 6 adapter's name.
 
@@ -88,28 +88,28 @@ That will allow you to bypass the execution policy just for that one instance. W
 
 Like I mentioned earlier, if you have an ethernet connection, then you are done. You can skip the rest of this post. But if you are like me, who don't have a physical line to your router, then read on. Since I can only connect to my router with WiFi, I bought a second external USB WiFi 5 adapter and plugged it into my PC's front IO.
 
-![External WiFi Adapter](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/pc_with_wifi5_adapter.jpg)
+![External WiFi Adapter](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/pc_with_wifi5_adapter.jpg)
 
 My intention is obvious. I want to use my WiFi 6 adapter for hotspot with my Quest 2 and WiFi 5 adapter for internet connection. Unfortunately, Windows 10 makes this very difficult, because it's not obvious which adapter is being used for what. So here is what you gotta do:
 1. Open _Network Connections_ and disable your external adapter. In my case, it's named "Wi-Fi 4".
 
-    ![Disable Adapter](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/windows_nw_disable.png)
+    ![Disable Adapter](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/windows_nw_disable.png)
 
 2. Use the above script to start a hotspot. At this point, your hotspot should be started on your WiFi 6 adapter.
 3. Now enable your external adapter, and connect it to the internet.
 4. You only have to do this step once. Share your external adapter to your hotspot connection. In my case, my hotspot connection is called "Local Area Connection* 14"
 
-    ![Share Connection](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/windows_nw_share.png)
+    ![Share Connection](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/windows_nw_share.png)
 
 5. Finally, connect your Quest 2 to your hotspot. Behold! Now your Quest 2 is connected to your PC through a WiFi 6 hotspot at 1200 Mbps and it also has an internet connection. Try Air Link, it will finally work. I can verify that Air Link traffic is definitely going through the hotspot by checking network traffic volume through each adapter. I also checked my router's monitor to further verify. I don't know why Air Link needs internet connection. Perhaps it's needed to search for your devices. Enjoy!
 
-![BeatSaber over hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_hs_wifi6_video.gif)
+![BeatSaber over hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/bs_hs_wifi6_video.gif)
 
 ## Performance Comparison
 
 Naturally, you may have some questions at this point. Does it actually perform well? Is it playable? Do I really need WiFi 6 for this? How bad is it if I just connect it to my router? Let's explore these and find out. TLDR: Yes it is playable. In fact, I believe the experience is comparable to the Oculus Rift, despite some quirks. Now let's look at some numbers. I used Virtual Desktop's performance overlay to capture performance metrics while playing BeatSaber. While it's not a scientific experiment, the numbers are actually quite consistent overall and helped paint a picture of what we are looking at. Let's dive in and take a look at these numbers. Screenshots are captured in the order of WiFi 6 hotspot, WiFi 5 hotspot, and WiFi 5 router.
 
-![WiFi 6 Hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_hs_wifi6.jpg)![WiFi 5 Hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_hs_wifi5.jpg)![WiFi 5 router](/static/images/2021-05-28-oculus-quest-2-wireless-streaming-setup/bs_router_wifi5.jpg)
+![WiFi 6 Hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/bs_hs_wifi6.jpg)![WiFi 5 Hotspot](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/bs_hs_wifi5.jpg)![WiFi 5 router](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/bs_router_wifi5.jpg)
 
 <div class="table_too_wide" markdown="1">
 
