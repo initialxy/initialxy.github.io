@@ -4,7 +4,7 @@ author: initialxy
 title: "Oculus Quest 2 Wireless Streaming Setup"
 description: "Explore different ways to setup wireless game streaming on the Oculus Quest 2"
 category: "VR"
-tags: [VR, Oculus, OculusQuest, Wifi6, AirLink, VirtualDesktop]
+tags: [VR, Oculus, Oculus Quest 2, Wifi 6, Air Link, Virtual Desktop]
 ---
 {% include JB/setup %}
 
@@ -26,7 +26,7 @@ I have a 256GB Oculus Quest 2, which is exactly the same as its 64GB base model 
 | CPU | AMD Ryzen 5 3600 |
 | GPU | AMD Radeon RX 580 4GB |
 | RAM | 16GB (2 x 8GB) DDR4 3200Mhz |
-| Storage | XPG SX8200 Pro 512GB NVMe Gen3x4 |
+| Storage | ADATA XPG SX8200 Pro 512GB NVMe Gen3x4 |
 | WiFi 1 | ZYT 3000Mbps PCIe Wifi Card with Intel WiFi 6 AX200 chipset |
 | WiFi 2 | TP-Link AC600 USB WiFi Adapter |
 

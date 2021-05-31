@@ -3,8 +3,8 @@ layout: post
 author: initialxy
 title: "Building a Compact PC"
 description: "Quirks when building an ultra compact PC"
-category: "BuildAPC"
-tags: [BuildAPC, MiniITX, AMD]
+category: "Build a PC"
+tags: [Build a PC, Mini-ITX, AMD]
 ---
 {% include JB/setup %}
 
