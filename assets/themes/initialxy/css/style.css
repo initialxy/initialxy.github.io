@@ -144,11 +144,7 @@ nav.navbar .navbar-nav .nav-link {
 
 .content .table_too_wide {
     max-width: 100%;
-    overflow: scroll;
-}
-
-.content .table_too_wide::-webkit-scrollbar {
-    display: none;
+    overflow: auto;
 }
 
 .content td,
