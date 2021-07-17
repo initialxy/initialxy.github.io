@@ -1,6 +1,6 @@
 
 body {
-    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 a {
@@ -26,16 +26,12 @@ a {
 
 .content {
     background-color: white;
+    margin: 2em 0 2em 0;
 }
 
-.content .page-header {
-    margin: 2rem 0;
-}
-
-.content .page-header h1 {
-    margin: 0;
+h1 {
     color: #5c0fa8;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Noto Serif SC', serif;
 }
 
 .content .lead {
@@ -43,7 +39,6 @@ a {
 }
 
 nav.navbar {
-    border-bottom: 1px solid #e7e7e7;
     padding-left: 0;
     padding-right: 0;
 }
@@ -174,4 +169,11 @@ nav.navbar .navbar-nav .nav-link {
 
 .content blockquote>p {
     margin: 0;
+}
+
+a.read_more {
+    background-color: #d5ebff;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    display: inline-block;
 }
