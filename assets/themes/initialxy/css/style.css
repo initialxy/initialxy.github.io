@@ -163,3 +163,13 @@ nav.navbar .navbar-nav .nav-link {
 .content blockquote>p {
     margin: 0;
 }
+
+.content .preview_img_3 > p > img {
+    width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+    .content .preview_img_3 > p > img {
+        width: 33.3%;
+    }
+}

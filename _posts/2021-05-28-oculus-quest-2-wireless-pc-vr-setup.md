@@ -10,7 +10,11 @@ tags: [VR, Oculus, Oculus Quest 2, Wifi 6, Air Link, Virtual Desktop]
 
 I consider myself a moderate VR enthusiast. I've been an owner of an Oculus Rift for a couple of years, and recently I got an Oculus Quest 2. It is an interesting device, which is completely standalone with inside-out tracking. You can put it on and play anywhere you'd like without a gaming PC nor base stations. It even has some features like hand tracking that's quite impressive. That being said, I found its ability to wirelessly stream games from PC to be the most intriguing, because I purchased most of my games on Steam! In this post, let's explore a few different ways to play PC VR games wirelessly on the Quest 2 and their quirks. In particular, using a **WiFi 6 hotspot** to minimize network latency.
 
+<div class="preview_img_3" markdown="1">
+
 ![Google Earth](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/google_earth.jpg)![BeatSaber](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/beatsaber.jpg)![Gorn](/static/images/2021-05-28-oculus-quest-2-wireless-pc-vr-setup/gorn.jpg)
+
+</div>
 <!--more-->
 
 ## Why Are You Doing This?

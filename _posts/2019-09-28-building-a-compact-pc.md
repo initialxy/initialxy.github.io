@@ -10,7 +10,11 @@ tags: [Build a PC, Mini-ITX, AMD]
 
 I build PCs as a hobby, though I don't go for the best and latest. I usually like to set a challenge for myself and try to accomplish that goal cost-effectively. I started with something really simple and basic, then incrementally upgrade my build piecemeal over time. So I always have something to do without creating a lot of waste or blow away all of my income. Inevitably, I eventually replaced enough parts of my build that my entire v1 of my build was sitting in my office as spare parts. It raises the question posed by [Ship of Theseus](https://en.wikipedia.org/wiki/Ship_of_Theseus), however, that is not the point of discussion for this blog entry. Since I had enough spare part to build a fully functional PC, I decided to reuse as many parts as possible to build a PC for my mom. Unfortunately, my mom has to take a flight to visit us, and she doesn't want to bring a check-in luggage just for my PC. Fortunately, according to [TSA](https://www.tsa.gov/travel/security-screening/whatcanibring/items/desktop-computers), it is possible to place a desktop computer in carry-on luggage, as long as you take it for inspection like laptops. So for this project, I challenged myself to build the tiniest possible PC with generic parts, full desktop-class components. This blog entry is not meant to serve as a build guide, but rather to discuss some quirks that I did not or simply could not have anticipated ahead of time. The fact that everything fit together at all was quite a miracle in retrospect.
 
+<div class="preview_img_3" markdown="1">
+
 ![Front yard](/static/images/2019-09-28-building-a-compact-pc/front_y.jpg)![Back](/static/images/2019-09-28-building-a-compact-pc/back.jpg)![side](/static/images/2019-09-28-building-a-compact-pc/side.jpg)
+
+</div>
 <!--more-->
 
 ## The Plan
