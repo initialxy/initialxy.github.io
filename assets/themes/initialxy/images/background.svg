@@ -29,9 +29,9 @@
      inkscape:snap-smooth-nodes="false"
      inkscape:snap-intersection-paths="false"
      inkscape:object-nodes="false"
-     inkscape:zoom="2.0435913"
-     inkscape:cx="434.03983"
-     inkscape:cy="430.36982"
+     inkscape:zoom="1.4450373"
+     inkscape:cx="473.34419"
+     inkscape:cy="348.43392"
      inkscape:window-width="3836"
      inkscape:window-height="2131"
      inkscape:window-x="0"
@@ -81,6 +81,46 @@
        style="fill:#a891ff;fill-opacity:0.5;stroke:none;stroke-width:0.0331503;stroke-linecap:round;stroke-linejoin:round"
        d="M -46.376354,59.654573 H 45.492359 L -0.44199782,67.44254 Z"
        sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/initialxy/git/initialxy.github.io/assets/themes/initialxy/images/background.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       id="rect996"
+       style="fill:#a891ff;fill-opacity:0.5;stroke:none;stroke-width:0.377953;stroke-linecap:round;stroke-linejoin:round"
+       d="M -73.095703 357.67578 L -73.095703 380.53125 L 192.91016 380.53125 L 228.35742 357.67578 L -73.095703 357.67578 z "
+       transform="scale(0.26458333)"
+       inkscape:export-filename="/home/initialxy/git/initialxy.github.io/assets/themes/initialxy/images/background.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       id="path1571"
+       style="fill:#91c2ff;fill-opacity:0.50196081;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round"
+       d="m 23.408276,94.634822 h 81.231414 l -9.378761,6.047658 H 14.029514 Z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/initialxy/git/initialxy.github.io/assets/themes/initialxy/images/background.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       id="path1573"
+       style="fill:#91e0ff;fill-opacity:0.50196081;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round"
+       d="m 93.535495,94.634822 h 81.231425 l -9.37876,6.047658 H 84.156737 Z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/initialxy/git/initialxy.github.io/assets/themes/initialxy/images/background.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       id="path1575"
+       style="fill:#91ffb5;fill-opacity:0.50196081;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round"
+       d="m 160.47996,94.634822 h 81.23142 l -9.37876,6.047658 H 151.1012 Z"
+       sodipodi:nodetypes="ccccc"
+       inkscape:export-filename="/home/initialxy/git/initialxy.github.io/assets/themes/initialxy/images/background.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       id="path1577"
+       style="fill:#ccff91;fill-opacity:0.501961;stroke:none;stroke-width:0.377953;stroke-linecap:round;stroke-linejoin:round"
+       d="M 820.95508 357.67578 L 785.50781 380.53125 L 1058.2422 380.53125 L 1058.2422 357.67578 L 820.95508 357.67578 z "
+       transform="scale(0.26458333)"
        inkscape:export-filename="/home/initialxy/git/initialxy.github.io/assets/themes/initialxy/images/background.png"
        inkscape:export-xdpi="96"
        inkscape:export-ydpi="96" />
