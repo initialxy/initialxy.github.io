@@ -5,8 +5,22 @@
         <title>{{ page.title }}</title>
         {% if page.description %}<meta name="description" content="{{ page.description }}">{% endif %}
         <meta name="author" content="{{ site.authors[site.site_author].display_name }}">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <link rel="shortcut icon" href="{{ ASSET_PATH }}/images/favicon.ico"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="manifest" href="{{ ASSET_PATH }}/manifest.json">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-touch-fullscreen" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="application-name" content="initialxy">
+        <meta name="apple-mobile-web-app-title" content="initialxy">
+        <meta name="msapplication-starturl" content="/">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ ASSET_PATH }}/images/apple-touch-icon-152x152.png" />
+        <link rel="icon" type="image/png" href="{{ ASSET_PATH }}/images/favicon-196x196.png" sizes="196x196" />
+        <meta name="msapplication-TileImage" content="{{ ASSET_PATH }}/images/mstile-144x144.png" />
+        <meta name="msapplication-square310x310logo" co144ntent="{{ ASSET_PATH }}/images/mstile-310x310.png" />
+        <meta rel="msapplication-TileColor" content="#5c0fa8">
+        <meta rel="theme-color" content="#5c0fa8">
 
         <!-- CSS only -->
         <link

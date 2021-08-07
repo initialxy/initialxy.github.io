@@ -1,0 +1,17 @@
+{
+  "name": "initialxy",
+  "short_name": "initialxy",
+  "lang": "en-US",
+  "theme_color": "#5c0fa8",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/assets/themes/initialxy/images/favicon-196x196.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
