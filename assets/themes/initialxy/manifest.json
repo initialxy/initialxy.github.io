@@ -9,7 +9,7 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "/assets/themes/initialxy/images/favicon-196x196.png",
+      "src": "/assets/themes/initialxy/images/favicon-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     }
