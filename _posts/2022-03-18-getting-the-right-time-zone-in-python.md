@@ -8,9 +8,10 @@ tags: [Python, Time Zone, System, Debugging]
 ---
 {% include JB/setup %}
 
-Given the [recent news](https://www.nytimes.com/2022/03/15/us/politics/daylight-saving-time-senate.html) that most of the US will stick with daylight saving time starting 2023, I'd like to revisit how error-prone dealing with time zone could be in software. Even in Python, which is supposed to be a more newbie-friend and intuitive languages out there, it does a rather confusing job at at. I hope to write this post as more of a straight to point code pointers for how to deal with time zones in Python with a more humanly readable documentation instead of pages of cryptic API documentation. In my professional experience, I have delt with countless time zone and daylight savings related bugs literally every year. There's always something that can go wrong. Being oncall during daylight savings change is always a time. 
+In light of the [recent news](https://www.nytimes.com/2022/03/15/us/politics/daylight-saving-time-senate.html) that most of the US will stick with daylight saving time starting 2023, I'd like to revisit how error-prone dealing with time zone could be in software. Even in Python, which is supposed to be a more newbie-friend and intuitive languages out there, it does a rather confusing job at at. I hope to write this post as more of code references for how to deal with time zones in Python, with a more humanly readable explanation instead of pages of cryptic API documentation. In my professional experience, I have delt with countless time zone and daylight savings related bugs literally every year. There's always something that can go wrong. Being oncall during daylight savings change is always a time.
+<!--more-->
 
-Now let me get straight to point by looking at some sample code for common use cases. I will elaborate in a later section. For all of these examples, keep in mind that I live in America/Los_Angeles, which I will use as reference point.
+Now let me get straight to point by looking at some sample code for common use cases. I will elaborate in a later section. For all of these examples.
 
 ### 1. Format date and time given a time zone
 Suppose you are given a timestamp or `datetime`, and you want to show user living in another time zone what that time is in their time zone. A common use case to consider is flight tickets, where departure time and arrival time are often shown in two different time zones. Here is the best way to do it
@@ -44,7 +45,7 @@ timestamp("2022-03-01T09:00", tz) # 1646143200.0
 ```
 
 ### 3. Get timestamp of a time on a certain date and time zone
-Suppose you know a store opens at 9:00 every day, and you want to find out when it will open on a particular date as a timestamp. This is closely related on the above. You can see that one way to do this is to simply concat an ISO date time string and use the method above. But here is a more elegant solution.
+Suppose you know a store opens at 9:00 every day, and you want to find out when it will open on a particular date as a timestamp. This is closely related on the above. You can see that one way to do this is to simply concat an ISO date time string and use the method above. But here is a more elegant solution that allows you to cleanly separate date and time as separate instances.
 
 ```python
 from pytz import timezone
@@ -79,6 +80,9 @@ format(dt, tz_other) # 2022-03-18T19:05:08.905647-04:00
 Now this is a tricky one and hopefully doesn't happen frequently in practice. Suppose you were given a datetime that represent the air time of an episode of a TV show, and you are asked to compute when it needs to air in a different time zone at the same local time (eg. 7 PM in Los Angeles and 7 PM in New York). You may be tempted to try a bunch of different thing, but here is the correct solution.
 
 ```python
+from pytz import timezone
+from datetime import datetime
+
 def timestamp(dt, tz):
   return tz.localize(dt.replace(tzinfo=None)).timestamp()
 
@@ -87,8 +91,6 @@ tz_other = timezone("America/New_York")
 dt = tz_og.localize(datetime.fromisoformat("2022-03-01T19:00"))
 timestamp(dt, tz_other) # 1646179200.0
 ```
-
-<div class="preview_img_3" markdown="1">
 
 ## Why Time Zone is So Hard
 I think many of us wouldn't think too much about time zone. How hard can it possibly be? You get a timestamp and just offset a few hours here and there from UTC right? Well not so simple. The key issue here is that time zones can be changed at any time by a local goverment. For example, as I linked above, the US Senate decided to stick with daylight saving time starting 2023. Another amusing example is when [Turkey changed their daylight saving rule](https://support.microsoft.com/en-us/topic/turkey-ends-dst-observance-56f14484-a323-543c-5e36-f701723f5b22) and [Tesla apparently didn't update for at least two years](https://www.reddit.com/r/teslamotors/comments/ag6r2f/please_help_our_turkish_tesla_community_reach/). This is the reason why there's GMT and UTC. GMT is a real-life time zone, which is subject to change by the UK government, while UTC is a global reference point, and not a real time zone. For now GMT and UTC are equal, but that's not guranteed. Imagine you were using GMT-7, then the next day the UK government decides to forward it by an hour for some reason. All of your references would become incorrect. So an **UTC offset is only useful when referencing to an exact point in history**. If you were to change that reference time, then it could cause errors.
