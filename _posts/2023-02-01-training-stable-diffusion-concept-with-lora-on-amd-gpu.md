@@ -31,23 +31,29 @@ The TLDR is that DreamBooth is probably the best. But it can only output a whole
 ## Getting Things Started
 Before we get too far, let's start with just getting things running. Right off the bat, it's not that straightforward, because we got an AMD GPU. You are gonna need Linux. Not because I'm a Linux fanboy (though I am), but because as of writing, [PyTorch only has AMD GPU support on Linux](https://pytorch.org/blog/pytorch-for-amd-rocm-platform-now-available-as-python-package/). If you are on Windows and have AMD GPU, well, you are out of luck. Since we are talking about ML training and Linux here, so I'm gonna assume you have some basic developer knowledge. You need Git and Python 3.10. Open the terminal and navigate to somewhere you want to checkout Git repositories and clone [stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui). What's important here is that we need to explicitly install the AMD ROCm build of PyTorch instead of the CUDA one, which is for NVIDIA GPU. Suppose you have Git repos under `~/git` directory. Follow these steps:
 
-    cd ~/git
-    git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
-    cd stable-diffusion-webui
-    python -m venv venv # Create Python venv. I'm on Arch so python refers to Python 3. Other distros may have python3 instead
-    source venv/bin/activate
+```bash
+cd ~/git
+git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+cd stable-diffusion-webui
+python -m venv venv # Create Python venv. I'm on Arch so python refers to Python 3. Other distros may have python3 instead
+source venv/bin/activate
+```
 
 Now we need to install the ROCm build of PyTorch. Use [this tool](https://pytorch.org/get-started/locally/), and select **Stable** -> **Pip** -> **Linux** -> **ROCm**. It should give you the pip install command to install the latest ROCm build of PyTorch using pip. At the time of writing, mine looks like `pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/rocm5.2`. We don't actually need `torchaudio`, so remove that and run
 
-    pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/rocm5.2
+```bash
+pip3 install torch torchvision --extra-index-url https://download.pytorch.org/whl/rocm5.2
+```
 
 Awesome, we have PyTorch installed, but that's not the only quirk. I created a launch script for myself, so let's go ahead and create one somewhere under your `PATH`.
 
-    #!/bin/bash
-    export TORCH_COMMAND='pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/rocm5.2' # Make sure it's the same rocm version
-    export HSA_OVERRIDE_GFX_VERSION=10.3.0 # Needed to work around a quirk with HIP
-    cd ~/git/stable-diffusion-webui
-    venv/bin/python launch.py $@
+```bash
+#!/bin/bash
+export TORCH_COMMAND='pip install torch torchvision --extra-index-url https://download.pytorch.org/whl/rocm5.2' # Make sure it's the same rocm version
+export HSA_OVERRIDE_GFX_VERSION=10.3.0 # Needed to work around a quirk with HIP
+cd ~/git/stable-diffusion-webui
+venv/bin/python launch.py $@
+```
 
 You can launch stable-diffusion-webui with this launch script without `source venv/bin/activate`, because it uses the `venv` instance of python. When you launch it for the first time, it will install the rest of the dependencies. Open [http://localhost:7860/](http://localhost:7860/) in your browser and voila! There's the webui. At this point, you don't have a Stable Diffusion model yet, so it's not functional. While we are here, let's install some extensions. For this tutorial, we are gonna train with LORA, so we need [sd_dreambooth_extension](https://github.com/d8ahazard/sd_dreambooth_extension). Go to **Extensions** tab -> **Available** -> **Load from** and search for **Dreambooth**. Click **install** next to it, and wait for it to finish. Now let's just ctrl + c to stop the webui for now and download a model. You can find Stable Diffusion [1.5 here](https://huggingface.co/runwayml/stable-diffusion-v1-5) and [2.1 here](https://huggingface.co/stabilityai/stable-diffusion-2-1). For this tutorial, I'm gonna use 1.5. So I have `sd-v1-5-pruned.ckpt` and `sd-v1-5-pruned.vae.pt` downloaded. In case you wonder what some of these extensions mean.
 
@@ -112,16 +118,20 @@ Go to **txt2img** tab and refresh **Stable Diffusion checkpoint** in the left to
 
 So I decided to extract 1880 and 2820 for further testing. Here we run into yet another problem. We have our LORAs in model `.ckpt` files, but how do we get them out of it? Thankfully, it's pointed out in its [Github issue](https://github.com/d8ahazard/sd_dreambooth_extension/issues/831) that another project, [kohya_ss](https://github.com/bmaltais/kohya_ss) is able to extract LORA out of a model file. Let's `git clone https://github.com/bmaltais/kohya_ss.git` and similarly create Python venv and install its dependencies. But wait, don't bother launching it, because kohya_ss really only works on Windows with NVIDIA CUDA. It has tons of hardcoded Windows path separator (`\`) in its code and there's just no hope of running it on Linux. Fortunately, we don't have to, because we are only interested in extracting LORAs from model files. We only need its `extract_lora_from_models.py`, which unfortunately uses TensorFlow that only works with NVIDIA CUDA. Fear not, we have not hit a dead end yet. We can force TensorFlow to run in CPU mode. It will be slow, but since we are asking for a pretty simple task, it will finish in a minute or so. In order to force TensorFlow to run in CPU mode. Run `accelerate config` and select CPU mode, then you also need to set two environment variables `CUDA_DEVICE_ORDER=PCI_BUS_ID`, `CUDA_VISIBLE_DEVICES=-1`. I wrapped it up in an `extract_lora` script.
 
-    #!/bin/bash
+```bash
+#!/bin/bash
 
-    export CUDA_DEVICE_ORDER=PCI_BUS_ID
-    export CUDA_VISIBLE_DEVICES=-1
+export CUDA_DEVICE_ORDER=PCI_BUS_ID
+export CUDA_VISIBLE_DEVICES=-1
 
-    ~/git/kohya_ss/venv/bin/python /home/initialxy/git/kohya_ss/networks/extract_lora_from_models.py --save_precision fp16 --save_to "$3" --model_org "$2" --model_tuned "$1" --dim 8
+~/git/kohya_ss/venv/bin/python /home/initialxy/git/kohya_ss/networks/extract_lora_from_models.py --save_precision fp16 --save_to "$3" --model_org "$2" --model_tuned "$1" --dim 8
+```
 
 It needs three arguments: LORA model, base model and output file. eg.
 
-    ./extract_lora ~/git/stable-diffusion-webui/models/Stable-diffusion/shrug/shrug_1880_lora.ckpt ~/git/stable-diffusion-webui/models/Stable-diffusion/sd-v1-5-pruned.ckpt ~/git/stable-diffusion-webui/models/Lora/cc_shrug_2820.ckpt
+```bash
+./extract_lora ~/git/stable-diffusion-webui/models/Stable-diffusion/shrug/shrug_1880_lora.ckpt ~/git/stable-diffusion-webui/models/Stable-diffusion/sd-v1-5-pruned.ckpt ~/git/stable-diffusion-webui/models/Lora/cc_shrug_2820.ckpt
+```
 
 Make sure you kill stable-diffusion-webui before running this to avoid going out of memory. I have 32GB of RAM and it gets blown up quickly.
 
