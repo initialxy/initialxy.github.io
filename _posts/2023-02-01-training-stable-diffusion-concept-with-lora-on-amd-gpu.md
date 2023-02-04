@@ -124,7 +124,7 @@ So I decided to extract 1880 and 2820 for further testing. Here we run into yet 
 export CUDA_DEVICE_ORDER=PCI_BUS_ID
 export CUDA_VISIBLE_DEVICES=-1
 
-~/git/kohya_ss/venv/bin/python /home/initialxy/git/kohya_ss/networks/extract_lora_from_models.py --save_precision fp16 --save_to "$3" --model_org "$2" --model_tuned "$1" --dim 8
+~/git/kohya_ss/venv/bin/python ~/git/kohya_ss/networks/extract_lora_from_models.py --save_precision fp16 --save_to "$3" --model_org "$2" --model_tuned "$1" --dim 8
 ```
 
 It needs three arguments: LORA model, base model and output file. eg.
