@@ -59,7 +59,7 @@ You can launch stable-diffusion-webui with this launch script without `source ve
 
 * `.ckpt` is the model file, but it has security concerns as it could allow malicious code to get in.
 * `.safetensors` is also the model file but safe. It's the sanitized version of `.ckpt`. Try to use `.safetensors` as much as possible.
-* `.vae.pt` is the VAE file. VAE is meant to make some corrections to the model output. Depending on the model, it will have varying degrees of effectiveness. Some models will look desaturated without VAE, while others can be completely broken. In the webui, under **Settings** tab. You can select a specific VAE, auto, or none. In auto mode, it will just pick the VAE file with the same name as the model that's selected. However, for training, it is extremely important that we **don't** load a VAE into memory while training. It will completely mess up our training. So every time before you start training, make sure to go to settings, select "none" for SD VAE, and save settings. Restart the webui just in case. Note that you can now merge a model and its VAE into the same model file. This is convenient but not ideal for training.
+* `.vae.pt` is the VAE file. VAE is meant to make some corrections to the model output. Depending on the model, it will have varying degrees of effectiveness. Some models will look desaturated without VAE, while others can be completely broken. In the webui, under **Settings** tab. You can select a specific VAE, auto, or none. In auto mode, it will just pick the VAE file with the same name as the model that's selected. However, it is extremely important that we **don't** load a VAE into memory while training **textual inversion**. It will completely mess it up. Though it appearls training LORA on a model with built-in VAE works just fine.
 
 Move your model as well as VAE files under `~/git/stable-diffusion-webui/models/Stable-diffusion/`. Notice that there's a separate directory just for VAE at `~/git/stable-diffusion-webui/models/VAE/`. You can optionally put VAE files in there, but it will work either way.
 
@@ -83,7 +83,7 @@ In the webui, go to **Train** -> **Preprocess images**. Enter your image directo
 Once it finishes, go to the output directory and double check if the images are cropped in a desirable way. Feel free to delete any that you believe no longer present the focal concept well. We are ready to train.
 
 ## Start Training
-We got our training images, so let's get things started. Again, make sure to set SD VAE to none in settings, apply settings and restart the webui before continueing. Go to the **DreamBooth** tab and create a new model first. Let's simply call it "shrug". Select `sd-v1-5-pruned.ckpt` as base model and make sure **512x** is selected and hit **Create Model**. Now a "shrug" model should be created and make sure it's selected in the left side pane.
+We got our training images, so let's get things started. Make sure to set SD VAE to none in settings, apply settings and restart the webui before continueing. Go to the **DreamBooth** tab and create a new model first. Let's simply call it "shrug". Select `sd-v1-5-pruned.ckpt` as base model and make sure **512x** is selected and hit **Create Model**. Now a "shrug" model should be created and make sure it's selected in the left side pane.
 
 ![Create Model](/static/images/2023-02-01-training-stable-diffusion-concept-with-lora-on-amd-gpu/create_model.jpg)
 
