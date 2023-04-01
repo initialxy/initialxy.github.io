@@ -8,12 +8,12 @@ tags: [MachineLearning, StableDiffusion, LoRA]
 ---
 {% include JB/setup %}
 
-Since [my last post](/lesson/2023/02/01/training-stable-diffusion-concept-with-lora-on-amd-gpu), a lot has changed. So instead of adding updates to my previous post, I figured I could write a follow-up instead. A lot of quirks with [sd_dreambooth_extension](https://github.com/d8ahazard/sd_dreambooth_extension) that I mentioned last time have been fixed. It is now able to create standalone LoRA on its own without the hacks that I mentioned. However, I also want to give [kohya_ss](https://github.com/bmaltais/kohya_ss) another try and see if I can get it to work this time. Again, our main challenge here is to get it to work with an AMD GPU. Recall that last time I couldn’t get it to work for a couple of issues: it had tons of hard-coded Windows path separators, which made it difficult to run on Linux, where PyTorch’s ROCm build is available, and I couldn’t get TensorFlow to work on AMD GPU. Things have certainly changed a lot in just a month or so. The good news is I managed to get it to work on Linux while running on AMD GPU. So I’d like to share my setup and some scripts that I wrote for myself.
+Since [my last post](/lesson/2023/02/01/training-stable-diffusion-concept-with-lora-on-amd-gpu), a lot has changed. So instead of adding updates to my previous post, I figured I could write a follow-up instead. A lot of quirks with [sd_dreambooth_extension](https://github.com/d8ahazard/sd_dreambooth_extension) that I mentioned last time have been fixed. It is now able to create standalone LoRA on its own without the hacks that I mentioned. However, I also want to give [kohya_ss](https://github.com/bmaltais/kohya_ss) another try and see if I can get it to work this time. Again, our main challenge here is to get it to work with an AMD GPU. Recall that last time I couldn't get it to work for a couple of issues: it had tons of hard-coded Windows path separators, which made it difficult to run on Linux, where PyTorch's ROCm build is available, and I couldn't get TensorFlow to work on AMD GPU. Things have certainly changed a lot in just a month or so. The good news is I managed to get it to work on Linux while running on AMD GPU. So I'd like to share my setup and some scripts that I wrote for myself.
 
 <!--more-->
 
 # Installation
-Let’s get [kohya_ss](https://github.com/bmaltais/kohya_ss) installed and running. This time around, it actually came with an Ubuntu install and launch script. So if you are on Ubuntu, you are ready to go! For me, I use Arch, so I basically just followed its [Ubuntu script](https://github.com/bmaltais/kohya_ss/blob/master/ubuntu_setup.sh), except we don’t install Python from `apt` and we need to install the [ROCm build of PyTorch](https://pytorch.org/get-started/locally/).
+Let's get [kohya_ss](https://github.com/bmaltais/kohya_ss) installed and running. This time around, it actually came with an Ubuntu install and launch script. So if you are on Ubuntu, you are ready to go! For me, I use Arch, so I basically just followed its [Ubuntu script](https://github.com/bmaltais/kohya_ss/blob/master/ubuntu_setup.sh), except we don't install Python from `apt` and we need to install the [ROCm build of PyTorch](https://pytorch.org/get-started/locally/).
 
 ```bash
 cd git # go to a directory of your choice where you leave git repos
@@ -21,20 +21,20 @@ git clone https://github.com/bmaltais/kohya_ss.git
 cd kohya_ss
 python -m venv venv
 source venv/bin/activate
-pip3 install torch torchvision --index-url https://download.pytorch.org/whl/rocm5.4.2
+pip install torch torchvision --index-url https://download.pytorch.org/whl/rocm5.4.2
 pip install --use-pep517 --upgrade -r requirements.txt
 
 accelerate config
 ```
 
-Now there are a couple of things we have to change at this point because of AMD GPU. First, AMD doesn’t have xformer, so there’s no point in installing that. The second is that instead of installing the default build of TensorFlow, we need to install [tensorflow-rocm](https://pypi.org/project/tensorflow-rocm/) instead, which is the ROCm build of TensorFlow. Fortunately, you don’t actually need to use [AMD's Docker image](https://www.amd.com/system/files/documents/chapter5.1-tensorflow-rocm.pdf), which would have made it a lot more complicated.
+Now there are a couple of things we have to change at this point because of AMD GPU. First, AMD doesn't have xformer, so there's no point in installing that. The second is that instead of installing the default build of TensorFlow, we need to install [tensorflow-rocm](https://pypi.org/project/tensorflow-rocm/) instead, which is the ROCm build of TensorFlow. Fortunately, we don't actually need to use [AMD's Docker image](https://www.amd.com/system/files/documents/chapter5.1-tensorflow-rocm.pdf), which would have made it more complicated.
 
 ```bash
 pip uninstall tensorflow # uninstall the default build of tensorflow first
 pip install tensorflow-rocm
 ```
 
-We are ready to launch, but it still doesn’t work, because we need to set an environment variable similar to Stable Diffusion. Similarly, we can write a launch script that skips the default script’s requirements check.
+We are ready to launch, but before we can do that, we need to set an an environment variable `HSA_OVERRIDE_GFX_VERSION=10.3.0` like what we did for stable-diffusion-webui. Similarly, we can write a launch script that skips the default script's requirements check.
 
 ```bash
 export HSA_OVERRIDE_GFX_VERSION=10.3.0 # necessary to get pytorch and tensorflow to run with ROCm
@@ -43,16 +43,16 @@ source venv/bin/activate
 python kohya_gui.py "$@"
 ```
 
-Now go to [http://localhost:7860/](http://localhost:7860/) and we got kohya_ss GUI. From here, it should be smooth sailing.
+Go to [http://localhost:7860/](http://localhost:7860/) and we got kohya_ss GUI. From here, it should be smooth sailing.
 
 # LoRA Training
-Following my previous post, I want to dive deeper into LoRA training. The first thing to notice is that kohya_ss sets up its training image differently than sd_dreambooth_extension. It needs `img`, `model`, and `log` directories for its inputs and outputs. It can help you create them under its **Tools** tab, but you can just do that on your own. Notably, the number of epochs to train, instance token, and class token are part of the image folder name. In my experiments, I found 5000 steps to be just about the right amount of training steps with the default 1e-5 **Learning rate** and cosine **LR scheduler**. This means you can compute the number of epochs by 5000 / number of images. e.g., If I have 60 training images, I’d set my epochs to 83. So my image input folder name would be something like `83_shrug pose`, where "shrug" is the instance token and "pose" is the class token separated by a space. One very important thing to remember is that your instance token needs to be in all of the caption files. I wrote a script to help with this.
+Following my previous post, I want to dive deeper into LoRA training. The first thing to notice is that kohya_ss sets up its training image differently than sd_dreambooth_extension. It needs `img`, `model`, and `log` directories for its inputs and outputs. It can help you create them under its **Tools** tab, but you can just do that on your own. Notably, the number of epochs to train, instance token, and class token are part of the image folder name. In my experiments, I found 5000 steps to be just about the right amount of training steps with the default 1e-5 **Learning rate** and cosine **LR scheduler**. This means you can compute the number of epochs by 5000 / number of images. eg. If I have 60 training images, I'd set my epochs to 83. So my image input folder name would be something like `83_shrug pose`, where "shrug" is the instance token and "pose" is the class token separated by a space. One very important thing to remember is that your instance token needs to be in all of the caption files. I wrote a script to help with this.
 
 `prepend.py`
 ```python
 #!/usr/bin/python
-import os
 import argparse
+import os
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
@@ -64,7 +64,7 @@ if __name__ == "__main__":
 
   files = os.listdir(args.dir)
   files = [f for f in files if os.path.isfile(os.path.join(args.dir, f)) and f.endswith(".txt")]
-  for i, f in enumerate(files):
+  for f in files:
     f = os.path.join(args.dir, f)
     with open(f, "r") as r:
       line = r.read()
@@ -75,14 +75,14 @@ if __name__ == "__main__":
 As for the rest of the settings, there are a few things we need to change in order for it to work for us.
 * **Optimizer**: Lion. We don't have Adam for AMD.
 * **Use xformers**: Uncheck. We don't have xformers for AMD.
-* **Caption Extension**: set this to `.txt` if your training images were prepred by stable-diffusion-webui. By default it will use `.caption`
+* **Caption Extension**: Set this to `.txt` if your training images were prepred by stable-diffusion-webui. By default it will use `.caption`
 * **Clip skip**: Set it to 2 for NAI based base model, 1 for everything else.
 * **Shuffle caption**: Check. Supposedly makes outputs more evened out.
 
-There are other settings you can fiddle with. I haven’t spent too much time with LyCORIS. It is supposedly better, but I don’t have an opinion on that yet. You will have to install [a1111-sd-webui-locon](https://github.com/KohakuBlueleaf/a1111-sd-webui-locon) in stable-diffusion-webui in order to use it. Now hit **Train model** and it should start training and output a `.safetensors` file under your `model` directory.
+There are other settings you can fiddle with. I haven't spent too much time with LyCORIS. It is supposedly better, but I don't have an opinion on that yet. You will have to install [a1111-sd-webui-locon](https://github.com/KohakuBlueleaf/a1111-sd-webui-locon) in stable-diffusion-webui in order to use it. Now hit **Train model** and it should start training and output a `.safetensors` file under your `model` directory.
 
 # More Scripts
-Kohya_ss has a **Print training command** feature, where it prints out the command it uses to train in terminal. I love this. This means I can automate training without having to launch its GUI. I could chain a few trainings together before I go to sleep. It’s great! I wrote a wrapper script to make things easier for me.
+Kohya_ss has a **Print training command** feature, where it prints out the command it uses to train in terminal. I love this. This means I can automate training without having to launch its GUI. I could chain a few trainings together before I go to sleep. It's great! I wrote a wrapper script to make things easier for me.
 
 `train_lora.py`
 ```python
@@ -153,9 +153,9 @@ It's a retty straightforward script. Use `--help` to see its instructions. But w
 `tojpg.py`
 ```python
 #!/usr/bin/python
+import argparse
 import os
 import re
-import argparse
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
@@ -166,13 +166,13 @@ if __name__ == "__main__":
 
   files = os.listdir(args.dir)
   files = [f for f in files if os.path.isfile(os.path.join(args.dir, f)) if not re.match(r".*\.(jpg|jpeg)$", f)]
-  for i, f in enumerate(files):
+  for f in files:
     f = f.replace(" ", "\\ ").replace("(", "\\(").replace(")", "\\)")
     name = re.search(r"(.*)\.[a-zA-Z]+", f).group(1)
     os.system(f"convert -quality 95% {os.path.join(args.dir, f)} {os.path.join(args.dir, name)}.jpg")
 ```
 
-Here is one that sequence file names in case you got a bunch of files from the internet with unreadable names and you just want them to look cleaner. It also helps when you want to add new images and want to make sure there’s no collision in file names. (Use the `--start-index` option to start the sequence after the last existing file.)
+Here is one that sequence file names in case you got a bunch of files from the internet with unreadable names and you just want them to look cleaner. It also helps when you want to add new images and want to make sure there's no collision in file names. (Use the `--start-index` option to start the sequence after the last existing file.)
 
 `sequence.py`
 ```python
@@ -215,8 +215,8 @@ Here is one that will deduplicate tokens (separated by `,`) and optionally filte
 `dedup.py`
 ```python
 #!/usr/bin/python
-import os
 import argparse
+import os
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
@@ -233,7 +233,7 @@ if __name__ == "__main__":
 
   files = os.listdir(args.dir)
   files = [f for f in files if os.path.isfile(os.path.join(args.dir, f)) and f.endswith(".txt")]
-  for i, f in enumerate(files):
+  for f in files:
     f = os.path.join(args.dir, f)
     with open(f, "r") as r:
       line = r.read()
