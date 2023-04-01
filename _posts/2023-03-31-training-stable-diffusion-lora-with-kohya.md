@@ -172,7 +172,7 @@ if __name__ == "__main__":
     os.system(f"convert -quality 95% {os.path.join(args.dir, f)} {os.path.join(args.dir, name)}.jpg")
 ```
 
-Here is one that sequence file names in case you got a bunch of files from the internet with unreadable names and you just want them to look cleaner. It also helps when you want to add new images and want to make sure there's no collision in file names. (Use the `--start-index` option to start the sequence after the last existing file.)
+Here is one that sequence file names in case you got a bunch of files from the internet with unreadable names and you just want them to look cleaner. It also helps when you are adding new images and want to make sure there's no collision in file names. (Use the `--start-index` option to start the sequence after the last sequenced file.)
 
 `sequence.py`
 ```python
