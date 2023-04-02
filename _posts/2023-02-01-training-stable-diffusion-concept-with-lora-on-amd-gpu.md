@@ -4,7 +4,7 @@ author: initialxy
 title: "Training Stable Diffusion Concept with LoRA on AMD GPU"
 description: "Workflow and quirks when training a concept for Stable Diffusion on AMD GPU."
 category: "Lesson"
-tags: [MachineLearning, StableDiffusion, LORA]
+tags: [MachineLearning, StableDiffusion, LoRA]
 ---
 {% include JB/setup %}
 

@@ -13,9 +13,10 @@ Since [my last post](/lesson/2023/02/01/training-stable-diffusion-concept-with-l
 <!--more-->
 
 # Installation
-Let's get [kohya_ss](https://github.com/bmaltais/kohya_ss) installed and running. This time around, it actually came with an Ubuntu install and launch script. So if you are on Ubuntu, you are ready to go! For me, I use Arch, so I basically just followed its [Ubuntu script](https://github.com/bmaltais/kohya_ss/blob/master/ubuntu_setup.sh), except we don't install Python from `apt` and we need to install the [ROCm build of PyTorch](https://pytorch.org/get-started/locally/).
+Let's get [kohya_ss](https://github.com/bmaltais/kohya_ss) installed and running. This time around, it actually came with an Ubuntu install and launch script. So if you are on Ubuntu and Nvidia GPU, then you are ready to go! For me, I use Arch and AMD GPU, so I basically just followed its [Ubuntu script](https://github.com/bmaltais/kohya_ss/blob/master/ubuntu_setup.sh), except we don't install Python from `apt` and we need to install the [ROCm build of PyTorch](https://pytorch.org/get-started/locally/).
 
 ```bash
+# Install git and Python 3 from your distro's repo first
 cd git # go to a directory of your choice where you leave git repos
 git clone https://github.com/bmaltais/kohya_ss.git
 cd kohya_ss
@@ -56,7 +57,7 @@ import os
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
-    description="Script to prepend a token to every .txt files under a directory."
+    description="Script to prepend a token to every .txt file under a directory."
   )
   parser.add_argument("dir", help="Directory where .txt files are found")
   parser.add_argument("token", help="Token to prepend. No , needed")
@@ -212,7 +213,7 @@ if __name__ == "__main__":
 
 Here is one that will deduplicate tokens (separated by `,`) and optionally filter a token in case you prepended tokens to all caption files but some of them may already have a token auto-generated, or you believe some auto-generated tokens are wrong.
 
-`dedup.py`
+`dedupe.py`
 ```python
 #!/usr/bin/python
 import argparse
@@ -220,7 +221,7 @@ import os
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
-    description="Dedup tokens in caption files. Optionally filter token."
+    description="Dedupe tokens in caption files. Optionally filter token."
   )
   parser.add_argument(
     "--filter",
