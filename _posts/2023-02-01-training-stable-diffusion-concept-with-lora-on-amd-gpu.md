@@ -83,7 +83,7 @@ In the webui, go to **Train** -> **Preprocess images**. Enter your image directo
 Once it finishes, go to the output directory and double check if the images are cropped in a desirable way. Feel free to delete any that you believe no longer present the focal concept well. We are ready to train.
 
 ## Start Training
-**UPDATE** I have an updated [post](/lesson/2023/03/31/training-stable-diffusion-lora-with-kohya) about this.
+**UPDATE** I have an updated [post](/lesson/2023/03/31/training-stable-diffusion-lora-with-kohya-on-amd-gpu) about this.
 
 
 We got our training images, so let's get things started. Make sure to set SD VAE to none in settings, apply settings and restart the webui before continueing. Go to the **DreamBooth** tab and create a new model first. Let's simply call it "shrug". Select `sd-v1-5-pruned.ckpt` as base model and make sure **512x** is selected and hit **Create Model**. Now a "shrug" model should be created and make sure it's selected in the left side pane.

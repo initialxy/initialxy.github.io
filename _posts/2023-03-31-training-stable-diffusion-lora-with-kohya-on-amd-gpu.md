@@ -1,7 +1,7 @@
 ---
 layout: post
 author: initialxy
-title: "Training Stable Diffusion LoRA with Kohya"
+title: "Training Stable Diffusion LoRA with Kohya on AMD GPU"
 description: "Setting up LoRA Training with kohya_ss on AMD GPU."
 category: "Lesson"
 tags: [MachineLearning, StableDiffusion, LoRA]
