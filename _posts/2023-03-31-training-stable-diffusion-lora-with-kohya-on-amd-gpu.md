@@ -198,6 +198,12 @@ if __name__ == "__main__":
     help="Prefix of file names",
     default=""
   )
+  parser.add_argument(
+    "--extension",
+    "-e",
+    help="Rename all extensions",
+    default=""
+  )
   parser.add_argument('dir', help="Directory under which files will be sequenced")
   args = parser.parse_args()
 
@@ -205,10 +211,13 @@ if __name__ == "__main__":
   files = [f for f in files if os.path.isfile(os.path.join(args.dir, f))]
   files.sort()
   for i, f in enumerate(files):
-    _, ext = os.path.splitext(f)
+    if args.extension:
+      ext = "." + args.extension
+    else:
+      _, ext = os.path.splitext(f)
     f = f.replace(" ", "\\ ").replace("(", "\\(").replace(")", "\\)")
     filename = f"{args.prefix}{args.start_index + i:03d}"
-    os.system(f"mv {os.path.join(args.dir, f)} {os.path.join(args.dir, filename)}.{ext}")
+    os.system(f"mv {os.path.join(args.dir, f)} {os.path.join(args.dir, filename)}{ext}")
 ```
 
 Here is one that will deduplicate tokens (separated by `,`) and optionally filter a token in case you prepended tokens to all caption files but some of them may already have a token auto-generated, or you believe some auto-generated tokens are wrong.
