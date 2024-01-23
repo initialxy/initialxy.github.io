@@ -238,8 +238,15 @@ if __name__ == "__main__":
     help="Token to remove",
     default=""
   )
+  parser.add_argument(
+    "--replace",
+    "-r",
+    help="Token to replace. Use , as separator",
+    default=""
+  )
   parser.add_argument("dir", help="Directory where .txt files are found")
   args = parser.parse_args()
+  rep = [t.strip() for t in args.replace.split(",")] if args.replace else []
 
   files = os.listdir(args.dir)
   files = [f for f in files if os.path.isfile(os.path.join(args.dir, f)) and f.endswith(".txt")]
@@ -249,8 +256,10 @@ if __name__ == "__main__":
       line = r.read()
     with open(f, "w") as w:
       tokens = {t.strip() for t in line.split(",")}
-      if args.filter:
-        tokens = {t for t in tokens if t not in args.filter}
+      if args.filter or rep:
+        to_filter = args.filter or rep[0]
+        to_replace = {rep[1]} if rep and rep[0] in tokens else set()
+        tokens = {t for t in tokens if t != to_filter} | to_replace
       w.write(", ".join(tokens))
 ```
 
