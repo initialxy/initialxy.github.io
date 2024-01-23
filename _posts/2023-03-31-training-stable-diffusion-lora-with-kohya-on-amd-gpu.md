@@ -233,20 +233,16 @@ if __name__ == "__main__":
     description="Dedupe tokens in caption files. Optionally filter token."
   )
   parser.add_argument(
-    "--filter",
-    "-f",
-    help="Token to remove",
-    default=""
-  )
-  parser.add_argument(
     "--replace",
     "-r",
-    help="Token to replace. Use , as separator",
+    help="Find and replace token. Use ',' as separator. eg. -r foo will filter foo, -r foo,bar will replace foo with bar.",
     default=""
   )
   parser.add_argument("dir", help="Directory where .txt files are found")
   args = parser.parse_args()
   rep = [t.strip() for t in args.replace.split(",")] if args.replace else []
+  to_filter = rep[0] if rep else ""
+  to_replace = rep[1] if len(rep) > 1 else ""
 
   files = os.listdir(args.dir)
   files = [f for f in files if os.path.isfile(os.path.join(args.dir, f)) and f.endswith(".txt")]
@@ -256,11 +252,10 @@ if __name__ == "__main__":
       line = r.read()
     with open(f, "w") as w:
       tokens = {t.strip() for t in line.split(",")}
-      if args.filter or rep:
-        to_filter = args.filter or rep[0]
-        to_replace = {rep[1]} if rep and rep[0] in tokens else set()
-        tokens = {t for t in tokens if t != to_filter} | to_replace
-      w.write(", ".join(tokens))
+      if to_filter:
+        to_append = {to_replace} if to_replace and to_filter in tokens else set()
+        tokens = tokens - {to_filter} | to_append
+      w.write(", ".join(sorted(tokens)))
 ```
 
 Spelling and grammer of this post was checked by ChatGPT.
