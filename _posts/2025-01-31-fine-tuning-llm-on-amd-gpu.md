@@ -124,7 +124,7 @@ import json
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
-    description="Script to alternating text dialog to ShareGPT JSONL format"
+    description="Script to convert alternating text dialog to ShareGPT JSONL format"
   )
   parser.add_argument("input", help="Input text file")
   parser.add_argument("output", help="Output JSONL file")
