@@ -23,11 +23,7 @@ I've decided to break it down into two separate posts, since they cover differen
 <!--more-->
 
 ## Objective
-Alright, I will be honest. What I really want to accomplish is to create a bot that mimics myself so I can set it up to reply to my coworkers on Slack. Just like that episode in HBO's Silicon Valley.
-
-[![Silicon Valley: Gilfoyle Made A Bot](https://img.youtube.com/vi/Y1gFSENorEY/0.jpg)](https://www.youtube.com/watch?v=Y1gFSENorEY)
-
-To be fair, I'm sure I'm not the only one who's trying to do this. The recent trend of AI agents is heading to that direction. But I want to do it completely locally on my home computer. Before I actually start working on it, I wanted to do a proof of concept project to see how feasible it is. So I decided to create Frieren, a fictional character unknown to open source LLM models, along with her relevant knowledge. I've been following [Matt Williams's YouTube channel](https://www.youtube.com/@technovangelist), which has been enormously informative in my research.
+Alright, I will be honest. What I really want to accomplish is to create a bot that mimics myself so I can set it up to reply to my coworkers on Slack. Just like that [episode in HBO's Silicon Valley](https://www.youtube.com/watch?v=Y1gFSENorEY). To be fair, I'm sure I'm not the only one who's trying to do this. The recent trend of AI agents is heading to that direction. But I want to do it completely locally on my home computer. Before I actually start working on it, I wanted to do a proof of concept project to see how feasible it is. So I decided to create Frieren, a fictional character unknown to open source LLM models, along with her relevant knowledge. I've been following [Matt Williams's YouTube channel](https://www.youtube.com/@technovangelist), which has been enormously informative in my research.
 
 [![19 Tips to Better AI Fine Tuning](https://img.youtube.com/vi/W2QuK9TwYXs/0.jpg)](https://www.youtube.com/watch?v=W2QuK9TwYXs)
 
@@ -78,7 +74,7 @@ Now open [http://localhost:8080](http://localhost:8080) and you should have infe
 
 The tricky part is to get things setup for training. AMD actually has [ROCm variants of most of the necessary libraries](https://github.com/ROCm), though at varying quality. I was following along AMD's own guide that they published recently: [Fine-tuning and inference using a single accelerator](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/fine-tuning/single-gpu-fine-tuning-and-inference.html), which was enormously helpful to get things started. However there were two open questions that I had:
 * How should my training data look like for a specific model?
-* How to run the output model in ollama?
+* How to run its outputs in ollama?
 
 That's when I discovered that [unsloth](https://github.com/unslothai/unsloth) can help with both. It can normalize training data format for a specific model template and help you merge LoRA adapter into a gguf file that ollama can then pick up. So I decided to give unsloth a try. Unfortunately, it looks like unsloth does not have [AMD GPU support](https://github.com/unslothai/unsloth/issues/37). However according to github user [sayanmndl21](https://github.com/unslothai/unsloth/issues/37#issuecomment-2445535450) most of the dependencies already have ROCm variants and they were able to get it to work with a small patch in unsloth's code. So I decided to give it a try. Turns out it doesn't work for me, because the ROCm variant of xformers [only supports AMD's workstation GPUs](https://github.com/ROCm/composable_kernel/issues/1171#issuecomment-2305358524) and not consumer GPUs like my RX 7900 XTX. Hopefully this will change in the future, because as far as I can see, xformers is the only dependency blocking unsloth to work. If I were to remove xformers from unsloth's code, training will start and complete, but produce incorrect outputs. I made an attempted to replace it with SDP, but it was not a simple change and stretches beyond my domain knowledge. I believe [Axolotl](https://axolotl.ai/) does support AMD GPU, but looking at [Matt Williams' video](https://www.youtube.com/watch?v=lj44Bt9UxYQ), it appears quite quirky to get it to work. Perhaps I will try it in the future. But for now I'm following [AMD's guide](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/fine-tuning/single-gpu-fine-tuning-and-inference.html) and borrow just a few helper functions from unsloth, mainly dataset normalization and gguf output. Here is now I got dependencies installed.
 
@@ -99,7 +95,7 @@ python setup.py install
 cd ../unsloth
 pip install unsloth-zoo
 ```
-That's it. Now if you want to train in a different directory just put `export PYTHONPATH=~/git/unsloth/` in your environment.
+If you run into errors when building `bitsandbytes`, make sure all necessary HIP-related libraries are installed. Pay close attention to what the error messages say and install the libraries that it's looking for using `yay` or `pacman`. If you want to train in a different directory, just put `export PYTHONPATH=~/git/unsloth/` in your environment.
 
 ## Training Dataset Collection
 We want to train for Frieren's style of speech, so what we need to collect is Frieren's dialogs. More specifically in Q&A format, where one character speaks to Frieren and she replies directly to it. I found [anime transcript of Frieren](https://transcripts.foreverdreaming.org/viewforum.php?f=2402) with a bit of Googling, and re-watched the first 7 episodes of Frieren while extracting her dialogs into a plain text file, which I named `frieren_dialog.txt`. This turned out to be an extremely time consuming and labor intensive task. I managed to collect 244 dialogs before giving up at the end of episode 7. Here is a snippet of it. Due to copyright concerns, I'm not going to share the entire raw file.
@@ -112,6 +108,7 @@ I suppose you're right.
 Frieren, the life ahead of you will surely be much longer than we can imagine.
 Perhaps.
 The king's going to erect statues of us in the plaza. I'm not sure they'll be able to faithfully recreate my handsome looks, though.
+How self-serving of him. He only gave us ten copper coins when we left on our adventure.
 ...
 ```
 This text file is pretty simple. You can consider every odd line to be a user prompt and every even line to be a response to the previous line. Next, we need to convert it to ShareGPT format so that unsloth can then normalize for a selected model template. This needs to be a JSONL file, which just means each line is one JSON object. Apparently the reason why they do this instead of just having a JSON array is so that a very large data file can be easily parsed, sampled, and split without having to load the whole file into memory. I guess that's fair. I wrote a Python script to do this. 
@@ -149,7 +146,7 @@ if __name__ == "__main__":
       f.write("\n")
 ```
 
-It's super straightforward to use. Run `python tosharegpt.py frieren_dialog.txt data.jsonl` and you will get a JSONL file that should look like this:
+It's pretty straightforward to use. Run `python tosharegpt.py frieren_dialog.txt data.jsonl` and you will get a JSONL file that should look like this:
 
 ```
 {"conversations": [{"from": "human", "value": "We'll have to look for work once we're back."}, {"from": "gpt", "value": "You're already thinking about that?"}]}
@@ -257,13 +254,11 @@ unsloth_save_pretrained_gguf(trainer.model, "ggufmodel", tokenizer, quantization
 
 ```
 
-Let's walkthrough some key points. We start by loading unsloth's version of 4bit Phi-4. You can find unsloth's mapping [here](https://github.com/unslothai/unsloth/blob/038e6d4c8d40207a87297ab3aaf787c19b1006d1/unsloth/models/mapper.py#L527). When I loaded the original `microsoft/phi-4`, it just blew up my VRAM. So I'm gonna stick with the 4bit version. Next we use unsloth's `get_chat_template` and `standardize_sharegpt` to normalize our training data for Phi-4. Then we configure `SFTTrainer` for LoRA fine tuning. Here are some of the notable parameters to watch out for:
+Let's walkthrough some key points. We start by loading unsloth's version of 4bit Phi-4. You can find unsloth's mapping [here](https://github.com/unslothai/unsloth/blob/038e6d4c8d40207a87297ab3aaf787c19b1006d1/unsloth/models/mapper.py#L527). When I loaded the original `microsoft/phi-4`, it just blew up my VRAM. So I'm gonna stick with the 4bit version. Next we use unsloth's `get_chat_template` and `standardize_sharegpt` to normalize our training data for Phi-4. Then we configure `SFTTrainer` for LoRA fine tuning. Here are some of the notable parameters to watch out for. Keep in mind that my attempt to explain the these parameters are extremely layman. It's always a good idea to look up [full documentation](https://huggingface.co/docs/trl/en/sft_trainer) to learn more.
 * `r` AKA LoRA rank. Choose 16, 32 or 64. This is the number of layers LoRA will influence. Higher number will get you better quality but needs more VRAM to train.
 * `per_device_train_batch_size` is how big of a batch to use during training. Bigger batch size will use more VRAM, but enables faster training. Here, I set it to 1 due to an issue with `train_on_responses_only`, which I will elaborate a bit later.
-* `num_train_epochs` and `max_steps` set now many training steps will run. `num_train_epochs` effectively means how many times it will loop through your training dataset while `max_steps` simply sets the number of steps. You can use either parameter to set your training steps.
+* `num_train_epochs` and `max_steps` set now many training steps will run. `num_train_epochs` effectively means how many times it will loop through your training dataset while `max_steps` simply sets the number of steps. You can use either parameter to set your training steps. Be cautious of training for too long, which will cause over fitting. It means your model will try too hard to "stick to the script" and lose a lot of its flexibility. My settings above actually deliberately under fit this dataset, which means it does not mimic Frieren as closely as it could. There's reason for this, which I will discuss in my next post regarding RAG.
 * `learning_rate` sets how much each step will change its parameters. In short, large learning rate value will converge faster but produces lower quality results, and smaller learning rate will take longer but produces finer quality results.
-
-My attempt to explain the above parameters are extremely layman, please look up [full documentation](https://huggingface.co/docs/trl/en/sft_trainer) to learn more. My settings above actually deliberately under fits this dataset, which means it does not mimic Frieren as closely as it could. There's reason for this, which I will discuss in my next post regarding RAG.
 
 Before we start training, I choose to use unsloth's `train_on_responses_only` to only fine tune on responses instead of both prompt and response. I feel this is important, because our goal is to *only* mimic Frieren's style of speech and not the other characters'. However this function seems to cause a [bug](https://github.com/unslothai/unsloth/issues/1017) with `per_device_train_batch_size`, where trainer will produce this error.
 
@@ -306,7 +301,7 @@ Start open-webui normally and we can see a new model `initialxy/frieren:latest` 
 
 ![First test](/static/images/2025-01-31-fine-tuning-llm-on-amd-gpu/model_test_1.jpg)
 
-Not bad. Sounds kind of like Frieren. Again, note that I deliverably under fit this model. Try to change your training steps with `num_train_epochs` or `max_steps` to get to a point where you think is right for you. It takes some trial and error. I then created a character with some custom parameters and system prompts in open-webui.
+Not bad. Sounds kind of like Frieren. Again, note that I deliberately under fit this model. Try to change your training steps with `num_train_epochs` or `max_steps` to get it to a point where you think it sounds right for you. It takes some trial and error to get it right. Next, I created a character with some custom parameters and system prompts in open-webui.
 
 ![Frieren character](/static/images/2025-01-31-fine-tuning-llm-on-amd-gpu/frieren_character.jpg)
 
