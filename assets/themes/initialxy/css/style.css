@@ -164,7 +164,7 @@ nav.navbar .navbar-nav .nav-link {
     margin: 0;
 }
 
-.content .preview_img_3 > p > img {
+.content .preview_img_1 > p > img, .content .preview_img_3 > p > img {
     width: 100%;
 }
 
