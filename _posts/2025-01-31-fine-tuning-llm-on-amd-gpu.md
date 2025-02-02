@@ -1,18 +1,18 @@
 ---
 layout: post
 author: initialxy
-title: "Fine Tuning LLM on AMD GPU"
-description: "Fine tuning Phi-4 on AMD consumer GPU with help from unsloth"
+title: "fine-tuning LLM on AMD GPU"
+description: "fine-tuning Phi-4 on AMD consumer GPU with help from unsloth"
 category: "Lesson"
 tags: [MachineLearning, LLM, LoRA, Phi-4]
 ---
 {% include JB/setup %}
 
-I've been fascinated by open source LLM models and have been running them locally. I like to maintain full control of ML models that run instead of relying on the cloud, simply because it's more fun that way. From my previous posts, you may be aware that I use AMD GPU on my Arch Linux (btw), so I'm gonna continue this trend of struggling to get things working on my AMD GPU. My most recent project is an attempt to recreate the character [Frieren from Frieren: Beyond Journey's End](https://en.wikipedia.org/wiki/Frieren). Why Frieren in particular? That's because it appears none of the open source LLM models seem to be aware of this series at all. So any new behavior added can be attributed to what I did instead of the base model's knowledge. Furthermore, Frieren has became a very successful series internationally, which makes it somewhat easier to collect a lot of materials from the internet for training purpose. I've also binge read its manga, so I can validate the model's correctness. In order to accomplish this, I have two milestones:
-* Train Frieren's style of speech with LoRA fine tuning.
-* Add world knowledge to the fine tuned model using a RAG.
+I've been fascinated by open-source LLM models and have been running them locally. I like to maintain full control of ML models that run instead of relying on the cloud, simply because it's more fun that way. From my previous posts, you may know that I use AMD GPU on my Arch Linux (btw), so I will continue this trend of struggling to get things working on my AMD GPU. My most recent project is an attempt to recreate the character [Frieren from Frieren: Beyond Journey's End](https://en.wikipedia.org/wiki/Frieren). Why Frieren in particular? That's because it appears none of the open-source LLM models seem to be aware of this series at all. So any new behavior added can be attributed to what I did instead of the base model's knowledge. Furthermore, Frieren has become a very successful series internationally, which makes it somewhat easier to collect a lot of materials from the internet for training purposes. I've also binge-read its manga, so I can validate the model's correctness. To accomplish this, I have two milestones:
+* Train Frieren's style of speech with LoRA fine-tuning.
+* Add world knowledge to the fine-tuned model using a RAG.
 
-I've decided to break it down into two separate posts, since they cover different techniques and many quirks. This post is focused on the first part, fine tuning for style.
+I've decided to break it down into two separate posts since they cover different techniques and many quirks. This post is focused on the first part, fine-tuning for style.
 
 <div class="preview_img_1" markdown="1">
 
@@ -23,11 +23,11 @@ I've decided to break it down into two separate posts, since they cover differen
 <!--more-->
 
 ## Objective
-Alright, I will be honest. What I really want to accomplish is to create a bot that mimics myself so I can set it up to reply to my coworkers on Slack. Just like that [episode in HBO's Silicon Valley](https://www.youtube.com/watch?v=Y1gFSENorEY). To be fair, I'm sure I'm not the only one who's trying to do this. The recent trend of AI agents is heading to that direction. But I want to do it completely locally on my home computer. Before I actually start working on it, I wanted to do a proof of concept project to see how feasible it is. So I decided to create Frieren, a fictional character unknown to open source LLM models, along with her relevant knowledge. I've been following [Matt Williams's YouTube channel](https://www.youtube.com/@technovangelist), which has been enormously informative in my research.
+Alright, I will be honest. What I really want to accomplish is to create a bot that mimics myself so I can set it up to reply to my coworkers on Slack. Just like that [episode in HBO's Silicon Valley](https://www.youtube.com/watch?v=Y1gFSENorEY). To be fair, I'm sure I'm not the only one who's trying to do this. The recent trend of AI agents is heading in that direction. But I want to do it completely locally on my home computer. Before I start working on it, I wanted to do a proof of concept project to see how feasible it is. So I decided to create Frieren, a fictional character unknown to open-source LLM models, along with her relevant knowledge. I've been following [Matt Williams's YouTube channel](https://www.youtube.com/@technovangelist), which has been enormously informative in my research.
 
-[![19 Tips to Better AI Fine Tuning](https://img.youtube.com/vi/W2QuK9TwYXs/0.jpg)](https://www.youtube.com/watch?v=W2QuK9TwYXs)
+[![19 Tips to Better AI fine-tuning](https://img.youtube.com/vi/W2QuK9TwYXs/0.jpg)](https://www.youtube.com/watch?v=W2QuK9TwYXs)
 
-It's generally understood that fine tuning is a way to train for style and focus while RAG is the best way to bring in new knowledge to a LLM. In order to create Frieren, I will use both techniques. So let's get started on fine tuning first to mimic Frieren's style of speech.
+It's generally understood that fine-tuning is a way to train for style and focus while RAG is the best way to bring in new knowledge to a LLM. To create Frieren, I will use both techniques. So let's get started on fine-tuning first to mimic Frieren's style of speech.
 
 ## Hardware
 Since my last post, I've actually made some major upgrades to my computer hardware. Most of its core parts are new.
@@ -43,10 +43,10 @@ Here is a picture for good measure, since I'm also a build-a-pc enthusiast. RGB 
 
 ![Hardware](/static/images/2025-01-31-fine-tuning-llm-on-amd-gpu/pc.jpg)
 
-I realized that AM4 CPU coolers are not always compatible with AM5. If your AM4 CPU cooler required a backplate then it won't work on AM5, because AM5 has a fixed backplate that can't be removed. On a different note, I swear I'm not actually an AMD fanboy. I was seriously considering picking up either a used RTX 3090 or Radeon RX 7900 XTX, both of which were about the same price. But RX 7900 XTX has somewhat better rasterized performance, so I figured it's a better value (for gaming, not everything else) and AMD is generally more Linux friendly when it comes to drivers. So I went AMD again. In case you wonder what games I play. It's Minecraft Bedrock Edition. So this brings us here. Why do I insist on working with ML on AMD GPU? Why not just use [Google Colab](https://colab.research.google.com/) or [RunPod](https://www.runpod.io/) at least for training? Am I just a masochist? The answer is yes. Yes I am.
+I realized that AM4 CPU coolers are not always compatible with AM5. If your AM4 CPU cooler requires a backplate then it won't work on AM5, because AM5 has a fixed backplate that can't be removed. On a different note, I swear I'm not actually an AMD fanboy. I was seriously considering picking up either a used RTX 3090 or a Radeon RX 7900 XTX, both of which were about the same price. But RX 7900 XTX has somewhat better rasterized performance, so I figured it's a better value (for gaming, not everything else) and AMD is generally more Linux friendly when it comes to drivers. So I went AMD again. In case you wonder what games I play. It's Minecraft Bedrock Edition. So this brings us here. Why do I insist on working with ML on AMD GPU? Why not just use [Google Colab](https://colab.research.google.com/) or [RunPod](https://www.runpod.io/) at least for training? Am I just a masochist? The answer is yes. Yes, I am.
 
 ## Installation and Environment Setup
-To get inference working is actually surprisingly easy this time. I just installed [ollama-rocm-git](https://aur.archlinux.org/packages/ollama-rocm-git) from AUR and it worked. Great! For UI, I chose to use [open-webui](https://github.com/open-webui/open-webui), which was also pretty easy to install. I just installed it from `pip`. In case you need some commands for reference, here it is:
+To get inference working is surprisingly easy this time. I just installed [ollama-rocm-git](https://aur.archlinux.org/packages/ollama-rocm-git) from AUR and it worked. Great! For UI, I chose to use [open-webui](https://github.com/open-webui/open-webui), which was also pretty easy to install. I just installed it from `pip`. In case you need some commands for reference, here it is:
 
 ```bash
 yay -S ollama-rocm-git # assuming you have yay on your Arch Linux
@@ -72,11 +72,11 @@ ollama pull <pick a model from https://ollama.com/library>
 
 Now open [http://localhost:8080](http://localhost:8080) and you should have inference ready to go.
 
-The tricky part is to get things setup for training. AMD actually has [ROCm variants of most of the necessary libraries](https://github.com/ROCm), though at varying quality. I was following along AMD's own guide that they published recently: [Fine-tuning and inference using a single accelerator](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/fine-tuning/single-gpu-fine-tuning-and-inference.html), which was enormously helpful to get things started. However there were two open questions that I had:
-* How should my training data look like for a specific model?
+The tricky part is to get things set up for training. AMD actually has [ROCm variants of most of the necessary libraries](https://github.com/ROCm), though at varying quality. I was following along AMD's own guide that they published recently: [Fine-tuning and inference using a single accelerator](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/fine-tuning/single-gpu-fine-tuning-and-inference.html), which was enormously helpful in getting things started. However, there were two open questions that I had:
+* What should my training data look like for a specific model?
 * How to run its outputs in ollama?
 
-That's when I discovered that [unsloth](https://github.com/unslothai/unsloth) can help with both. It can normalize training data format for a specific model template and help you merge LoRA adapter into a gguf file that ollama can then pick up. So I decided to give unsloth a try. Unfortunately, it looks like unsloth does not have [AMD GPU support](https://github.com/unslothai/unsloth/issues/37). However according to github user [sayanmndl21](https://github.com/unslothai/unsloth/issues/37#issuecomment-2445535450) most of the dependencies already have ROCm variants and they were able to get it to work with a small patch in unsloth's code. So I decided to give it a try. Turns out it doesn't work for me, because the ROCm variant of xformers [only supports AMD's workstation GPUs](https://github.com/ROCm/composable_kernel/issues/1171#issuecomment-2305358524) and not consumer GPUs like my RX 7900 XTX. Hopefully this will change in the future, because as far as I can see, xformers is the only dependency blocking unsloth to work. If I were to remove xformers from unsloth's code, training will start and complete, but produce incorrect outputs. I made an attempted to replace it with SDP, but it was not a simple change and stretches beyond my domain knowledge. I believe [Axolotl](https://axolotl.ai/) does support AMD GPU, but looking at [Matt Williams' video](https://www.youtube.com/watch?v=lj44Bt9UxYQ), it appears quite quirky to get it to work. Perhaps I will try it in the future. But for now I'm following [AMD's guide](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/fine-tuning/single-gpu-fine-tuning-and-inference.html) and borrow just a few helper functions from unsloth, mainly dataset normalization and gguf output. Here is now I got dependencies installed.
+That's when I discovered that [unsloth](https://github.com/unslothai/unsloth) can help with both. It can normalize training data format for a specific model template and help you merge LoRA adapter into a gguf file that ollama can then pick up. So I decided to give unsloth a try. Unfortunately, it looks like unsloth does not have [AMD GPU support](https://github.com/unslothai/unsloth/issues/37). However according to GitHub user [sayanmndl21](https://github.com/unslothai/unsloth/issues/37#issuecomment-2445535450) most of the dependencies already have ROCm variants and they were able to get it to work with a small patch in unsloth's code. So I decided to give it a try. Turns out it doesn't work for me, because the ROCm variant of xformers [only supports AMD's workstation GPUs](https://github.com/ROCm/composable_kernel/issues/1171#issuecomment-2305358524) and not consumer GPUs like my RX 7900 XTX. Hopefully, this will change in the future, because as far as I can see, xformers is the only dependency blocking unsloth from working. If I were to remove xformers from unsloth's code, training would start and complete, but produce incorrect outputs. I attempted to replace it with SDP, but it was not a simple change and stretched beyond my domain knowledge. I believe [Axolotl](https://axolotl.ai/) does support AMD GPU, but looking at [Matt Williams' video](https://www.youtube.com/watch?v=lj44Bt9UxYQ), it appears quite quirky to get it to work. Perhaps I will try it in the future. But for now, I'm following [AMD's guide](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/fine-tuning/single-gpu-fine-tuning-and-inference.html) and borrowing just a few helper functions from unsloth, mainly dataset normalization and gguf output. Here is how I got dependencies installed.
 
 ```bash
 cd git # or wherever you keep your git repositories
@@ -98,7 +98,7 @@ pip install unsloth-zoo
 If you run into errors when building `bitsandbytes`, make sure all necessary HIP-related libraries are installed. Pay close attention to what the error messages say and install the libraries that it's looking for using `yay` or `pacman`. If you want to train in a different directory, just put `export PYTHONPATH=~/git/unsloth/` in your environment.
 
 ## Training Dataset Collection
-We want to train for Frieren's style of speech, so what we need to collect is Frieren's dialogs. More specifically in Q&A format, where one character speaks to Frieren and she replies directly to it. I found [anime transcript of Frieren](https://transcripts.foreverdreaming.org/viewforum.php?f=2402) with a bit of Googling, and re-watched the first 7 episodes of Frieren while extracting her dialogs into a plain text file, which I named `frieren_dialog.txt`. This turned out to be an extremely time consuming and labor intensive task. I managed to collect 244 dialogs before giving up at the end of episode 7. Here is a snippet of it. Due to copyright concerns, I'm not going to share the entire raw file.
+We want to train for Frieren's style of speech, so what we need to collect is Frieren's dialogues. More specifically in Q&A format, where one character speaks to Frieren and she replies directly to it. I found an [anime transcript of Frieren](https://transcripts.foreverdreaming.org/viewforum.php?f=2402) with a bit of Googling and re-watched the first 7 episodes of Frieren while extracting her dialogues into a plain text file, which I named `frieren_dialogue.txt`. This turned out to be an extremely time-consuming and labor-intensive task. I managed to collect 244 dialogues before giving up at the end of episode 7. Here is a snippet of it. Due to copyright concerns, I'm not going to share the entire raw file.
 
 ```
 We'll have to look for work once we're back.
@@ -111,7 +111,7 @@ The king's going to erect statues of us in the plaza. I'm not sure they'll be ab
 How self-serving of him. He only gave us ten copper coins when we left on our adventure.
 ...
 ```
-This text file is pretty simple. You can consider every odd line to be a user prompt and every even line to be a response to the previous line. Next, we need to convert it to ShareGPT format so that unsloth can then normalize for a selected model template. This needs to be a JSONL file, which just means each line is one JSON object. Apparently the reason why they do this instead of just having a JSON array is so that a very large data file can be easily parsed, sampled, and split without having to load the whole file into memory. I guess that's fair. I wrote a Python script to do this. 
+This text file is pretty simple. You can consider every odd line to be a user prompt and every even line to be a response to the previous line. Next, we need to convert it to ShareGPT format so that unsloth can then normalize for a selected model template. This needs to be a JSONL file, which just means each line is one JSON object. Apparently, the reason why they do this instead of just having a JSON array is so that a very large data file can be easily parsed, sampled, and split without having to load the whole file into memory. I guess that's fair. I wrote a Python script to do this. 
 
 `tosharegpt.py`
 ```python
@@ -121,7 +121,7 @@ import json
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
-    description="Script to convert alternating text dialog to ShareGPT JSONL format"
+    description="Script to convert alternating text dialogue to ShareGPT JSONL format"
   )
   parser.add_argument("input", help="Input text file")
   parser.add_argument("output", help="Output JSONL file")
@@ -146,7 +146,7 @@ if __name__ == "__main__":
       f.write("\n")
 ```
 
-It's pretty straightforward to use. Run `python tosharegpt.py frieren_dialog.txt data.jsonl` and you will get a JSONL file that should look like this:
+It's pretty straightforward to use. Run `python tosharegpt.py frieren_dialogue.txt data.jsonl` and you will get a JSONL file that should look like this:
 
 ```
 {"conversations": [{"from": "human", "value": "We'll have to look for work once we're back."}, {"from": "gpt", "value": "You're already thinking about that?"}]}
@@ -156,7 +156,7 @@ It's pretty straightforward to use. Run `python tosharegpt.py frieren_dialog.txt
 ...
 ```
 
-## LoRA Fine Tuning
+## LoRA fine-tuning
 Let's get training started. I picked Microsoft's Phi-4 as base model. The reason is simply that it's small enough to fit in my VRAM during training but also large enough to produce pretty reasonable responses most of the time. The great thing about using unsloth is that it will help normalize the data template for you, so if you were to pick a different base mode, you can do it quite easily. To get my training script working, I referenced [AMD's guide](https://rocm.docs.amd.com/en/latest/how-to/rocm-for-ai/fine-tuning/single-gpu-fine-tuning-and-inference.html) as well as [unsloth's Phi-4 notebook](https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Phi_4-Conversational.ipynb).
 
 `train.py`
@@ -254,19 +254,19 @@ unsloth_save_pretrained_gguf(trainer.model, "ggufmodel", tokenizer, quantization
 
 ```
 
-Let's walkthrough some key points. We start by loading unsloth's version of 4bit Phi-4. You can find unsloth's mapping [here](https://github.com/unslothai/unsloth/blob/038e6d4c8d40207a87297ab3aaf787c19b1006d1/unsloth/models/mapper.py#L527). When I loaded the original `microsoft/phi-4`, it just blew up my VRAM. So I'm gonna stick with the 4bit version. Next we use unsloth's `get_chat_template` and `standardize_sharegpt` to normalize our training data for Phi-4. Then we configure `SFTTrainer` for LoRA fine tuning. Here are some of the notable parameters to watch out for. Keep in mind that my attempt to explain the these parameters are extremely layman. It's always a good idea to look up [full documentation](https://huggingface.co/docs/trl/en/sft_trainer) to learn more.
-* `r` AKA LoRA rank. Choose 16, 32 or 64. This is the number of layers LoRA will influence. Higher number will get you better quality but needs more VRAM to train.
+Let's walk through some key points. We start by loading unsloth's version of 4bit Phi-4. You can find unsloth's mapping [here](https://github.com/unslothai/unsloth/blob/038e6d4c8d40207a87297ab3aaf787c19b1006d1/unsloth/models/mapper.py#L527). When I loaded the original `microsoft/phi-4`, it just blew up my VRAM. So I'm gonna stick with the 4bit version. Next, we use unsloth's `get_chat_template` and `standardize_sharegpt` to normalize our training data for Phi-4. Then we configure `SFTTrainer` for LoRA fine-tuning. Here are some of the notable parameters to watch out for. Keep in mind that my attempt to explain these parameters is extremely layman. It's always a good idea to look up [full documentation](https://huggingface.co/docs/trl/en/sft_trainer) to learn more.
+* `r` AKA LoRA rank. Choose 16, 32, or 64. This is the number of layers LoRA will influence. A higher number will get you better quality but needs more VRAM to train.
 * `per_device_train_batch_size` is how big of a batch to use during training. Bigger batch size will use more VRAM, but enables faster training. Here, I set it to 1 due to an issue with `train_on_responses_only`, which I will elaborate a bit later.
-* `num_train_epochs` and `max_steps` set now many training steps will run. `num_train_epochs` effectively means how many times it will loop through your training dataset while `max_steps` simply sets the number of steps. You can use either parameter to set your training steps. Be cautious of training for too long, which will cause over fitting. It means your model will try too hard to "stick to the script" and lose a lot of its flexibility. My settings above actually deliberately under fit this dataset, which means it does not mimic Frieren as closely as it could. There's reason for this, which I will discuss in my next post regarding RAG.
-* `learning_rate` sets how much each step will change its parameters. In short, large learning rate value will converge faster but produces lower quality results, and smaller learning rate will take longer but produces finer quality results.
+* `num_train_epochs` and `max_steps` set now many training steps will run. `num_train_epochs` effectively means how many times it will loop through your training dataset while `max_steps` simply sets the number of steps. You can use either parameter to set your training steps. Be cautious of training for too long, which will cause overfitting. It means your model will try too hard to "stick to the script" and lose a lot of its flexibility. My settings above actually deliberately underfit this dataset, which means it does not mimic Frieren as closely as it could. There's reason for this, which I will discuss in my next post regarding RAG.
+* `learning_rate` sets how much each step will change its parameters. In short, large learning rate values will converge faster but produce lower-quality results, and smaller learning rate will take longer but produce finer-quality results.
 
-Before we start training, I choose to use unsloth's `train_on_responses_only` to only fine tune on responses instead of both prompt and response. I feel this is important, because our goal is to *only* mimic Frieren's style of speech and not the other characters'. However this function seems to cause a [bug](https://github.com/unslothai/unsloth/issues/1017) with `per_device_train_batch_size`, where trainer will produce this error.
+Before we start training, I choose to use unsloth's `train_on_responses_only` to only fine-tune on responses instead of both prompt and response. I feel this is important, because our goal is to *only* mimic Frieren's style of speech and not the other characters'. However, this function seems to cause a [bug](https://github.com/unslothai/unsloth/issues/1017) with `per_device_train_batch_size`, where the trainer will produce this error.
 
 ```
 ValueError: Unable to create tensor, you should probably activate truncation and/or padding with 'padding=True' 'truncation=True' to have batched tensors with the same length.
 ```
 
-What this means is that trainier thinks entries in dataset are not the same size, hence it is unable to batch them. It is asking you to either add padding or truncate them. That is strange, because I thought we already enabled padding in tokenizer. Taking a look at its [source code](https://github.com/unslothai/unsloth-zoo/blob/1101ee09f9464e259163a12a4ed5735c06873769/unsloth_zoo/dataset_utils.py#L174), it appears to be doing some pretty hacky stuff that overwrites all instructions to -100. Given that, I'm not sure if there's a easy way to patch this, so I will just set `per_device_train_batch_size` to `1` in order to work around this issue.
+What this means is that the trainer thinks entries in the dataset are not the same length, hence it is unable to batch them. It is asking you to either add padding or truncate them. That is strange, because I thought we already enabled padding in the tokenizer. Taking a look at its [source code](https://github.com/unslothai/unsloth-zoo/blob/1101ee09f9464e259163a12a4ed5735c06873769/unsloth_zoo/dataset_utils.py#L174), it appears to be doing some pretty hacky stuff that overwrites all instructions to -100. Given that, I'm not sure if there's an easy way to patch this, so I will just set `per_device_train_batch_size` to `1` to work around this issue.
 
 Finally we can get training started with `trainer_stats = trainer.train()` and we borrow unsloth's `unsloth_save_pretrained_gguf` to save the results in gguf format with `Q4_K_M` quantization. Run this script with unsloth's `venv` activated.
 
@@ -301,15 +301,15 @@ Start open-webui normally and we can see a new model `initialxy/frieren:latest` 
 
 ![First test](/static/images/2025-01-31-fine-tuning-llm-on-amd-gpu/model_test_1.jpg)
 
-Not bad. Sounds kind of like Frieren. Again, note that I deliberately under fit this model. Try to change your training steps with `num_train_epochs` or `max_steps` to get it to a point where you think it sounds right for you. It takes some trial and error to get it right. Next, I created a character with some custom parameters and system prompts in open-webui.
+Not bad. Sounds kind of like Frieren. Again, note that I deliberately underfit this model. Try to change your training steps with `num_train_epochs` or `max_steps` to get it to a point where you think it sounds right for you. It takes some trial and error to get it right. Next, I created a character with some custom parameters and system prompts in open-webui.
 
 ![Frieren character](/static/images/2025-01-31-fine-tuning-llm-on-amd-gpu/frieren_character.jpg)
 
-I chose to use 0.6 as temperture and increased its context length to 80k. Keep in mind that open-webui almost always defaults context length to 2k, and Phi-4 is supposed to use 16k context length. Now let's test it again.
+I chose to use 0.6 as temperature and increased its context length to 80k. Keep in mind that open-webui almost always defaults context length to 2k, and Phi-4 is supposed to use 16k context length. Now let's test it again.
 
 ![Second test](/static/images/2025-01-31-fine-tuning-llm-on-amd-gpu/model_test_2.jpg)
 
 Not bad, I like it.
 
 ## Closing
-Try to play with the above mentioned parameters and see where it suits you best. Also try to collect as much *high quality* training data as possible, which will also improve quality. In the next post, I will discuss how we can combine it wih a RAG in order to supplement this model with world knowledge from Frieren: Beyond Journey's End in open-webui. It's not as straightforward as I hoped and required some hacky monkey patching.
+Try to play with the above-mentioned parameters and see where it suits you best. Also try to collect as much high-quality training data as possible, which will also improve quality. In the next post, I will discuss how we can combine it with a RAG in order to supplement this model with world knowledge from Frieren: Beyond Journey’s End in open-webui. It’s not as straightforward as I hoped and requires some hacky monkey patching.
