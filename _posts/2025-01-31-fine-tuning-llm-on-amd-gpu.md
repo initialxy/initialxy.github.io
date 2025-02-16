@@ -1,7 +1,7 @@
 ---
 layout: post
 author: initialxy
-title: "fine-tuning LLM on AMD GPU"
+title: "Fine-tuning LLM on AMD GPU"
 description: "fine-tuning Phi-4 on AMD consumer GPU with help from unsloth"
 category: "Lesson"
 tags: [MachineLearning, LLM, LoRA, Phi-4]
