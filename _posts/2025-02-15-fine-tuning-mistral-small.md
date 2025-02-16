@@ -38,7 +38,9 @@ base_model = AutoModelForCausalLM.from_pretrained(base_model_name).to(device)
 
 # Load tokenizer.
 tokenizer = AutoTokenizer.from_pretrained(
-        base_model_name)
+    base_model_name,
+    trust_remote_code=True
+)
 tokenizer.pad_token = tokenizer.eos_token
 tokenizer.padding_side = "right"
 
@@ -51,8 +53,8 @@ tokenizer = get_chat_template(
 
 def formatting_prompts_func(examples):
     convos = examples["conversations"]
-    texts = [tokenizer.apply_chat_template(convo, tokenize = False, add_generation_prompt = False) for convo in convos]
-    return { "text" : texts, }
+    texts = [tokenizer.apply_chat_template(convo, tokenize=False, add_generation_prompt=False) for convo in convos]
+    return {"text" : texts}
 
 dataset = load_dataset("json", data_files="data.jsonl", split="train")
 
@@ -82,7 +84,7 @@ trainer = SFTTrainer(
         per_device_train_batch_size = 1,
         gradient_accumulation_steps = 4,
         warmup_steps = 5,
-        num_train_epochs = 10, # Set this for 1 full training run.
+        num_train_epochs = 10,
         max_steps = -1,
         learning_rate = 1e-4,
         fp16 = not is_bfloat16_supported(),
@@ -126,7 +128,7 @@ cd build/bin
 ./llama-quantize ../../../mistral_frieren/Mistral-Small-24B-Instruct-bnb-4bit-2501-F16.gguf ../../../mistral_frieren/Mistral-Frieren.gguf Q4_K_M
 ```
 
-Before we can add it to ollama, it's missing one more thing, which is its `Modelfile`. Thankfully it's pretty easy to borrow Mistral-Small's ModelFile.
+Before we can add it to ollama, it's missing one more thing, which is its `Modelfile`. Thankfully it's pretty easy to borrow Mistral-Small's Modelfile.
 
 ```bash
 cd ../../../mistral_frieren
@@ -179,10 +181,10 @@ As an example, I chose to use the [abliterated version of Mistral-Small instead]
 python tobnb4bit.py 'huihui-ai/Mistral-Small-24B-Instruct-2501-abliterated' bnb4bit
 ```
 
-This should create a new directory `bnb4bit` that contains bnb 4bit version of `Mistral-Small-24B-Instruct-2501-abliterated`. You will need to manually download its `tokenizer.json` and `tokenizer_config.json` from [repo](https://huggingface.co/huihui-ai/Mistral-Small-24B-Instruct-2501-abliterated/tree/main), and save them in the same directory. In the training script, load it locally. Eg.
+This should create a new directory `bnb4bit` that contains bnb 4bit version of `Mistral-Small-24B-Instruct-2501-abliterated`. You will need to manually download its `tokenizer.json` and `tokenizer_config.json` from [repo](https://huggingface.co/huihui-ai/Mistral-Small-24B-Instruct-2501-abliterated/tree/main), and save them in the same directory. In the above training script, load it locally. Eg.
 
 ```python
 base_model_name = "./bnb4bit"
 ```
 
-Unfortunately, I ran out of VRAM during the training step. I'm not sure why this abliterated version seems to take up just a bit too much VRAM. So I had to lower LoRA rank to `r=32` in order to get a successful training. The remaining steps are the same, just replace with new file names.
+Unfortunately, I ran out of VRAM during the training step. I'm not sure why this abliterated version seems to take up just a bit too much VRAM. So I had to lower LoRA rank to `r = 32` in order to get a successful training. The remaining steps are the same, just replace with new file names.
