@@ -1,7 +1,7 @@
 ---
 layout: post
 author: initialxy
-title: "Fine-tuning LLM Mistral Small"
+title: "Fine-tuning Mistral Small"
 description: "fine-tuning Mistral Small and others on AMD consumer GPU"
 category: "Lesson"
 tags: [MachineLearning, LLM, LoRA, Mistral-Small]
@@ -162,7 +162,7 @@ if __name__ == "__main__":
       load_in_4bit=True,
       bnb_4bit_use_double_quant=True,
       bnb_4bit_quant_type="nf4",
-      bnb_4bit_compute_dtype=torch.float16 if not major_version >= 8 else torch.bfloat16,
+      bnb_4bit_compute_dtype=torch.bfloat16 if major_version >= 8 else torch.float16,
    )
 
    model = AutoModelForCausalLM.from_pretrained(
@@ -179,7 +179,7 @@ As an example, I chose to use the [abliterated version of Mistral-Small instead]
 python tobnb4bit.py 'huihui-ai/Mistral-Small-24B-Instruct-2501-abliterated' bnb4bit
 ```
 
-This should create a new directory `bnb4bit` that contains bnb 4bit version of `Mistral-Small-24B-Instruct-2501-abliterated`. In the training script, load it locally. Eg.
+This should create a new directory `bnb4bit` that contains bnb 4bit version of `Mistral-Small-24B-Instruct-2501-abliterated`. You will need to manually download its `tokenizer.json` and `tokenizer_config.json` from [repo](https://huggingface.co/huihui-ai/Mistral-Small-24B-Instruct-2501-abliterated/tree/main), and save them in the same directory. In the training script, load it locally. Eg.
 
 ```python
 base_model_name = "./bnb4bit"
