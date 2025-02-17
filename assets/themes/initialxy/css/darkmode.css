@@ -69,6 +69,12 @@
     border-color: #211f2e;
   }
 
+
+  .content .tag .badge {
+    background-color: #433d5c;
+    color: #818a92;
+  }
+
   a {
     color: #81b3fe;
   }
