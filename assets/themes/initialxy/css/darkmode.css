@@ -1,0 +1,74 @@
+@media (prefers-color-scheme: dark) {
+  body {
+    color: white;
+    background-color: black;
+  }
+
+  .content {
+    background-color: #202020;
+  }
+
+  .bg-light {
+    background-color: #141414 !important;
+  }
+
+  .navbar-light .navbar-nav .nav-link {
+    color: #d1d1d1;
+  }
+
+  .navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .nav-link.active,
+  .navbar-light .navbar-nav .nav-link:hover {
+    color: white;
+  }
+
+  nav.navbar .navbar-brand.logo {
+    background-image: url("/assets/themes/initialxy/images/logo_light_small.png");
+}
+
+  .footer {
+    background-color: #141414;
+  }
+
+  .highlight {
+    background: #2e2e2e;
+  }
+
+  pre.highlight {
+    background: #2e2e2e;
+    border-color: #333333;
+  }
+
+  .btn-light {
+    color: #d1d1d1;
+    background-color: #29333d;
+    border-color: #29333d;
+  }
+
+  .btn-light:hover {
+    color: white;
+    background-color: #2d3843;
+    border-color: #2d3843;
+  }
+
+  .btn-light:disabled, .btn-light.disabled {
+    color: #667d99;
+    background-color: #1f262e;
+    border-color: #1f262e;
+  }
+
+  a {
+    color: #81b3fe;
+  }
+
+  a:hover {
+    color: #9ac2fe;
+  }
+
+  h1 {
+    color: #a356f0;
+  }
+
+  .text-muted {
+    color: #818a92 !important;
+  }
+}

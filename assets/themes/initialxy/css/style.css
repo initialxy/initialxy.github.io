@@ -12,6 +12,10 @@ a {
     padding: 2rem 0;
 }
 
+.footer p {
+    margin: 0;
+}
+
 .author a:link,
 .author a:visited,
 .author a:hover,
@@ -41,9 +45,16 @@ nav.navbar {
     padding-right: 0;
 }
 
+nav.navbar .navbar-brand.logo,
 nav.navbar .navbar-brand img {
     width: 2rem;
     height: 2rem;
+}
+
+nav.navbar .navbar-brand.logo {
+    background-image: url("/assets/themes/initialxy/images/logo_small.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
 
 nav.navbar .navbar-brand.avatar {
