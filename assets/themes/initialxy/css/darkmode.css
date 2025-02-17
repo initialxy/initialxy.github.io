@@ -45,9 +45,10 @@
     color: #8080ff;
   }
 
+  .content blockquote,
   pre.highlight {
-    background: #2e2e2e;
-    border-color: #333333;
+    background-color: #2e2e2e;
+    border-color: #3b3b3b;
   }
 
   .btn-light {
