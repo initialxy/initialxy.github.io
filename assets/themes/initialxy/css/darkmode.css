@@ -5,11 +5,11 @@
   }
 
   .content {
-    background-color: #202020;
+    background-color: #1c1b22;
   }
 
   .bg-light {
-    background-color: #141414 !important;
+    background-color: #322d52 !important;
   }
 
   .navbar-light .navbar-nav .nav-link {
@@ -26,11 +26,11 @@
 }
 
   .footer {
-    background-color: #141414;
+    background-color: #322d52;
   }
 
   .highlight {
-    background: #2e2e2e;
+    background: #2a2a32;
   }
 
   .highlight .nn {
@@ -47,26 +47,26 @@
 
   .content blockquote,
   pre.highlight {
-    background-color: #2e2e2e;
-    border-color: #3b3b3b;
+    background-color: #2a2a32;
+    border-color: #36363f;
   }
 
   .btn-light {
     color: #d1d1d1;
-    background-color: #29333d;
-    border-color: #29333d;
+    background-color: #2c293d;
+    border-color: #2c293d;
   }
 
   .btn-light:hover {
     color: white;
-    background-color: #2d3843;
-    border-color: #2d3843;
+    background-color: #312d43;
+    border-color: #312d43;
   }
 
   .btn-light:disabled, .btn-light.disabled {
-    color: #667d99;
-    background-color: #1f262e;
-    border-color: #1f262e;
+    color: #6e6699;
+    background-color: #211f2e;
+    border-color: #211f2e;
   }
 
   a {
