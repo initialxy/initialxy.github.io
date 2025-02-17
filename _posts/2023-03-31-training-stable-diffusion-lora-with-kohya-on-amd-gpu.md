@@ -12,7 +12,7 @@ Since [my last post](/lesson/2023/02/01/training-stable-diffusion-concept-with-l
 
 <!--more-->
 
-# Installation
+## Installation
 Let's get [kohya_ss](https://github.com/bmaltais/kohya_ss) installed and running. This time around, it actually came with an Ubuntu install and launch script. So if you are on Ubuntu and Nvidia GPU, then you are ready to go! For me, I use Arch and AMD GPU, so I basically just followed its [Ubuntu script](https://github.com/bmaltais/kohya_ss/blob/master/ubuntu_setup.sh), except we don't install Python from `apt` and we need to install the [ROCm build of PyTorch](https://pytorch.org/get-started/locally/).
 
 ```bash
@@ -46,7 +46,7 @@ python kohya_gui.py "$@"
 
 Go to [http://localhost:7860/](http://localhost:7860/) and we got kohya_ss GUI. From here, it should be smooth sailing.
 
-# LoRA Training
+## LoRA Training
 Following my previous post, I want to dive deeper into LoRA training. The first thing to notice is that kohya_ss sets up its training image differently than sd_dreambooth_extension. It needs `img`, `model`, and `log` directories for its inputs and outputs. It can help you create them under its **Tools** tab, but you can just do that on your own. Notably, the number of epochs to train, instance token, and class token are part of the image folder name. In my experiments, I found 5000 steps to be just about the right amount of training steps with the default 1e-5 **Learning rate** and cosine **LR scheduler**. This means you can compute the number of epochs by 5000 / number of images. eg. If I have 60 training images, I'd set my epochs to 83. So my image input folder name would be something like `83_shrug pose`, where "shrug" is the instance token and "pose" is the class token separated by a space. One very important thing to remember is that your instance token needs to be in all of the caption files. I wrote a script to help with this.
 
 `prepend.py`
@@ -82,7 +82,7 @@ As for the rest of the settings, there are a few things we need to change in ord
 
 There are other settings you can fiddle with. I haven't spent too much time with LyCORIS. It is supposedly better, but I don't have an opinion on that yet. You will have to install [a1111-sd-webui-locon](https://github.com/KohakuBlueleaf/a1111-sd-webui-locon) in stable-diffusion-webui in order to use it. Now hit **Train model** and it should start training and output a `.safetensors` file under your `model` directory.
 
-# More Scripts
+## More Scripts
 Kohya_ss has a **Print training command** feature, where it prints out the command it uses to train in terminal. I love this. This means I can automate training without having to launch its GUI. I could chain a few trainings together before I go to sleep. It's great! I wrote a wrapper script to make things easier for me.
 
 `train_lora.py`
