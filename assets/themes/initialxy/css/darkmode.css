@@ -33,6 +33,18 @@
     background: #2e2e2e;
   }
 
+  .highlight .nn {
+    color: #ababab;
+  }
+
+  .highlight .nf {
+    color: #ff6666;
+  }
+
+  .highlight .nt {
+    color: #8080ff;
+  }
+
   pre.highlight {
     background: #2e2e2e;
     border-color: #333333;

@@ -55,6 +55,7 @@ nav.navbar .navbar-brand.logo {
     background-image: url("/assets/themes/initialxy/images/logo_small.png");
     background-size: contain;
     background-repeat: no-repeat;
+    background-position: center;
 }
 
 nav.navbar .navbar-brand.avatar {
