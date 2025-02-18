@@ -34,7 +34,7 @@
   }
 
   .highlight .nn {
-    color: #ababab;
+    color: #d1d1d1;
   }
 
   .highlight .nf {
@@ -43,6 +43,13 @@
 
   .highlight .nt {
     color: #8080ff;
+  }
+
+  .highlight .s,
+  .highlight .se,
+  .highlight .s1,
+  .highlight .s2 {
+    color: #f47192;
   }
 
   .content blockquote,
@@ -89,5 +96,9 @@
 
   .text-muted {
     color: #818a92 !important;
+  }
+
+  code {
+    color: #ea95bf;
   }
 }
