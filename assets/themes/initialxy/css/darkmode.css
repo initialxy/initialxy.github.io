@@ -62,17 +62,17 @@
     color: #81b3fe;
   }
 
-  a:hover, a:focus, a:active {
+  a:hover {
     color: #9ac2fe;
   }
 
-  .btn-light {
+  .btn-light, .btn-light:visited {
     color: #d1d1d1;
     background-color: #2c293d;
     border-color: #2c293d;
   }
 
-  .btn-light:hover, .btn-light:focus, .btn-light:activate {
+  .btn-light:hover, .btn-light:focus, .btn-light:active {
     color: white;
     background-color: #312d43;
     border-color: #312d43;
