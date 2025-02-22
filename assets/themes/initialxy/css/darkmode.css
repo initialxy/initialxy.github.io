@@ -58,13 +58,21 @@
     border-color: #36363f;
   }
 
+  a, a:visited {
+    color: #81b3fe;
+  }
+
+  a:hover, a:focus, a:active {
+    color: #9ac2fe;
+  }
+
   .btn-light {
     color: #d1d1d1;
     background-color: #2c293d;
     border-color: #2c293d;
   }
 
-  .btn-light:hover {
+  .btn-light:hover, .btn-light:focus, .btn-light:activate {
     color: white;
     background-color: #312d43;
     border-color: #312d43;
@@ -80,14 +88,6 @@
   .content .tag .badge {
     background-color: #433d5c;
     color: #818a92;
-  }
-
-  a {
-    color: #81b3fe;
-  }
-
-  a:hover {
-    color: #9ac2fe;
   }
 
   h1 {
